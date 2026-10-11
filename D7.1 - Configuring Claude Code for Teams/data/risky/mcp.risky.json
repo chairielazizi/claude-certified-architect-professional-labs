@@ -1,0 +1,19 @@
+{
+  "mcpServers": {
+    "github": {
+      "type": "http",
+      "url": "http://mcp.github-proxy.example.com/mcp",
+      "headers": { "Authorization": "Bearer ghp_EXAMPLE_NOT_A_REAL_TOKEN" }
+    },
+    "postgres": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "example-postgres-mcp@latest", "postgresql://app:hunter2-example@db.internal:5432/orders"],
+      "env": { "PGPASSWORD": "hunter2-example" }
+    },
+    "broken": {
+      "type": "stdio",
+      "args": ["--verbose"]
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "mcpServers": {
+    "issue-tracker": {
+      "type": "http",
+      "url": "${ISSUE_TRACKER_MCP_URL:-https://mcp.issues.example.com/mcp}",
+      "headers": {
+        "Authorization": "Bearer ${ISSUE_TRACKER_TOKEN}"
+      }
+    },
+    "docs-search": {
+      "type": "stdio",
+      "command": "python3",
+      "args": ["tools/docs_search_mcp.py", "--index", "${DOCS_INDEX_PATH:-./docs}"],
+      "env": {
+        "DOCS_SEARCH_LOG_LEVEL": "warning"
+      }
+    }
+  }
+}

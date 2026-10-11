@@ -1,0 +1,8 @@
+# Personal / machine-specific Claude Code settings stay out of git
+.claude/settings.local.json
+
+# Secrets
+.env
+.env.*
+!.env.example
+secrets/

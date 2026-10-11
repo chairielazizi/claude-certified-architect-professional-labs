@@ -1,0 +1,17 @@
+{
+  "name": "orders-platform",
+  "description": "Order management: Python API + TypeScript web client",
+  "languages": {"Python": 61, "TypeScript": 33, "SQL": 6},
+  "top_level_dirs": ["api/", "web/", "migrations/", "tests/", "docs/", "scripts/"],
+  "build_files": {
+    "Makefile": ["setup", "lint", "test", "migrate", "seed-db"],
+    "web/package.json": ["dev", "build", "lint", "test:unit", "test:e2e"]
+  },
+  "ci": ".github/workflows/ci.yml runs make lint && make test on every PR",
+  "contributing_md_excerpts": [
+    "Use Conventional Commits.",
+    "Money is stored as integer cents.",
+    "Never edit applied migrations; add a new migration instead."
+  ],
+  "sensitive_paths": [".env", "secrets/", "deploy/certs/"]
+}

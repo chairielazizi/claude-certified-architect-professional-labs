@@ -1,0 +1,11 @@
+{
+  "_comment": "Simulated ~/.claude/settings.json of one developer (lowest precedence).",
+  "model": "claude-opus-5-5",
+  "permissions": {
+    "allow": ["Bash(curl:*)", "Bash(docker ps)", "Read(~/notes/**)"]
+  },
+  "env": {
+    "LOG_LEVEL": "debug",
+    "EDITOR": "code"
+  }
+}

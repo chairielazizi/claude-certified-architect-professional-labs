@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "model": "claude-sonnet-5-5",
+  "permissions": {
+    "defaultMode": "default",
+    "allow": [
+      "Bash(make lint)",
+      "Bash(make test)",
+      "Bash(pytest:*)",
+      "Bash(ruff check:*)",
+      "Bash(npm run lint)",
+      "Bash(npm run test:*)",
+      "Bash(git status)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Edit(./api/**)",
+      "Edit(./web/src/**)",
+      "Edit(./tests/**)",
+      "WebFetch(domain:docs.python.org)",
+      "mcp__issue-tracker__get_issue",
+      "mcp__issue-tracker__search_issues"
+    ],
+    "ask": [
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(make migrate)",
+      "Edit(./migrations/**)",
+      "Edit(./web/package.json)",
+      "mcp__issue-tracker__create_issue"
+    ],
+    "deny": [
+      "Read(./.env)",
+      "Read(./.env.*)",
+      "Read(./secrets/**)",
+      "Read(./**/*.pem)",
+      "Bash(rm -rf:*)",
+      "Bash(git push --force:*)",
+      "Bash(git reset --hard:*)",
+      "Bash(sudo:*)",
+      "Bash(curl:*)",
+      "Bash(wget:*)"
+    ]
+  },
+  "env": {
+    "APP_ENV": "development",
+    "LOG_LEVEL": "info"
+  },
+  "enabledMcpjsonServers": ["issue-tracker", "docs-search"],
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"$CLAUDE_PROJECT_DIR/.claude/hooks/protect_paths.py\"",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"$CLAUDE_PROJECT_DIR/.claude/hooks/format_changed_file.py\"",
+            "timeout": 30
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "_comment": "Simulated command-line flags for one session, mapped to the settings they override.",
+  "argv": ["claude", "--model", "claude-haiku-5-5", "--disallowedTools", "Bash(git push:*)"],
+  "settings": {
+    "model": "claude-haiku-5-5",
+    "permissions": {
+      "deny": ["Bash(git push:*)"]
+    }
+  }
+}

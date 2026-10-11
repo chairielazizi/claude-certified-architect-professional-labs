@@ -1,0 +1,10 @@
+{
+  "_comment": "Simulated .claude/settings.local.json (personal, git-ignored, overrides the shared project file).",
+  "permissions": {
+    "defaultMode": "acceptEdits",
+    "allow": ["Bash(make seed-db)"]
+  },
+  "env": {
+    "LOG_LEVEL": "trace"
+  }
+}

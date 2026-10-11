@@ -1,0 +1,12 @@
+{
+  "_comment": "Simulated enterprise managed policy (deployed by IT/MDM to an OS-level path; highest precedence, users cannot override).",
+  "permissions": {
+    "deny": ["Bash(curl:*)", "Bash(wget:*)", "WebFetch(domain:pastebin.com)", "Read(./**/.env)"],
+    "disableBypassPermissionsMode": "disable"
+  },
+  "env": {
+    "CLAUDE_CODE_ENABLE_TELEMETRY": "1",
+    "OTEL_METRICS_EXPORTER": "otlp"
+  },
+  "cleanupPeriodDays": 14
+}
