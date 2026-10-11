@@ -1,0 +1,27 @@
+{
+  "note": "Mini regression suite (6 of the 240 golden cases) for the draft_letter route. Programmatic checks only: the output space is constrained enough to grade without a judge.",
+  "prompts": {
+    "2.1.0": "You draft claim correspondence for Harbor Mutual adjusters. Prompt version: 2.1.0.\nUse only facts in the case. Never state or imply a coverage decision or liability. Always include the claim number and exact amounts and dates. Plain, warm, concise English. Output only the letter body.",
+    "2.1.1": "You draft claim correspondence for Harbor Mutual adjusters. Prompt version: 2.1.1.\nUse only facts in the case. Never state or imply a coverage decision or liability. Always include the claim number and exact amounts and dates. Plain, warm, concise English. Status updates and acknowledgements: at most 120 words. Output only the letter body."
+  },
+  "cases": [
+    { "id": "C-01", "type": "status update", "input": "Letter type: status update. Claim CLM-20417 (auto, rear-end collision). Repair estimate received 2027-01-18; adjuster review in progress; next update within 10 business days.",
+      "must_include": ["CLM-20417", "received"], "must_not_include": ["covered", "liable"], "max_words": 120 },
+    { "id": "C-02", "type": "document request", "input": "Letter type: document request. Claim CLM-20533 (property, water damage). Missing: contractor repair estimate and photos of the affected rooms. Deadline: 30 days.",
+      "must_include": ["CLM-20533", "repair estimate"], "must_not_include": ["covered"], "max_words": 150 },
+    { "id": "C-03", "type": "status update", "input": "Letter type: status update. Claim CLM-20602 (property, storm damage to roof). Notes: inspection completed 2027-01-20; engineer report requested; contractor quote pending; customer called twice about timing; temporary tarp approved.",
+      "must_include": ["CLM-20602"], "must_not_include": ["covered"], "max_words": 120 },
+    { "id": "C-04", "type": "payment confirmation", "input": "Letter type: payment confirmation. Claim CLM-20711 (auto, hail). Payment: $1,250.00 by direct deposit on 2027-01-25, after the $500.00 deductible.",
+      "must_include": ["CLM-20711", "$1,250.00"], "must_not_include": ["approximately"], "max_words": 150 },
+    { "id": "C-05", "type": "status update", "input": "Letter type: status update. Claim CLM-20788 (property, theft). Coverage review pending with the coverage team; police report received.",
+      "must_include": ["CLM-20788", "under review"], "must_not_include": ["covered", "approved"], "max_words": 150 },
+    { "id": "C-06", "type": "acknowledgement", "input": "Letter type: acknowledgement. Claim CLM-20855 (auto, windshield). Claim received 2027-01-26; assigned adjuster: J. Ortiz.",
+      "must_include": ["CLM-20855"], "must_not_include": ["covered"], "max_words": 100 }
+  ],
+  "recorded_baseline": {
+    "model": "claude-sonnet-5",
+    "prompt": "2.1.0",
+    "recorded_week": 11,
+    "results": { "C-01": true, "C-02": true, "C-03": true, "C-04": true, "C-05": false, "C-06": true }
+  }
+}

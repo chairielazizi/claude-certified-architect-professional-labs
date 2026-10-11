@@ -1,0 +1,23 @@
+{
+  "signals": [
+    { "id": "SIG-Q", "name": "Quality drift", "rule": "2-week rolling judge pass rate < baseline - 0.03", "action": "iteration" },
+    { "id": "SIG-C", "name": "Cost creep", "rule": "weekly cost per task > baseline x 1.2 (watch above x 1.1)", "action": "iteration" },
+    { "id": "SIG-L", "name": "Latency", "rule": "weekly p95 > 8 s", "action": "incident process (rollback), not a lifecycle iteration" },
+    { "id": "SIG-D", "name": "Model deprecation", "rule": "a model in use retires within 180 days", "action": "migration task (mandatory)" },
+    { "id": "SIG-R", "name": "New model release", "rule": "a successor to a model in use is released", "action": "evaluate upgrade (optional)" }
+  ],
+  "thresholds": { "quality_drop": 0.03, "quality_watch": 0.01, "cost_trigger": 1.2, "cost_watch": 1.1, "p95_max_s": 8, "deprecation_horizon_days": 180 },
+  "weeks": [
+    { "week": 16, "quality": 0.915, "cost_per_task": 0.044, "p95_s": 7.2 },
+    { "week": 17, "quality": 0.918, "cost_per_task": 0.045, "p95_s": 7.3 },
+    { "week": 18, "quality": 0.912, "cost_per_task": 0.046, "p95_s": 7.1 },
+    { "week": 19, "quality": 0.897, "cost_per_task": 0.046, "p95_s": 8.2, "note": "prompt v2.2 regression rolled back (incident INC-019)" },
+    { "week": 20, "quality": 0.914, "cost_per_task": 0.049, "p95_s": 7.0 },
+    { "week": 21, "quality": 0.916, "cost_per_task": 0.05, "p95_s": 7.1 },
+    { "week": 22, "quality": 0.917, "cost_per_task": 0.051, "p95_s": 7.2 }
+  ],
+  "external_events": [
+    { "week": 22, "type": "model_release", "models": ["claude-sonnet-5-5", "claude-haiku-5-5"], "successor_of": { "claude-sonnet-5-5": "claude-sonnet-5", "claude-haiku-5-5": "claude-haiku-4-5" } },
+    { "week": 22, "type": "deprecation_notice", "model": "claude-sonnet-5", "retirement_date": "2027-06-30", "note": "fictional date for the simulation" }
+  ]
+}

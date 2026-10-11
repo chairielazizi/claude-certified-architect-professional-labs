@@ -1,0 +1,28 @@
+{
+  "v1": {
+    "runbook": { "alerts": ["AL-1", "AL-2", "AL-3", "AL-4", "AL-5", "AL-6"], "covered": ["AL-1", "AL-2", "AL-3", "AL-6"] },
+    "eval": { "suite": "evals/golden_240.jsonl", "cases": 240, "baseline_recorded": true },
+    "dashboards": ["SLO overview", "Cost per completed letter"],
+    "owners": { "service": "AI Delivery Team", "prompts": null, "on_call": "AI Delivery Team (primary), Claims Platform (secondary)" },
+    "prompt_registry": { "pinned": true, "prompts": { "draft_letter": "2.1.0", "classify_guard": "1.0.0" } },
+    "model_inventory": [
+      { "route": "draft_letter", "model": "claude-sonnet-5", "deprecation_watch": false },
+      { "route": "classify_guard", "model": "claude-haiku-4-5", "deprecation_watch": false }
+    ],
+    "ops_signoff": false
+  },
+  "fix": {
+    "runbook_covered_add": ["AL-4", "AL-5"],
+    "dashboards_add": ["Guardrail blocks and refusals", "Prompt version canary comparison"],
+    "owners": { "prompts": "Claims Ops content lead" },
+    "deprecation_watch": true,
+    "ops_signoff": true
+  },
+  "delta": {
+    "model_inventory": [
+      { "route": "draft_letter", "model": "claude-sonnet-5-5", "deprecation_watch": true },
+      { "route": "classify_guard", "model": "claude-haiku-5-5", "deprecation_watch": true }
+    ],
+    "prompt_registry": { "draft_letter": "2.1.1", "classify_guard": "1.1.0" }
+  }
+}

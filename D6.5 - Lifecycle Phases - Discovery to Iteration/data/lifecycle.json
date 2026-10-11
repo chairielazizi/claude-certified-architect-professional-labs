@@ -1,0 +1,107 @@
+{
+  "project": "Claims Correspondence Copilot",
+  "start_date": "2026-09-07",
+  "note": "Simulated project timeline; model release and retirement dates are fictional for the exercise - always check the official model deprecations page.",
+  "transitions": {
+    "discovery": ["design"],
+    "design": ["build"],
+    "build": ["evaluation"],
+    "evaluation": ["handoff", "build"],
+    "handoff": ["monitoring"],
+    "monitoring": ["iteration"],
+    "iteration": ["design"]
+  },
+  "phases": [
+    {
+      "id": "discovery",
+      "name": "Discovery",
+      "goal": "Agree the problem, measurable requirements and a feasible first use case",
+      "reviewers": ["Executive sponsor", "Solution architect"],
+      "artifacts": ["req_doc", "use_case_assessment"],
+      "exit": [
+        { "id": "D1", "text": "Requirements baseline approved", "artifact": "req_doc", "check": "approved" },
+        { "id": "D2", "text": "No open high-severity stakeholder conflicts", "artifact": "req_doc", "check": "lte", "metric": "open_high_conflicts", "value": 0 },
+        { "id": "D3", "text": "Every NFR measurable", "artifact": "req_doc", "check": "lte", "metric": "unmeasurable_nfrs", "value": 0 },
+        { "id": "D4", "text": "At least one use case rated GO", "artifact": "use_case_assessment", "check": "gte", "metric": "go_count", "value": 1 }
+      ]
+    },
+    {
+      "id": "design",
+      "name": "Design",
+      "goal": "Architecture, decisions, SLOs and privacy controls agreed",
+      "reviewers": ["Architecture board", "Security and privacy"],
+      "artifacts": ["arch_spec", "adr_log", "slo_doc", "dpia", "compat_scan"],
+      "exit": [
+        { "id": "DS1", "text": "Architecture spec lint-clean", "artifact": "arch_spec", "check": "lte", "metric": "lint_errors", "value": 0 },
+        { "id": "DS2", "text": "Key decisions recorded as accepted ADRs", "artifact": "adr_log", "check": "gte", "metric": "accepted", "value": 2 },
+        { "id": "DS3", "text": "SLIs, SLOs and SLA approved", "artifact": "slo_doc", "check": "approved" },
+        { "id": "DS4", "text": "Privacy / security review approved", "artifact": "dpia", "check": "approved" },
+        { "id": "DS5", "text": "Model API compatibility scan performed", "artifact": "compat_scan", "check": "exists" }
+      ]
+    },
+    {
+      "id": "build",
+      "name": "Build / prototype",
+      "goal": "Working system in staging with an eval suite and versioned prompts",
+      "reviewers": ["Engineering lead", "AI quality lead"],
+      "artifacts": ["prototype", "eval_suite", "prompt_registry"],
+      "exit": [
+        { "id": "B1", "text": "Prototype running in staging", "artifact": "prototype", "check": "exists" },
+        { "id": "B2", "text": "Eval suite with >= 200 cases", "artifact": "eval_suite", "check": "gte", "metric": "cases", "value": 200 },
+        { "id": "B3", "text": "All prompts versioned and pinned", "artifact": "prompt_registry", "check": "lte", "metric": "unversioned", "value": 0 },
+        { "id": "B4", "text": "Route configs compatible with their models (no blocking API issues)", "artifact": "compat_scan", "check": "lte", "metric": "blocking", "value": 0 }
+      ]
+    },
+    {
+      "id": "evaluation",
+      "name": "Evaluation",
+      "goal": "Evidence that quality, safety, latency and cost meet targets - and nothing regressed",
+      "reviewers": ["AI quality lead", "Product owner", "Compliance"],
+      "artifacts": ["eval_report"],
+      "exit": [
+        { "id": "E1", "text": "Eval pass rate >= 90%", "artifact": "eval_report", "check": "gte", "metric": "pass_rate", "value": 0.9 },
+        { "id": "E2", "text": "No critical safety failures", "artifact": "eval_report", "check": "lte", "metric": "critical_failures", "value": 0 },
+        { "id": "E3", "text": "p95 latency <= 8 s under load", "artifact": "eval_report", "check": "lte", "metric": "p95_s", "value": 8 },
+        { "id": "E4", "text": "Cost per task <= $0.06", "artifact": "eval_report", "check": "lte", "metric": "cost_per_task", "value": 0.06 },
+        { "id": "E5", "text": "No regressions vs the frozen baseline", "artifact": "eval_report", "check": "lte", "metric": "regressions", "value": 0 }
+      ]
+    },
+    {
+      "id": "handoff",
+      "name": "Handoff",
+      "goal": "Operations can run, monitor and change the system without the build team",
+      "reviewers": ["Operations lead", "Service owner"],
+      "artifacts": ["handoff_package"],
+      "exit": [
+        { "id": "H1", "text": "Runbook covers every alert", "artifact": "handoff_package", "check": "gte", "metric": "runbook_coverage", "value": 1.0 },
+        { "id": "H2", "text": "Eval suite and baseline results stored", "artifact": "handoff_package", "check": "true", "metric": "baseline_recorded" },
+        { "id": "H3", "text": "Dashboards live (SLOs, cost, guardrails)", "artifact": "handoff_package", "check": "gte", "metric": "dashboards", "value": 3 },
+        { "id": "H4", "text": "Named owners: service, prompts, on-call", "artifact": "handoff_package", "check": "lte", "metric": "owners_missing", "value": 0 },
+        { "id": "H5", "text": "Prompt registry with pinned versions", "artifact": "handoff_package", "check": "true", "metric": "prompt_registry_pinned" },
+        { "id": "H6", "text": "Model inventory with deprecation watch", "artifact": "handoff_package", "check": "true", "metric": "model_inventory_ok" },
+        { "id": "H7", "text": "Operations acceptance signed", "artifact": "handoff_package", "check": "true", "metric": "ops_signoff" }
+      ]
+    },
+    {
+      "id": "monitoring",
+      "name": "Monitoring",
+      "goal": "Run against SLOs; detect drift, cost creep and model lifecycle events",
+      "reviewers": ["Service owner"],
+      "artifacts": ["iteration_ticket"],
+      "exit": [
+        { "id": "M1", "text": "Iteration trigger raised by a monitoring signal", "artifact": "iteration_ticket", "check": "exists" }
+      ]
+    },
+    {
+      "id": "iteration",
+      "name": "Iteration",
+      "goal": "Scope the change and assess impact before re-entering design",
+      "reviewers": ["Product owner", "Solution architect"],
+      "artifacts": ["change_request", "impact_assessment"],
+      "exit": [
+        { "id": "I1", "text": "Change request approved with scope", "artifact": "change_request", "check": "approved" },
+        { "id": "I2", "text": "Impact assessment completed", "artifact": "impact_assessment", "check": "exists" }
+      ]
+    }
+  ]
+}
