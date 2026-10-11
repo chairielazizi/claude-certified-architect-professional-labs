@@ -1,0 +1,145 @@
+{
+  "_note": "Workload profiles for the model-selection engine. Token figures are per request (agent workloads: summed over all turns of one task). capability_need uses the same 1-5 scale as the model catalog (Haiku 2, Sonnet 3, Opus 4, Fable 5). latency_sla_ms = null means no interactive SLA.",
+  "workloads": [
+    {
+      "id": "realtime-intent-classifier",
+      "description": "Classify live chat messages into 12 intents before queue routing",
+      "requests_per_month": 3000000,
+      "avg_input_tokens": 450,
+      "avg_output_tokens": 15,
+      "cacheable_input_fraction": 0.8,
+      "context_need_tokens": 2000,
+      "capability_need": 1.5,
+      "latency_sla_ms": 800,
+      "batchable": false,
+      "agent_turns": 1
+    },
+    {
+      "id": "high-volume-extraction",
+      "description": "Extract 14 fields from supplier invoices into JSON (overnight)",
+      "requests_per_month": 5000000,
+      "avg_input_tokens": 1500,
+      "avg_output_tokens": 250,
+      "cacheable_input_fraction": 0.6,
+      "context_need_tokens": 2500,
+      "capability_need": 2.0,
+      "latency_sla_ms": null,
+      "batchable": true,
+      "agent_turns": 1
+    },
+    {
+      "id": "meeting-transcript-summaries",
+      "description": "Summarize 2-hour meeting transcripts into action items",
+      "requests_per_month": 40000,
+      "avg_input_tokens": 150000,
+      "avg_output_tokens": 1500,
+      "cacheable_input_fraction": 0.0,
+      "context_need_tokens": 160000,
+      "capability_need": 2.0,
+      "latency_sla_ms": null,
+      "batchable": true,
+      "agent_turns": 1
+    },
+    {
+      "id": "nightly-contract-analysis",
+      "description": "Flag risky clauses in supplier contracts against the legal playbook",
+      "requests_per_month": 20000,
+      "avg_input_tokens": 60000,
+      "avg_output_tokens": 2500,
+      "cacheable_input_fraction": 0.3,
+      "context_need_tokens": 120000,
+      "capability_need": 3.5,
+      "latency_sla_ms": null,
+      "batchable": true,
+      "agent_turns": 1
+    },
+    {
+      "id": "autonomous-coding-agent",
+      "description": "Resolve backlog tickets end-to-end (read code, edit, run tests)",
+      "requests_per_month": 30000,
+      "avg_input_tokens": 600000,
+      "avg_output_tokens": 40000,
+      "cacheable_input_fraction": 0.9,
+      "context_need_tokens": 400000,
+      "capability_need": 4.3,
+      "latency_sla_ms": 900000,
+      "batchable": false,
+      "agent_turns": 30
+    },
+    {
+      "id": "frontier-research-agent",
+      "description": "Multi-day due-diligence research with long-horizon tool use",
+      "requests_per_month": 2000,
+      "avg_input_tokens": 400000,
+      "avg_output_tokens": 30000,
+      "cacheable_input_fraction": 0.85,
+      "context_need_tokens": 300000,
+      "capability_need": 4.8,
+      "latency_sla_ms": 3600000,
+      "batchable": false,
+      "agent_turns": 40
+    }
+  ],
+  "research_agent_eval": {
+    "_note": "ILLUSTRATIVE pass rates from a 50-task internal eval of the frontier-research-agent workload. Replace with your own eval sweep - per-token prices do not predict cost per solved task.",
+    "workload_id": "frontier-research-agent",
+    "human_fallback_cost_usd": 40.0,
+    "candidates": [
+      {"model": "claude-sonnet-5-5", "effort": "max", "pass_rate": 0.52},
+      {"model": "claude-opus-5-5", "effort": "xhigh", "pass_rate": 0.70},
+      {"model": "claude-opus-5-5", "effort": "max", "pass_rate": 0.73},
+      {"model": "claude-fable-5-1", "effort": "low", "pass_rate": 0.80},
+      {"model": "claude-fable-5-1", "effort": "medium", "pass_rate": 0.86}
+    ]
+  },
+  "cascade_requests": [
+    {
+      "id": "R1",
+      "text": "What are your support hours on weekends?",
+      "expected": "simple",
+      "offline_mock": {"difficulty": "simple", "confidence": 0.97, "reason": "single factual lookup", "answer": "Weekend support runs 09:00-17:00 UTC on Saturday and Sunday via chat and email."}
+    },
+    {
+      "id": "R2",
+      "text": "Change the shipping address on order #48213 to 22 Elm St, Leeds.",
+      "expected": "simple",
+      "offline_mock": {"difficulty": "simple", "confidence": 0.93, "reason": "single well-specified account action", "answer": "Done - order #48213 will now ship to 22 Elm St, Leeds. You will get a confirmation email shortly."}
+    },
+    {
+      "id": "R3",
+      "text": "Translate this order confirmation into Spanish: 'Your order has shipped and will arrive Thursday.'",
+      "expected": "simple",
+      "offline_mock": {"difficulty": "moderate", "confidence": 0.81, "reason": "translation task; tone rules may apply", "answer": "Su pedido ha sido enviado y llegara el jueves."}
+    },
+    {
+      "id": "R4",
+      "text": "Summarize this three-paragraph complaint about a late delivery and draft a polite reply offering a 10% voucher.",
+      "expected": "moderate",
+      "offline_mock": {"difficulty": "moderate", "confidence": 0.88, "reason": "summarize plus draft with a policy constraint", "answer": "Summary: the customer's order arrived 6 days late with no tracking updates. Draft reply: We are sorry your order arrived late and that tracking went quiet. As an apology, here is a 10% voucher (code SORRY10) for your next order."}
+    },
+    {
+      "id": "R5",
+      "text": "Compare the Basic and Pro plans for a 12-person design team that needs SSO and recommend one.",
+      "expected": "moderate",
+      "offline_mock": {"difficulty": "moderate", "confidence": 0.68, "reason": "comparison may need pricing rules not shown", "answer": "Recommend Pro: SSO is only included in Pro, and at 12 seats Pro costs $228/month versus Basic at $144/month plus a $150/month SSO add-on."}
+    },
+    {
+      "id": "R6",
+      "text": "Is the blue XL hoodie in my cart in stock?",
+      "expected": "simple",
+      "offline_mock": {"difficulty": "simple", "confidence": 0.95, "reason": "single inventory lookup", "answer": "Yes - the blue XL hoodie is in stock (14 units) and ships within 1 business day."}
+    },
+    {
+      "id": "R7",
+      "text": "Our invoices since March show double-charged VAT for EU customers on annual plans only. Work out the likely root cause from the attached line-item patterns and propose a remediation plan.",
+      "expected": "complex",
+      "offline_mock": {"difficulty": "complex", "confidence": 0.91, "reason": "multi-step diagnosis across billing rules plus a plan", "answer": "Likely root cause: the March tax-engine upgrade applies VAT at invoice generation AND again in the annual-plan proration step. Plan: (1) hotfix proration to skip tax lines, (2) identify affected invoices via line_type=proration_tax, (3) issue credit notes, (4) add a regression test on annual EU plans."}
+    },
+    {
+      "id": "R8",
+      "text": "Draft a zero-downtime migration plan for moving 40 custom webhook integrations to the v3 API, including rollback steps.",
+      "expected": "complex",
+      "offline_mock": {"difficulty": "complex", "confidence": 0.89, "reason": "long-horizon plan with dependencies and rollback", "answer": "Plan: (1) inventory the 40 webhooks and group by event type, (2) dual-write v2+v3 behind a flag, (3) migrate in 4 waves of 10 with canary checks, (4) cut over reads per wave, (5) rollback = flip the flag back to v2 (dual-write keeps v2 warm), (6) decommission v2 after 14 days clean."}
+    }
+  ]
+}
