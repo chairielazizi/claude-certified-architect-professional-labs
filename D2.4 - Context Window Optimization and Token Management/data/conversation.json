@@ -1,0 +1,29 @@
+{
+  "system": "You are the Orbit IT helpdesk copilot. Help employees fix device, network and account problems using the knowledge-base articles provided in <kb> tags and device telemetry in <telemetry> tags. Prefer the most specific fix first, cite KB ids, and say when a step needs IT to act. Be concise: numbered steps, no more than 6.",
+  "critical_facts": ["ORB-55812", "24H2", "GlobalProtect 6.2.1", "INC-48213", "Singapore", "reinstall"],
+  "turns": [
+    {"role": "user", "content": "Hi, it's Dana from Finance. My laptop is asset tag ORB-55812, a ThinkPad X1 Carbon Gen 11."},
+    {"role": "assistant", "content": "Hi Dana, thanks. I have ORB-55812 on file as a ThinkPad X1 Carbon Gen 11 assigned to Finance. What can I help with today?"},
+    {"role": "user", "content": "First, Outlook stopped showing my team's shared calendar this morning."},
+    {"role": "assistant", "content": "Shared calendars can take up to two hours to appear after a permission change. If it is still missing, switch New Outlook off and on, then run File > Account Settings > Repair (KB-106)."},
+    {"role": "user", "content": "The repair worked, the calendar is back. Thanks!"},
+    {"role": "assistant", "content": "Great. Anything else?"},
+    {"role": "user", "content": "Yes, the bigger problem. My VPN keeps disconnecting. I opened ticket INC-48213 yesterday but nobody has called me."},
+    {"role": "assistant", "content": "Sorry about the wait on INC-48213. Let's work through it. Which VPN client and Windows version are you on?"},
+    {"role": "user", "content": "It's GlobalProtect 6.2.1. Windows says version 24H2, I think the update came last week."},
+    {"role": "assistant", "content": "Thanks: Windows 11 24H2 with GlobalProtect 6.2.1. How often does it drop, and on which networks?"},
+    {"role": "user", "content": "Roughly every ten minutes. It happens on my home Wi-Fi and it happened at the hotel in Lyon last week too."},
+    {"role": "assistant", "content": "Understood. Does it also drop when the laptop is plugged in and actively in use, or mainly when idle on battery?"},
+    {"role": "user", "content": "Even in the middle of Teams calls while plugged in. Calls freeze and then reconnect."},
+    {"role": "assistant", "content": "That points away from power saving. Have you tried anything yet?"},
+    {"role": "user", "content": "I already tried reinstalling GlobalProtect from Company Portal, same version. No change."},
+    {"role": "assistant", "content": "Noted, a same-version reinstall would not fix a version-specific bug. Let me pull your device telemetry."},
+    {"role": "user", "content": "Sure. Also, my manager asked if this affects the expense tool, it seemed slow."},
+    {"role": "assistant", "content": "The expense tool runs through the VPN, so drops will make it feel slow. It should recover once the VPN is stable."},
+    {"role": "user", "content": "Makes sense. By the way, the printer on floor 4 jammed again, but facilities fixed it."},
+    {"role": "assistant", "content": "Good to hear facilities sorted it. Back to the VPN, I have the telemetry now."},
+    {"role": "user", "content": "Important: I fly to Singapore next Monday for the quarter-end close, so I really need this fixed before then."},
+    {"role": "assistant", "content": "Understood, we will aim to have it fixed well before Monday."}
+  ],
+  "question": "So what should I try next? And does the hotel MTU issue apply to me?"
+}

@@ -1,0 +1,65 @@
+{
+  "_note": "IT knowledge-base articles exported from a wiki. Every body carries the export header/footer boilerplate, which is noise for the model.",
+  "docs": [
+    {
+      "id": "KB-101",
+      "title": "GlobalProtect VPN drops every few minutes on Windows 11 24H2",
+      "body": "ORBIT IT KNOWLEDGE BASE | CONFIDENTIAL - INTERNAL USE ONLY\nDocument owner: IT Service Desk | Last reviewed: 2026-08-14 | Revision 7\n----\nSymptom: after the Windows 11 24H2 feature update, GlobalProtect 6.2.0 and 6.2.1 disconnect every 8-12 minutes, mostly on Wi-Fi. The tunnel re-establishes automatically but active Teams calls and RDP sessions drop.\nCause: a known incompatibility between the 24H2 network stack and the GlobalProtect 6.2.x split-tunnel driver when the adapter renegotiates its DHCP lease.\nFix: upgrade GlobalProtect to 6.2.4 or later from Company Portal (category Network). Reboot after the upgrade. If 6.2.4 is not yet visible in Company Portal, IT can push it to the device from Intune within 15 minutes.\nWorkaround until upgraded: in GlobalProtect settings set Connect Method to 'On-demand' and reconnect manually after lease renewal.\n----\nThis document is uncontrolled when printed. For the latest version see the IT portal.\n(c) 2026 Orbit Corp. All rights reserved. Page 1 of 1"
+    },
+    {
+      "id": "KB-102",
+      "title": "Wi-Fi adapter power saving causes VPN disconnects",
+      "body": "ORBIT IT KNOWLEDGE BASE | CONFIDENTIAL - INTERNAL USE ONLY\nDocument owner: IT Service Desk | Last reviewed: 2026-08-14 | Revision 7\n----\nSymptom: VPN disconnects when the laptop is idle for a few minutes on battery, on any network.\nCause: Windows lets the Wi-Fi adapter power down to save energy; the VPN tunnel times out.\nFix: Device Manager > Network adapters > (Wi-Fi adapter) > Power Management > untick 'Allow the computer to turn off this device to save power'. On ThinkPads also set Lenovo Vantage > Power > Intelligent Cooling to 'Balanced'.\nNote: this does not explain disconnects while the laptop is actively in use or plugged in.\n----\nThis document is uncontrolled when printed. For the latest version see the IT portal.\n(c) 2026 Orbit Corp. All rights reserved. Page 1 of 1"
+    },
+    {
+      "id": "KB-103",
+      "title": "Reset your Orbit password",
+      "body": "ORBIT IT KNOWLEDGE BASE | CONFIDENTIAL - INTERNAL USE ONLY\nDocument owner: IT Service Desk | Last reviewed: 2026-08-14 | Revision 7\n----\nUse the self-service portal at password.orbit.example to reset your password. You need your registered MFA method. Passwords must be at least 14 characters and cannot reuse the last 12 passwords. After resetting, lock and unlock your laptop while connected to the office network or VPN so cached credentials update.\n----\nThis document is uncontrolled when printed. For the latest version see the IT portal.\n(c) 2026 Orbit Corp. All rights reserved. Page 1 of 1"
+    },
+    {
+      "id": "KB-104",
+      "title": "VPN instability on hotel and captive-portal networks (MTU)",
+      "body": "ORBIT IT KNOWLEDGE BASE | CONFIDENTIAL - INTERNAL USE ONLY\nDocument owner: IT Service Desk | Last reviewed: 2026-08-14 | Revision 7\n----\nSymptom: VPN connects but pages stall or the tunnel drops on hotel, airport or conference Wi-Fi with a captive portal. Home networks work fine.\nCause: these networks often use a smaller MTU; large VPN packets are fragmented or dropped.\nFix: GlobalProtect 6.2.4+ negotiates MTU automatically. On older clients, IT can apply the 'VPN-MTU-1300' Intune profile. Always complete the captive portal login in a browser before connecting the VPN.\nHow to tell: if drops happen on home Wi-Fi too, MTU is unlikely to be the main cause.\n----\nThis document is uncontrolled when printed. For the latest version see the IT portal.\n(c) 2026 Orbit Corp. All rights reserved. Page 1 of 1"
+    },
+    {
+      "id": "KB-105",
+      "title": "Set up a network printer",
+      "body": "ORBIT IT KNOWLEDGE BASE | CONFIDENTIAL - INTERNAL USE ONLY\nDocument owner: IT Service Desk | Last reviewed: 2026-08-14 | Revision 7\n----\nOpen Settings > Bluetooth and devices > Printers and scanners > Add device. Office printers are named by floor, for example ORB-PRN-04-EAST. If the printer is not listed, connect to the office network or VPN first. Follow-me printing requires badge release at any printer.\n----\nThis document is uncontrolled when printed. For the latest version see the IT portal.\n(c) 2026 Orbit Corp. All rights reserved. Page 1 of 1"
+    },
+    {
+      "id": "KB-106",
+      "title": "Outlook calendar not syncing",
+      "body": "ORBIT IT KNOWLEDGE BASE | CONFIDENTIAL - INTERNAL USE ONLY\nDocument owner: IT Service Desk | Last reviewed: 2026-08-14 | Revision 7\n----\nIf meetings are missing from Outlook, switch off 'New Outlook' and back on, then run File > Account Settings > Repair. Shared calendars can take up to 2 hours to appear after permissions change. Mobile calendar issues are usually fixed by removing and re-adding the account in the Outlook app.\n----\nThis document is uncontrolled when printed. For the latest version see the IT portal.\n(c) 2026 Orbit Corp. All rights reserved. Page 1 of 1"
+    },
+    {
+      "id": "KB-107",
+      "title": "Laptop refresh programme",
+      "body": "ORBIT IT KNOWLEDGE BASE | CONFIDENTIAL - INTERNAL USE ONLY\nDocument owner: IT Service Desk | Last reviewed: 2026-08-14 | Revision 7\n----\nLaptops are refreshed every 4 years. You will receive an email 6 weeks before your refresh window with a booking link. Back up local files to OneDrive beforehand; IT wipes returned devices. Asset tags start with ORB- followed by five digits and are printed under the battery.\n----\nThis document is uncontrolled when printed. For the latest version see the IT portal.\n(c) 2026 Orbit Corp. All rights reserved. Page 1 of 1"
+    },
+    {
+      "id": "KB-108",
+      "title": "Teams audio and microphone problems",
+      "body": "ORBIT IT KNOWLEDGE BASE | CONFIDENTIAL - INTERNAL USE ONLY\nDocument owner: IT Service Desk | Last reviewed: 2026-08-14 | Revision 7\n----\nCheck Teams > Settings > Devices and pick the correct speaker and microphone. Disable audio enhancements in Windows sound settings. If calls drop only when the VPN reconnects, see the VPN articles; Teams itself is usually not the cause.\n----\nThis document is uncontrolled when printed. For the latest version see the IT portal.\n(c) 2026 Orbit Corp. All rights reserved. Page 1 of 1"
+    },
+    {
+      "id": "KB-109",
+      "title": "BitLocker recovery key prompt",
+      "body": "ORBIT IT KNOWLEDGE BASE | CONFIDENTIAL - INTERNAL USE ONLY\nDocument owner: IT Service Desk | Last reviewed: 2026-08-14 | Revision 7\n----\nIf your laptop asks for a BitLocker recovery key after a BIOS or Windows update, retrieve it at aka.ms/myrecoverykey with your Orbit account, or call the Service Desk. Never share the key by email or chat.\n----\nThis document is uncontrolled when printed. For the latest version see the IT portal.\n(c) 2026 Orbit Corp. All rights reserved. Page 1 of 1"
+    },
+    {
+      "id": "KB-110",
+      "title": "Reinstalling the GlobalProtect client",
+      "body": "ORBIT IT KNOWLEDGE BASE | CONFIDENTIAL - INTERNAL USE ONLY\nDocument owner: IT Service Desk | Last reviewed: 2026-08-14 | Revision 7\n----\nUninstall GlobalProtect from Settings > Apps, reboot, then install the current approved version from Company Portal. Reinstalling the same version does not fix version-specific bugs; check the approved version list first. Portal address: vpn.orbit.example.\n----\nThis document is uncontrolled when printed. For the latest version see the IT portal.\n(c) 2026 Orbit Corp. All rights reserved. Page 1 of 1"
+    },
+    {
+      "id": "KB-111",
+      "title": "Travel checklist for international trips",
+      "body": "ORBIT IT KNOWLEDGE BASE | CONFIDENTIAL - INTERNAL USE ONLY\nDocument owner: IT Service Desk | Last reviewed: 2026-08-14 | Revision 7\n----\nBefore travelling: install pending updates, confirm VPN works from a non-office network, register your trip in the travel portal (required for Singapore, Japan and the US), and pack a USB-C charger. Some countries restrict VPN use; check the travel portal country page.\n----\nThis document is uncontrolled when printed. For the latest version see the IT portal.\n(c) 2026 Orbit Corp. All rights reserved. Page 1 of 1"
+    },
+    {
+      "id": "KB-112",
+      "title": "Requesting new software",
+      "body": "ORBIT IT KNOWLEDGE BASE | CONFIDENTIAL - INTERNAL USE ONLY\nDocument owner: IT Service Desk | Last reviewed: 2026-08-14 | Revision 7\n----\nApproved software is in Company Portal. For anything else raise a software request with a business justification; security review takes 5-10 business days. Browser extensions also require approval.\n----\nThis document is uncontrolled when printed. For the latest version see the IT portal.\n(c) 2026 Orbit Corp. All rights reserved. Page 1 of 1"
+    }
+  ]
+}
