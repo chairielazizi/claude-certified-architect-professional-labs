@@ -1,0 +1,100 @@
+{
+  "_comment": "Illustrative planning inputs for a customer-support AI business case. Replace every number with your own baseline, pilot measurements and contract terms.",
+  "baseline": {
+    "tickets_per_month": 40000,
+    "aht_min": 12,
+    "loaded_cost_per_hour": 38,
+    "productive_hours_per_fte_month": 140,
+    "frt_hours": 6.0,
+    "csat": 4.1
+  },
+  "assumptions": {
+    "realization_rate": 0.7,
+    "transformation_confidence": 0.5,
+    "latency_samples": 2000,
+    "latency_seed": 20261011
+  },
+  "latency_profiles_ms": {
+    "claude-haiku-5-5": [300, 4],
+    "claude-sonnet-5-5": [600, 8],
+    "claude-opus-5-5": [1000, 13]
+  },
+  "component_availability": {
+    "model_api": 0.999,
+    "app_single_az": 0.9995,
+    "app_multi_az": 0.9999,
+    "knowledge_base": 0.9995
+  },
+  "weights": {
+    "efficiency": 0.25,
+    "productivity": 0.2,
+    "transformation": 0.2,
+    "cost_roi": 0.25,
+    "sla": 0.1
+  },
+  "options": [
+    {
+      "id": "A",
+      "name": "Agent assist (draft replies + summaries)",
+      "candidates": ["claude-sonnet-5-5"],
+      "calls_per_ticket": 2,
+      "pilot_usage": {"input_tokens": 1000, "cache_read_input_tokens": 2500, "output_tokens": 400},
+      "deflection": 0.0,
+      "aht_reduction": 0.35,
+      "frt_improvement": 0.2,
+      "build_usd": 180000,
+      "infra_usd_month": 4000,
+      "people_usd_month": 8000,
+      "new_value_usd_year": 0,
+      "new_capability": "consistent, policy-checked replies",
+      "reply_tokens": 400,
+      "tool_ms": 400,
+      "architecture": ["model_api", "app_single_az", "knowledge_base"],
+      "model_fallback": false,
+      "sla": {"p95_latency_s": 8.0, "availability": 0.995, "quality": 0.85},
+      "pilot_quality": {"claude-sonnet-5-5": 0.91}
+    },
+    {
+      "id": "B",
+      "name": "Autonomous tier-1 resolution agent",
+      "candidates": ["claude-haiku-5-5", "claude-sonnet-5-5", "claude-opus-5-5"],
+      "calls_per_ticket": 2.44,
+      "pilot_usage": {"input_tokens": 1200, "cache_read_input_tokens": 4800, "output_tokens": 350},
+      "deflection": 0.45,
+      "aht_reduction": 0.15,
+      "frt_improvement": 0.7,
+      "build_usd": 420000,
+      "infra_usd_month": 9000,
+      "people_usd_month": 24000,
+      "new_value_usd_year": 1560000,
+      "new_capability": "24/7 multilingual resolution; opens APAC hours without new hires",
+      "reply_tokens": 300,
+      "tool_ms": 400,
+      "architecture": ["model_api", "app_multi_az", "knowledge_base"],
+      "model_fallback": true,
+      "sla": {"p95_latency_s": 6.0, "availability": 0.999, "quality": 0.92},
+      "pilot_quality": {"claude-haiku-5-5": 0.86, "claude-sonnet-5-5": 0.93, "claude-opus-5-5": 0.96}
+    },
+    {
+      "id": "C",
+      "name": "Triage + routing only",
+      "candidates": ["claude-haiku-5-5"],
+      "calls_per_ticket": 1,
+      "pilot_usage": {"input_tokens": 1200, "output_tokens": 120},
+      "deflection": 0.0,
+      "aht_reduction": 0.08,
+      "frt_improvement": 0.35,
+      "build_usd": 60000,
+      "infra_usd_month": 1500,
+      "people_usd_month": 4000,
+      "new_value_usd_year": 0,
+      "new_capability": "none (efficiency play)",
+      "reply_tokens": 120,
+      "tool_ms": 0,
+      "architecture": ["model_api", "app_single_az"],
+      "model_fallback": false,
+      "sla": {"p95_latency_s": 3.0, "availability": 0.995, "quality": 0.9},
+      "pilot_quality": {"claude-haiku-5-5": 0.94}
+    }
+  ]
+}
