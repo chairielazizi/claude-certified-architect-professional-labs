@@ -1,0 +1,49 @@
+[
+  {
+    "id": "RB-017",
+    "title": "Claude API 429 rate_limit_error",
+    "url": "https://runbooks.example.com/ai-platform/rb-017-claude-rate-limits",
+    "keywords": ["429", "rate limit", "rate_limit_error", "retry-after", "itpm", "tokens per minute", "concurrency"],
+    "steps": [
+      "Confirm which limit is hit (requests, input tokens or output tokens per minute) from the error message and rate-limit headers.",
+      "Honor the retry-after header; never retry 429s on a fixed short delay.",
+      "Reduce concurrency or add client-side token-bucket throttling below the org limit.",
+      "Restore prompt caching: cached input tokens generally do not count toward the input-tokens-per-minute limit on current models.",
+      "If sustained, route overflow to a fallback model or request a limit increase."
+    ]
+  },
+  {
+    "id": "RB-018",
+    "title": "Claude API 529 overloaded_error",
+    "url": "https://runbooks.example.com/ai-platform/rb-018-claude-overloaded",
+    "keywords": ["529", "overloaded", "overloaded_error", "fallback", "capacity"],
+    "steps": [
+      "Check status.anthropic.com for an ongoing capacity event.",
+      "Back off exponentially with full jitter; open the circuit breaker after repeated failures.",
+      "Fail over to the configured fallback model (for example Sonnet) for non-critical traffic.",
+      "Make sure your own retries are not amplifying load (retry storm)."
+    ]
+  },
+  {
+    "id": "RB-004",
+    "title": "Roll back a service deploy",
+    "url": "https://runbooks.example.com/platform/rb-004-rollback",
+    "keywords": ["rollback", "deploy", "revert", "release"],
+    "steps": [
+      "Announce the rollback in the incident channel.",
+      "Run the deploy pipeline with the previous version tag.",
+      "Verify error rate and latency return to baseline within 10 minutes."
+    ]
+  },
+  {
+    "id": "RB-021",
+    "title": "Prompt cache hit rate dropped",
+    "url": "https://runbooks.example.com/ai-platform/rb-021-prompt-cache",
+    "keywords": ["cache", "cache_read", "prompt caching", "cache hit", "cache_creation"],
+    "steps": [
+      "Compare cache_read_input_tokens before and after the change.",
+      "Look for silent invalidators: timestamps or IDs early in the prompt, unsorted JSON, changing tool lists, model switches.",
+      "Keep the stable prefix (tools, system) byte-identical; move volatile data to the end of the request."
+    ]
+  }
+]

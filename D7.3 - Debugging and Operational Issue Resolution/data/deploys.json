@@ -1,0 +1,38 @@
+[
+  {
+    "service": "summarizer",
+    "version": "v2.13.2",
+    "started": "2026-10-07T16:20:00Z",
+    "finished": "2026-10-07T16:22:10Z",
+    "author": "dana",
+    "changes": ["Fix typo in summary footer"],
+    "config_diff": {}
+  },
+  {
+    "service": "web",
+    "version": "web-v5.2.0",
+    "started": "2026-10-08T11:05:00Z",
+    "finished": "2026-10-08T11:07:30Z",
+    "author": "lee",
+    "changes": ["New dashboard layout", "Upgrade charting library"],
+    "config_diff": {}
+  },
+  {
+    "service": "summarizer",
+    "version": "v2.14.0",
+    "started": "2026-10-08T13:58:30Z",
+    "finished": "2026-10-08T13:59:40Z",
+    "author": "ci-bot (PR #911 by sam)",
+    "changes": [
+      "Prompt template v7: put the request timestamp and user locale at the top of the system prompt",
+      "Raise SUMMARIZER_CONCURRENCY from 8 to 64 to cut queue time",
+      "Simplify retry policy: fixed 500 ms delay, up to 5 attempts",
+      "Remove the cache_control breakpoint helper (looked unused)"
+    ],
+    "config_diff": {
+      "SUMMARIZER_CONCURRENCY": ["8", "64"],
+      "RETRY_POLICY": ["exponential_jitter_honor_retry_after", "fixed_500ms_x5"],
+      "PROMPT_TEMPLATE": ["v6", "v7"]
+    }
+  }
+]

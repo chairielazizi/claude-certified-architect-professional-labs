@@ -1,0 +1,69 @@
+2026-10-08T13:50:04Z INFO  api           request route=/v1/summarize status=200 latency_ms=1820 request_id=r-5001
+2026-10-08T13:50:04Z INFO  claude-client response model=claude-opus-5-5 stop_reason=end_turn input_tokens=420 cache_read_input_tokens=3900 cache_creation_input_tokens=0 output_tokens=356 latency_ms=1760 request_id=req_011CA01
+2026-10-08T13:51:17Z INFO  api           request route=/v1/summarize status=200 latency_ms=1950 request_id=r-5002
+2026-10-08T13:51:17Z INFO  claude-client response model=claude-opus-5-5 stop_reason=end_turn input_tokens=455 cache_read_input_tokens=3900 cache_creation_input_tokens=0 output_tokens=371 latency_ms=1890 request_id=req_011CA02
+2026-10-08T13:52:40Z WARN  api           slow request route=/v1/summarize status=200 latency_ms=4210 request_id=r-5003
+2026-10-08T13:52:40Z INFO  claude-client response model=claude-opus-5-5 stop_reason=end_turn input_tokens=1210 cache_read_input_tokens=3900 cache_creation_input_tokens=0 output_tokens=802 latency_ms=4150 request_id=req_011CA03
+2026-10-08T13:54:02Z INFO  api           request route=/v1/summarize status=200 latency_ms=1710 request_id=r-5004
+2026-10-08T13:54:02Z INFO  claude-client response model=claude-opus-5-5 stop_reason=end_turn input_tokens=398 cache_read_input_tokens=3900 cache_creation_input_tokens=0 output_tokens=340 latency_ms=1650 request_id=req_011CA04
+2026-10-08T13:55:30Z INFO  api           request route=/v1/summarize status=200 latency_ms=1880 request_id=r-5005
+2026-10-08T13:55:30Z INFO  claude-client response model=claude-opus-5-5 stop_reason=end_turn input_tokens=441 cache_read_input_tokens=3900 cache_creation_input_tokens=0 output_tokens=362 latency_ms=1820 request_id=req_011CA05
+2026-10-08T13:57:11Z INFO  api           request route=/v1/summarize status=200 latency_ms=1790 request_id=r-5006
+2026-10-08T13:57:11Z INFO  claude-client response model=claude-opus-5-5 stop_reason=end_turn input_tokens=430 cache_read_input_tokens=3900 cache_creation_input_tokens=0 output_tokens=350 latency_ms=1730 request_id=req_011CA06
+2026-10-08T13:58:30Z INFO  deploy        deploy started service=summarizer version=v2.14.0 actor=ci-bot
+2026-10-08T13:59:40Z INFO  deploy        deploy finished service=summarizer version=v2.14.0 concurrency=64 retry_policy=fixed_500ms_x5 prompt_template=v7
+2026-10-08T13:59:41Z INFO  worker-pool   pool resized size=64 previous=8
+2026-10-08T14:00:05Z INFO  api           request route=/v1/summarize status=200 latency_ms=2480 request_id=r-5101
+2026-10-08T14:00:05Z INFO  claude-client response model=claude-opus-5-5 stop_reason=end_turn input_tokens=4310 cache_read_input_tokens=0 cache_creation_input_tokens=0 output_tokens=361 latency_ms=2410 request_id=req_011CB01
+2026-10-08T14:00:31Z INFO  api           request route=/v1/summarize status=200 latency_ms=2390 request_id=r-5102
+2026-10-08T14:00:31Z INFO  claude-client response model=claude-opus-5-5 stop_reason=end_turn input_tokens=4298 cache_read_input_tokens=0 cache_creation_input_tokens=0 output_tokens=344 latency_ms=2330 request_id=req_011CB02
+2026-10-08T14:01:12Z ERROR claude-client api error status=429 type=rate_limit_error model=claude-opus-5-5 retry_after=20 attempt=1 request_id=req_011CB07 msg="input tokens per minute rate limit exceeded"
+2026-10-08T14:01:12Z WARN  claude-client retrying attempt=2 delay_ms=500 model=claude-opus-5-5 reason=rate_limit_error
+2026-10-08T14:01:13Z ERROR claude-client api error status=429 type=rate_limit_error model=claude-opus-5-5 retry_after=19 attempt=2 request_id=req_011CB08 msg="input tokens per minute rate limit exceeded"
+2026-10-08T14:01:13Z WARN  claude-client retrying attempt=3 delay_ms=500 model=claude-opus-5-5 reason=rate_limit_error
+2026-10-08T14:01:14Z ERROR claude-client api error status=429 type=rate_limit_error model=claude-opus-5-5 retry_after=18 attempt=3 request_id=req_011CB09 msg="input tokens per minute rate limit exceeded"
+2026-10-08T14:01:15Z ERROR api           request failed route=/v1/summarize status=503 latency_ms=3120 upstream=claude error=rate_limit_error request_id=r-5103
+2026-10-08T14:01:48Z INFO  claude-client response model=claude-opus-5-5 stop_reason=end_turn input_tokens=4305 cache_read_input_tokens=0 cache_creation_input_tokens=0 output_tokens=352 latency_ms=2600 request_id=req_011CB10
+2026-10-08T14:02:20Z ERROR claude-client api error status=429 type=rate_limit_error model=claude-opus-5-5 retry_after=24 attempt=1 request_id=req_011CB21 msg="input tokens per minute rate limit exceeded"
+2026-10-08T14:02:20Z WARN  claude-client retrying attempt=2 delay_ms=500 model=claude-opus-5-5 reason=rate_limit_error
+2026-10-08T14:02:21Z ERROR claude-client api error status=429 type=rate_limit_error model=claude-opus-5-5 retry_after=23 attempt=2 request_id=req_011CB22 msg="input tokens per minute rate limit exceeded"
+2026-10-08T14:02:22Z ERROR api           request failed route=/v1/summarize status=503 latency_ms=2950 upstream=claude error=rate_limit_error request_id=r-5104
+2026-10-08T14:02:45Z ERROR claude-client api error status=429 type=rate_limit_error model=claude-opus-5-5 retry_after=22 attempt=1 request_id=req_011CB25 msg="input tokens per minute rate limit exceeded"
+2026-10-08T14:02:45Z WARN  claude-client retrying attempt=2 delay_ms=500 model=claude-opus-5-5 reason=rate_limit_error
+2026-10-08T14:02:46Z ERROR api           request failed route=/v1/summarize status=503 latency_ms=2210 upstream=claude error=rate_limit_error request_id=r-5105
+2026-10-08T14:03:30Z ERROR claude-client api error status=429 type=rate_limit_error model=claude-opus-5-5 retry_after=27 attempt=1 request_id=req_011CB31 msg="input tokens per minute rate limit exceeded"
+2026-10-08T14:03:30Z WARN  claude-client retrying attempt=2 delay_ms=500 model=claude-opus-5-5 reason=rate_limit_error
+2026-10-08T14:03:31Z ERROR claude-client api error status=429 type=rate_limit_error model=claude-opus-5-5 retry_after=26 attempt=2 request_id=req_011CB32 msg="input tokens per minute rate limit exceeded"
+2026-10-08T14:03:31Z WARN  claude-client retrying attempt=3 delay_ms=500 model=claude-opus-5-5 reason=rate_limit_error
+2026-10-08T14:03:32Z ERROR claude-client api error status=429 type=rate_limit_error model=claude-opus-5-5 retry_after=25 attempt=3 request_id=req_011CB33 msg="input tokens per minute rate limit exceeded"
+2026-10-08T14:03:33Z ERROR api           request failed route=/v1/summarize status=503 latency_ms=3480 upstream=claude error=rate_limit_error request_id=r-5106
+2026-10-08T14:04:10Z INFO  claude-client response model=claude-opus-5-5 stop_reason=end_turn input_tokens=4320 cache_read_input_tokens=0 cache_creation_input_tokens=0 output_tokens=366 latency_ms=3900 request_id=req_011CB40
+2026-10-08T14:04:52Z ERROR claude-client api error status=429 type=rate_limit_error model=claude-opus-5-5 retry_after=30 attempt=1 request_id=req_011CB45 msg="input tokens per minute rate limit exceeded"
+2026-10-08T14:04:52Z WARN  claude-client retrying attempt=2 delay_ms=500 model=claude-opus-5-5 reason=rate_limit_error
+2026-10-08T14:04:53Z ERROR api           request failed route=/v1/summarize status=503 latency_ms=2870 upstream=claude error=rate_limit_error request_id=r-5107
+2026-10-08T14:05:40Z ERROR claude-client api error status=529 type=overloaded_error model=claude-opus-5-5 attempt=1 request_id=req_011CC01 msg="Overloaded"
+2026-10-08T14:05:40Z WARN  claude-client retrying attempt=2 delay_ms=500 model=claude-opus-5-5 reason=overloaded_error
+2026-10-08T14:05:41Z ERROR claude-client api error status=529 type=overloaded_error model=claude-opus-5-5 attempt=2 request_id=req_011CC02 msg="Overloaded"
+2026-10-08T14:05:41Z WARN  claude-client retrying attempt=3 delay_ms=500 model=claude-opus-5-5 reason=overloaded_error
+2026-10-08T14:05:42Z ERROR claude-client api error status=529 type=overloaded_error model=claude-opus-5-5 attempt=3 request_id=req_011CC03 msg="Overloaded"
+2026-10-08T14:05:43Z ERROR api           request failed route=/v1/summarize status=503 latency_ms=3300 upstream=claude error=overloaded_error request_id=r-5108
+2026-10-08T14:06:25Z ERROR claude-client api error status=429 type=rate_limit_error model=claude-opus-5-5 retry_after=28 attempt=1 request_id=req_011CC11 msg="input tokens per minute rate limit exceeded"
+2026-10-08T14:06:25Z WARN  claude-client retrying attempt=2 delay_ms=500 model=claude-opus-5-5 reason=rate_limit_error
+2026-10-08T14:06:26Z ERROR claude-client api error status=529 type=overloaded_error model=claude-opus-5-5 attempt=2 request_id=req_011CC12 msg="Overloaded"
+2026-10-08T14:06:27Z ERROR api           request failed route=/v1/summarize status=503 latency_ms=2990 upstream=claude error=overloaded_error request_id=r-5109
+2026-10-08T14:07:05Z ERROR claude-client api error status=529 type=overloaded_error model=claude-opus-5-5 attempt=1 request_id=req_011CC21 msg="Overloaded"
+2026-10-08T14:07:05Z WARN  claude-client retrying attempt=2 delay_ms=500 model=claude-opus-5-5 reason=overloaded_error
+2026-10-08T14:07:06Z ERROR claude-client api error status=529 type=overloaded_error model=claude-opus-5-5 attempt=2 request_id=req_011CC22 msg="Overloaded"
+2026-10-08T14:07:07Z ERROR api           request failed route=/v1/summarize status=503 latency_ms=3050 upstream=claude error=overloaded_error request_id=r-5110
+2026-10-08T14:08:00Z WARN  alerting      alert fired name=SummarizerErrorRateHigh error_rate=0.31 threshold=0.05
+2026-10-08T14:08:14Z ERROR claude-client api error status=429 type=rate_limit_error model=claude-opus-5-5 retry_after=29 attempt=1 request_id=req_011CC31 msg="input tokens per minute rate limit exceeded"
+2026-10-08T14:08:14Z WARN  claude-client retrying attempt=2 delay_ms=500 model=claude-opus-5-5 reason=rate_limit_error
+2026-10-08T14:08:15Z ERROR api           request failed route=/v1/summarize status=503 latency_ms=2760 upstream=claude error=rate_limit_error request_id=r-5111
+2026-10-08T14:09:02Z INFO  claude-client response model=claude-opus-5-5 stop_reason=end_turn input_tokens=4331 cache_read_input_tokens=0 cache_creation_input_tokens=0 output_tokens=348 latency_ms=4400 request_id=req_011CC40
+2026-10-08T14:09:40Z ERROR claude-client api error status=529 type=overloaded_error model=claude-opus-5-5 attempt=1 request_id=req_011CC45 msg="Overloaded"
+2026-10-08T14:09:40Z WARN  claude-client retrying attempt=2 delay_ms=500 model=claude-opus-5-5 reason=overloaded_error
+2026-10-08T14:09:41Z ERROR api           request failed route=/v1/summarize status=503 latency_ms=3010 upstream=claude error=overloaded_error request_id=r-5112
+2026-10-08T14:10:30Z WARN  alerting      alert fired name=SummarizerLatencyP95High p95_ms=29800 threshold_ms=8000
+2026-10-08T14:11:05Z ERROR claude-client api error status=429 type=rate_limit_error model=claude-opus-5-5 retry_after=30 attempt=1 request_id=req_011CC51 msg="input tokens per minute rate limit exceeded"
+2026-10-08T14:11:06Z ERROR api           request failed route=/v1/summarize status=503 latency_ms=2640 upstream=claude error=rate_limit_error request_id=r-5113
+2026-10-08T14:12:20Z INFO  oncall        incident opened id=INC-2291 commander=priya

@@ -1,0 +1,32 @@
+{
+  "service": "summarizer",
+  "interval": "1m",
+  "limits": {"claude_opus_input_tokens_per_min": 400000, "claude_opus_requests_per_min": 4000},
+  "points": [
+    {"minute": "13:50", "rps": 12.1, "p95_latency_ms": 2100, "error_rate": 0.002, "claude_429": 0, "claude_529": 0, "cache_hit_ratio": 0.89, "input_tokens_per_min": 61000, "in_flight": 7},
+    {"minute": "13:51", "rps": 11.8, "p95_latency_ms": 2150, "error_rate": 0.001, "claude_429": 0, "claude_529": 0, "cache_hit_ratio": 0.90, "input_tokens_per_min": 59000, "in_flight": 8},
+    {"minute": "13:52", "rps": 12.4, "p95_latency_ms": 2240, "error_rate": 0.002, "claude_429": 0, "claude_529": 0, "cache_hit_ratio": 0.89, "input_tokens_per_min": 64000, "in_flight": 8},
+    {"minute": "13:53", "rps": 12.0, "p95_latency_ms": 2120, "error_rate": 0.000, "claude_429": 0, "claude_529": 0, "cache_hit_ratio": 0.90, "input_tokens_per_min": 60000, "in_flight": 8},
+    {"minute": "13:54", "rps": 12.2, "p95_latency_ms": 2080, "error_rate": 0.001, "claude_429": 0, "claude_529": 0, "cache_hit_ratio": 0.90, "input_tokens_per_min": 61000, "in_flight": 8},
+    {"minute": "13:55", "rps": 12.5, "p95_latency_ms": 2190, "error_rate": 0.002, "claude_429": 0, "claude_529": 0, "cache_hit_ratio": 0.89, "input_tokens_per_min": 63000, "in_flight": 8},
+    {"minute": "13:56", "rps": 12.3, "p95_latency_ms": 2110, "error_rate": 0.001, "claude_429": 0, "claude_529": 0, "cache_hit_ratio": 0.90, "input_tokens_per_min": 62000, "in_flight": 8},
+    {"minute": "13:57", "rps": 12.0, "p95_latency_ms": 2140, "error_rate": 0.001, "claude_429": 0, "claude_529": 0, "cache_hit_ratio": 0.90, "input_tokens_per_min": 60000, "in_flight": 8},
+    {"minute": "13:58", "rps": 11.9, "p95_latency_ms": 2200, "error_rate": 0.002, "claude_429": 0, "claude_529": 0, "cache_hit_ratio": 0.88, "input_tokens_per_min": 62000, "in_flight": 8},
+    {"minute": "13:59", "rps": 12.2, "p95_latency_ms": 2380, "error_rate": 0.003, "claude_429": 0, "claude_529": 0, "cache_hit_ratio": 0.41, "input_tokens_per_min": 236000, "in_flight": 31},
+    {"minute": "14:00", "rps": 12.6, "p95_latency_ms": 2510, "error_rate": 0.004, "claude_429": 0, "claude_529": 0, "cache_hit_ratio": 0.00, "input_tokens_per_min": 388000, "in_flight": 64},
+    {"minute": "14:01", "rps": 12.4, "p95_latency_ms": 6900, "error_rate": 0.08, "claude_429": 38, "claude_529": 0, "cache_hit_ratio": 0.00, "input_tokens_per_min": 455000, "in_flight": 64},
+    {"minute": "14:02", "rps": 12.8, "p95_latency_ms": 11800, "error_rate": 0.17, "claude_429": 96, "claude_529": 0, "cache_hit_ratio": 0.00, "input_tokens_per_min": 498000, "in_flight": 64},
+    {"minute": "14:03", "rps": 12.5, "p95_latency_ms": 15300, "error_rate": 0.22, "claude_429": 141, "claude_529": 0, "cache_hit_ratio": 0.00, "input_tokens_per_min": 512000, "in_flight": 64},
+    {"minute": "14:04", "rps": 12.7, "p95_latency_ms": 19100, "error_rate": 0.26, "claude_429": 158, "claude_529": 0, "cache_hit_ratio": 0.00, "input_tokens_per_min": 520000, "in_flight": 64},
+    {"minute": "14:05", "rps": 12.9, "p95_latency_ms": 23400, "error_rate": 0.29, "claude_429": 162, "claude_529": 24, "cache_hit_ratio": 0.00, "input_tokens_per_min": 524000, "in_flight": 64},
+    {"minute": "14:06", "rps": 12.6, "p95_latency_ms": 26100, "error_rate": 0.30, "claude_429": 155, "claude_529": 47, "cache_hit_ratio": 0.00, "input_tokens_per_min": 519000, "in_flight": 64},
+    {"minute": "14:07", "rps": 12.8, "p95_latency_ms": 28700, "error_rate": 0.31, "claude_429": 149, "claude_529": 61, "cache_hit_ratio": 0.00, "input_tokens_per_min": 522000, "in_flight": 64},
+    {"minute": "14:08", "rps": 12.5, "p95_latency_ms": 29500, "error_rate": 0.31, "claude_429": 152, "claude_529": 58, "cache_hit_ratio": 0.00, "input_tokens_per_min": 517000, "in_flight": 64},
+    {"minute": "14:09", "rps": 12.7, "p95_latency_ms": 29800, "error_rate": 0.32, "claude_429": 150, "claude_529": 63, "cache_hit_ratio": 0.00, "input_tokens_per_min": 521000, "in_flight": 64},
+    {"minute": "14:10", "rps": 12.6, "p95_latency_ms": 29800, "error_rate": 0.31, "claude_429": 147, "claude_529": 59, "cache_hit_ratio": 0.00, "input_tokens_per_min": 518000, "in_flight": 64},
+    {"minute": "14:11", "rps": 12.4, "p95_latency_ms": 29900, "error_rate": 0.31, "claude_429": 151, "claude_529": 55, "cache_hit_ratio": 0.00, "input_tokens_per_min": 516000, "in_flight": 64},
+    {"minute": "14:12", "rps": 12.5, "p95_latency_ms": 29700, "error_rate": 0.30, "claude_429": 146, "claude_529": 52, "cache_hit_ratio": 0.00, "input_tokens_per_min": 515000, "in_flight": 64},
+    {"minute": "14:13", "rps": 12.3, "p95_latency_ms": 29800, "error_rate": 0.31, "claude_429": 149, "claude_529": 50, "cache_hit_ratio": 0.00, "input_tokens_per_min": 514000, "in_flight": 64},
+    {"minute": "14:14", "rps": 12.6, "p95_latency_ms": 29900, "error_rate": 0.31, "claude_429": 150, "claude_529": 49, "cache_hit_ratio": 0.00, "input_tokens_per_min": 517000, "in_flight": 64}
+  ]
+}

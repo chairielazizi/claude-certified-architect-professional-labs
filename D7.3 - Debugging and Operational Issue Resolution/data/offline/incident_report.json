@@ -1,0 +1,40 @@
+{
+  "title": "Summarizer outage: Claude API 429/529 storm after deploy v2.14.0",
+  "severity": "SEV2",
+  "impact": "From 14:01 UTC about 31% of /v1/summarize requests failed with 503 and p95 latency rose from about 2.1 s to about 30 s.",
+  "trigger": "Deploy v2.14.0 of summarizer, finished 13:59:40 UTC",
+  "root_cause": "Prompt template v7 puts a per-request timestamp at the top of the system prompt, which invalidated prompt caching (cache hit ratio 0.90 -> 0.00), so every call sent about 4.3k uncached input tokens. Together with concurrency raised from 8 to 64, input tokens per minute (peak 524000) exceeded the 400000 ITPM limit, producing sustained 429 rate_limit_error responses.",
+  "contributing_factors": [
+    "The new retry policy retries after a fixed 500 ms and ignores retry-after (18-30 s), multiplying load (retry storm).",
+    "Upstream 529 overloaded_error responses from 14:05 were amplified by the same retries; there is no fallback model or circuit breaker.",
+    "No alert on cache hit ratio or rate-limit headroom; the first alert fired 8 minutes after the deploy."
+  ],
+  "evidence": [
+    "First 429 at 14:01:12, 92 s after the deploy finished.",
+    "cache_read_input_tokens fell from 3900 per call to 0 immediately after the deploy.",
+    "Retry log lines show delay_ms=500 while the API returned retry_after up to 30 s.",
+    "input_tokens_per_min peaked at 524000 against a limit of 400000."
+  ],
+  "timeline": [
+    {"time": "13:58:30", "event": "Deploy v2.14.0 started"},
+    {"time": "13:59:40", "event": "Deploy finished; worker pool resized from 8 to 64"},
+    {"time": "14:01:12", "event": "First 429 rate_limit_error"},
+    {"time": "14:05:40", "event": "First 529 overloaded_error"},
+    {"time": "14:08:00", "event": "Alert SummarizerErrorRateHigh fired"},
+    {"time": "14:12:20", "event": "Incident INC-2291 opened"}
+  ],
+  "immediate_actions": [
+    "Roll back summarizer to v2.13.2 (RB-004), or hot-fix SUMMARIZER_CONCURRENCY=8 and RETRY_POLICY=exponential_jitter_honor_retry_after.",
+    "Move the timestamp out of the system prompt (append it to the user turn) to restore cache hits.",
+    "Route overflow traffic to claude-sonnet-5-5 while 529s persist."
+  ],
+  "follow_up_actions": [
+    "Add a CI check that fails when the system prompt contains volatile values.",
+    "Alert on cache read ratio below 0.5 and on ITPM above 80% of the limit.",
+    "Add a client-side token bucket sized below the organisation's rate limits.",
+    "Load-test concurrency changes against rate limits before rollout."
+  ],
+  "runbook_id": "RB-017",
+  "runbook_url": "https://runbooks.example.com/ai-platform/rb-017-claude-rate-limits",
+  "confidence": 0.86
+}
