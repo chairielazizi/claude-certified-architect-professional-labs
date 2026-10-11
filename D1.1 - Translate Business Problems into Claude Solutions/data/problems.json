@@ -1,0 +1,26 @@
+[
+  {
+    "id": "P1",
+    "title": "Motor insurance claims triage",
+    "sponsor": "VP Claims Operations, Northwind Mutual",
+    "intake_notes": "We receive about 12,000 first-notice-of-loss (FNOL) motor claims per month through web forms, email and call-centre transcripts. Each claim arrives as a free-text description, 2-10 photos of the damage and sometimes a police report PDF. Today a triage adjuster spends roughly 25 minutes per claim reading everything to decide severity (minor / moderate / total loss), which team gets it, whether an injury is mentioned and whether fraud indicators are present. They also check the customer's policy wording and our triage guidelines. Loaded adjuster cost is about $55/hour. Misrouted claims add 3-5 days to cycle time. The routing decision is entered into our claims system. Final settlement decisions must stay with licensed adjusters (regulator requirement) and every triage decision needs an audit trail. Claims contain personal data. Anything under a minute per claim is fine for us. Success = triage minutes per claim, misrouting rate, claim cycle time, fraud referral precision."
+  },
+  {
+    "id": "P2",
+    "title": "Checkout sales-tax calculation",
+    "sponsor": "Head of Finance Engineering, Contoso Retail",
+    "intake_notes": "Our checkout must calculate sales tax for about 2 million orders a day across 11,000 US tax jurisdictions. Inputs are fully structured: ship-to address, product tax codes, amounts and exemption certificates. Rates and rules are published by each jurisdiction and change monthly. The amount must be exact to the cent and is audited; a wrong amount is a compliance violation. The latency budget for the tax step inside checkout is 50 ms. Nobody reviews individual calculations - there are far too many. Engineers spend time patching our in-house rate tables. Success = zero calculation errors, p99 latency under 50 ms, cost per calculation."
+  },
+  {
+    "id": "P3",
+    "title": "Production incident root-cause investigation",
+    "sponsor": "Director of SRE, Fabrikam Cloud",
+    "intake_notes": "We handle about 300 production incidents per month. During an incident the on-call engineer spends around 90 minutes on investigation: searching logs, comparing metrics dashboards, checking recent deploys and feature-flag changes, and reading runbooks and past postmortems. Every incident is different and the path through the evidence is never the same twice. Loaded engineer cost is about $120/hour, and downtime costs far more. We can expose read-only APIs for logs, metrics, deploy history, feature flags and the runbook wiki. Remediation actions such as rollbacks must be approved by a human. A first hypothesis within 5 minutes would be a big win. Success = mean time to identify root cause, share of incidents with a correct first hypothesis, engineer hours per incident."
+  },
+  {
+    "id": "P4",
+    "title": "Weekly customer-feedback digest",
+    "sponsor": "Product Ops lead, Tailspin Apps",
+    "intake_notes": "Every week our PMs want a one-page digest of app-store reviews and NPS verbatims: top themes, notable quotes and sentiment shifts. An analyst exports roughly 1,600 free-text comments a month to CSV and spends about one minute per comment reading, tagging and writing, so roughly 6 hours a week. Loaded analyst cost is about $70/hour. The digest is internal; PMs read it critically and a slightly off theme is low impact. Turnaround by Monday morning is fine. Success = analyst hours per week, PM satisfaction with the digest, time-to-insight."
+  }
+]
