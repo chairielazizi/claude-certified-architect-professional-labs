@@ -1,0 +1,21 @@
+{
+  "name": "claude-certified-architect-professional-labs",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Hands-on labs for every objective in the Claude Certified Architect - Professional (CCAR-P) exam guide",
+  "type": "module",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.133.0",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@types/node": "^24.19.2",
+    "typescript": "^7.0.2"
+  }
+}
