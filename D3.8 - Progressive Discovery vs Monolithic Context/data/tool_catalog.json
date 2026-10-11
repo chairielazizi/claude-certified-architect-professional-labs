@@ -1,0 +1,1335 @@
+{
+ "tools": [
+  {
+   "domain": "hr",
+   "name": "hr_get_pto_balance",
+   "description": "Get an employee's remaining paid time off (PTO) balance in days for the current year. Use when someone asks how many vacation or PTO days are left.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "employee": {
+      "type": "string",
+      "description": "Full name or employee ID"
+     },
+     "year": {
+      "type": "integer",
+      "description": "Calendar year; defaults to the current year"
+     }
+    },
+    "required": [
+     "employee"
+    ]
+   }
+  },
+  {
+   "domain": "hr",
+   "name": "hr_submit_pto_request",
+   "description": "Submit a PTO / vacation request for approval by the employee's manager.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "employee": {
+      "type": "string",
+      "description": "Full name or employee ID"
+     },
+     "start_date": {
+      "type": "string",
+      "description": "First day off (YYYY-MM-DD)"
+     },
+     "end_date": {
+      "type": "string",
+      "description": "Last day off (YYYY-MM-DD)"
+     },
+     "note": {
+      "type": "string",
+      "description": "Optional note to the manager"
+     }
+    },
+    "required": [
+     "employee",
+     "start_date",
+     "end_date"
+    ]
+   }
+  },
+  {
+   "domain": "hr",
+   "name": "hr_get_employee_profile",
+   "description": "Look up an employee's profile: title, department, manager, location and start date.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "employee": {
+      "type": "string",
+      "description": "Full name, email or employee ID"
+     }
+    },
+    "required": [
+     "employee"
+    ]
+   }
+  },
+  {
+   "domain": "hr",
+   "name": "hr_list_direct_reports",
+   "description": "List the direct reports of a manager.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "manager": {
+      "type": "string",
+      "description": "Manager's full name or employee ID"
+     }
+    },
+    "required": [
+     "manager"
+    ]
+   }
+  },
+  {
+   "domain": "hr",
+   "name": "hr_update_emergency_contact",
+   "description": "Update an employee's emergency contact details.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "employee": {
+      "type": "string",
+      "description": "Employee ID"
+     },
+     "contact_name": {
+      "type": "string",
+      "description": "Contact full name"
+     },
+     "phone": {
+      "type": "string",
+      "description": "Contact phone number"
+     }
+    },
+    "required": [
+     "employee",
+     "contact_name",
+     "phone"
+    ]
+   }
+  },
+  {
+   "domain": "hr",
+   "name": "hr_get_org_chart",
+   "description": "Return the reporting line above and below an employee as an org chart.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "employee": {
+      "type": "string",
+      "description": "Full name or employee ID"
+     },
+     "depth": {
+      "type": "integer",
+      "description": "Levels to include (1-3)"
+     }
+    },
+    "required": [
+     "employee"
+    ]
+   }
+  },
+  {
+   "domain": "hr",
+   "name": "hr_start_onboarding",
+   "description": "Start the onboarding checklist for a new hire (accounts, equipment, orientation).",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "new_hire_name": {
+      "type": "string",
+      "description": "Full name"
+     },
+     "start_date": {
+      "type": "string",
+      "description": "Start date (YYYY-MM-DD)"
+     },
+     "manager": {
+      "type": "string",
+      "description": "Hiring manager"
+     }
+    },
+    "required": [
+     "new_hire_name",
+     "start_date",
+     "manager"
+    ]
+   }
+  },
+  {
+   "domain": "hr",
+   "name": "hr_get_benefits_summary",
+   "description": "Summarize an employee's enrolled benefits: health plan, retirement and insurance.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "employee": {
+      "type": "string",
+      "description": "Full name or employee ID"
+     }
+    },
+    "required": [
+     "employee"
+    ]
+   }
+  },
+  {
+   "domain": "payroll",
+   "name": "payroll_get_payslip",
+   "description": "Retrieve an employee's payslip for a given month.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "employee": {
+      "type": "string",
+      "description": "Employee ID"
+     },
+     "month": {
+      "type": "string",
+      "description": "Month (YYYY-MM)"
+     }
+    },
+    "required": [
+     "employee",
+     "month"
+    ]
+   }
+  },
+  {
+   "domain": "payroll",
+   "name": "payroll_get_leave_accrual",
+   "description": "Get the payroll leave ACCRUAL rate and accrual history (days earned per month) for an employee. Payroll view of leave accrual.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "employee": {
+      "type": "string",
+      "description": "Full name or employee ID"
+     },
+     "from_month": {
+      "type": "string",
+      "description": "Start month (YYYY-MM)"
+     }
+    },
+    "required": [
+     "employee"
+    ]
+   }
+  },
+  {
+   "domain": "payroll",
+   "name": "payroll_update_bank_details",
+   "description": "Change the bank account used for salary payments. Requires identity verification.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "employee": {
+      "type": "string",
+      "description": "Employee ID"
+     },
+     "iban": {
+      "type": "string",
+      "description": "New IBAN or account number"
+     },
+     "verification_code": {
+      "type": "string",
+      "description": "One-time verification code"
+     }
+    },
+    "required": [
+     "employee",
+     "iban",
+     "verification_code"
+    ]
+   }
+  },
+  {
+   "domain": "payroll",
+   "name": "payroll_get_tax_forms",
+   "description": "Download year-end tax forms for an employee.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "employee": {
+      "type": "string",
+      "description": "Employee ID"
+     },
+     "tax_year": {
+      "type": "integer",
+      "description": "Tax year"
+     }
+    },
+    "required": [
+     "employee",
+     "tax_year"
+    ]
+   }
+  },
+  {
+   "domain": "payroll",
+   "name": "payroll_list_pay_dates",
+   "description": "List upcoming payroll run dates for a country.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "country": {
+      "type": "string",
+      "description": "ISO country code"
+     }
+    },
+    "required": [
+     "country"
+    ]
+   }
+  },
+  {
+   "domain": "finance",
+   "name": "expense_create_report",
+   "description": "Create a new draft expense report for a trip or month.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "employee": {
+      "type": "string",
+      "description": "Employee ID"
+     },
+     "title": {
+      "type": "string",
+      "description": "Report title, e.g. 'Berlin client visit'"
+     },
+     "currency": {
+      "type": "string",
+      "description": "Report currency (ISO code)"
+     }
+    },
+    "required": [
+     "employee",
+     "title"
+    ]
+   }
+  },
+  {
+   "domain": "finance",
+   "name": "expense_add_line_item",
+   "description": "Add one expense line (amount, category, receipt) to a draft expense report.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "report_id": {
+      "type": "string",
+      "description": "Draft report ID"
+     },
+     "amount": {
+      "type": "number",
+      "description": "Amount in report currency"
+     },
+     "category": {
+      "type": "string",
+      "description": "Expense category",
+      "enum": [
+       "meals",
+       "lodging",
+       "airfare",
+       "ground",
+       "client_entertainment",
+       "other"
+      ]
+     },
+     "receipt_url": {
+      "type": "string",
+      "description": "Link to the receipt image"
+     }
+    },
+    "required": [
+     "report_id",
+     "amount",
+     "category"
+    ]
+   }
+  },
+  {
+   "domain": "finance",
+   "name": "expense_submit_report",
+   "description": "Submit a draft expense report for manager approval.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "report_id": {
+      "type": "string",
+      "description": "Draft report ID"
+     }
+    },
+    "required": [
+     "report_id"
+    ]
+   }
+  },
+  {
+   "domain": "finance",
+   "name": "expense_get_report_status",
+   "description": "Check the approval and payment status of an expense report.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "report_id": {
+      "type": "string",
+      "description": "Expense report ID"
+     }
+    },
+    "required": [
+     "report_id"
+    ]
+   }
+  },
+  {
+   "domain": "finance",
+   "name": "expense_get_per_diem_rate",
+   "description": "Look up the per diem meal allowance for a city and date.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "city": {
+      "type": "string",
+      "description": "City name"
+     },
+     "date": {
+      "type": "string",
+      "description": "Travel date (YYYY-MM-DD)"
+     }
+    },
+    "required": [
+     "city",
+     "date"
+    ]
+   }
+  },
+  {
+   "domain": "finance",
+   "name": "finance_get_budget_remaining",
+   "description": "Get the remaining budget for a cost center in the current fiscal quarter.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "cost_center": {
+      "type": "string",
+      "description": "Cost center code"
+     }
+    },
+    "required": [
+     "cost_center"
+    ]
+   }
+  },
+  {
+   "domain": "finance",
+   "name": "finance_get_cost_center",
+   "description": "Find the cost center code for a team or employee.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "team_or_employee": {
+      "type": "string",
+      "description": "Team name or employee ID"
+     }
+    },
+    "required": [
+     "team_or_employee"
+    ]
+   }
+  },
+  {
+   "domain": "finance",
+   "name": "finance_convert_currency",
+   "description": "Convert an amount between currencies at today's corporate rate.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "amount": {
+      "type": "number",
+      "description": "Amount to convert"
+     },
+     "from_currency": {
+      "type": "string",
+      "description": "ISO code"
+     },
+     "to_currency": {
+      "type": "string",
+      "description": "ISO code"
+     }
+    },
+    "required": [
+     "amount",
+     "from_currency",
+     "to_currency"
+    ]
+   }
+  },
+  {
+   "domain": "procurement",
+   "name": "procurement_create_purchase_request",
+   "description": "Create a purchase request (PR) in the procurement system for goods or services; routes it to the right approver based on the total.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "item": {
+      "type": "string",
+      "description": "What is being bought"
+     },
+     "quantity": {
+      "type": "integer",
+      "description": "Number of units"
+     },
+     "unit_price_usd": {
+      "type": "number",
+      "description": "Price per unit in USD"
+     },
+     "cost_center": {
+      "type": "string",
+      "description": "Cost center to charge"
+     }
+    },
+    "required": [
+     "item",
+     "quantity",
+     "unit_price_usd"
+    ]
+   }
+  },
+  {
+   "domain": "procurement",
+   "name": "procurement_get_request_status",
+   "description": "Check the approval status of a purchase request.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "request_id": {
+      "type": "string",
+      "description": "Purchase request ID"
+     }
+    },
+    "required": [
+     "request_id"
+    ]
+   }
+  },
+  {
+   "domain": "procurement",
+   "name": "procurement_search_vendors",
+   "description": "Search approved vendors by product category or name.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "query": {
+      "type": "string",
+      "description": "Category or vendor name"
+     }
+    },
+    "required": [
+     "query"
+    ]
+   }
+  },
+  {
+   "domain": "procurement",
+   "name": "procurement_onboard_vendor",
+   "description": "Start onboarding of a new vendor (tax ID, bank details, security questionnaire).",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "vendor_name": {
+      "type": "string",
+      "description": "Legal name"
+     },
+     "tax_id": {
+      "type": "string",
+      "description": "Tax ID"
+     },
+     "contact_email": {
+      "type": "string",
+      "description": "Vendor contact email"
+     }
+    },
+    "required": [
+     "vendor_name",
+     "tax_id",
+     "contact_email"
+    ]
+   }
+  },
+  {
+   "domain": "procurement",
+   "name": "procurement_get_contract",
+   "description": "Retrieve the active contract and pricing terms for a vendor.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "vendor_name": {
+      "type": "string",
+      "description": "Vendor name"
+     }
+    },
+    "required": [
+     "vendor_name"
+    ]
+   }
+  },
+  {
+   "domain": "procurement",
+   "name": "procurement_list_preferred_vendors",
+   "description": "List preferred vendors for a category with negotiated pricing.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "category": {
+      "type": "string",
+      "description": "Product or service category"
+     }
+    },
+    "required": [
+     "category"
+    ]
+   }
+  },
+  {
+   "domain": "it",
+   "name": "it_reset_password",
+   "description": "Reset a user's single sign-on password and send a reset link to their recovery email.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "username": {
+      "type": "string",
+      "description": "Username or email"
+     }
+    },
+    "required": [
+     "username"
+    ]
+   }
+  },
+  {
+   "domain": "it",
+   "name": "it_reset_vpn_access",
+   "description": "Reset a user's VPN access: revoke the old VPN certificate and issue a new VPN profile.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "username": {
+      "type": "string",
+      "description": "Username"
+     },
+     "reason": {
+      "type": "string",
+      "description": "Why the reset is needed"
+     }
+    },
+    "required": [
+     "username"
+    ]
+   }
+  },
+  {
+   "domain": "it",
+   "name": "it_unlock_account",
+   "description": "Unlock a user account that was locked after failed sign-in attempts.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "username": {
+      "type": "string",
+      "description": "Username"
+     }
+    },
+    "required": [
+     "username"
+    ]
+   }
+  },
+  {
+   "domain": "it",
+   "name": "it_create_ticket",
+   "description": "Open an IT support ticket for an issue that no other IT tool can fix.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "summary": {
+      "type": "string",
+      "description": "One-line summary"
+     },
+     "description": {
+      "type": "string",
+      "description": "Details"
+     },
+     "priority": {
+      "type": "string",
+      "description": "Priority",
+      "enum": [
+       "low",
+       "medium",
+       "high"
+      ]
+     }
+    },
+    "required": [
+     "summary",
+     "description",
+     "priority"
+    ]
+   }
+  },
+  {
+   "domain": "it",
+   "name": "it_get_ticket_status",
+   "description": "Get the status and assignee of an IT ticket.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "ticket_id": {
+      "type": "string",
+      "description": "Ticket ID"
+     }
+    },
+    "required": [
+     "ticket_id"
+    ]
+   }
+  },
+  {
+   "domain": "it",
+   "name": "it_request_software",
+   "description": "Request installation or a license for a software product.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "username": {
+      "type": "string",
+      "description": "Username"
+     },
+     "software": {
+      "type": "string",
+      "description": "Product name"
+     },
+     "justification": {
+      "type": "string",
+      "description": "Business reason"
+     }
+    },
+    "required": [
+     "username",
+     "software",
+     "justification"
+    ]
+   }
+  },
+  {
+   "domain": "it",
+   "name": "it_list_assigned_devices",
+   "description": "List laptops, phones and peripherals assigned to a user.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "username": {
+      "type": "string",
+      "description": "Username"
+     }
+    },
+    "required": [
+     "username"
+    ]
+   }
+  },
+  {
+   "domain": "it",
+   "name": "it_request_hardware",
+   "description": "Request new hardware such as a laptop, monitor or headset.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "username": {
+      "type": "string",
+      "description": "Username"
+     },
+     "item": {
+      "type": "string",
+      "description": "Hardware item"
+     },
+     "justification": {
+      "type": "string",
+      "description": "Business reason"
+     }
+    },
+    "required": [
+     "username",
+     "item",
+     "justification"
+    ]
+   }
+  },
+  {
+   "domain": "it",
+   "name": "it_grant_group_access",
+   "description": "Add a user to an access group (application or shared drive permissions).",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "username": {
+      "type": "string",
+      "description": "Username"
+     },
+     "group": {
+      "type": "string",
+      "description": "Access group name"
+     },
+     "approver": {
+      "type": "string",
+      "description": "Approving manager"
+     }
+    },
+    "required": [
+     "username",
+     "group",
+     "approver"
+    ]
+   }
+  },
+  {
+   "domain": "it",
+   "name": "it_revoke_group_access",
+   "description": "Remove a user from an access group.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "username": {
+      "type": "string",
+      "description": "Username"
+     },
+     "group": {
+      "type": "string",
+      "description": "Access group name"
+     }
+    },
+    "required": [
+     "username",
+     "group"
+    ]
+   }
+  },
+  {
+   "domain": "facilities",
+   "name": "facilities_book_room",
+   "description": "Book a meeting room for a given number of people, building, start time and duration.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "building": {
+      "type": "string",
+      "description": "Building code, e.g. 'B'"
+     },
+     "capacity": {
+      "type": "integer",
+      "description": "Number of attendees"
+     },
+     "start": {
+      "type": "string",
+      "description": "Start time (YYYY-MM-DDTHH:MM)"
+     },
+     "duration_minutes": {
+      "type": "integer",
+      "description": "Length of the meeting"
+     }
+    },
+    "required": [
+     "building",
+     "capacity",
+     "start",
+     "duration_minutes"
+    ]
+   }
+  },
+  {
+   "domain": "facilities",
+   "name": "facilities_cancel_booking",
+   "description": "Cancel an existing room booking.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "booking_id": {
+      "type": "string",
+      "description": "Booking ID"
+     }
+    },
+    "required": [
+     "booking_id"
+    ]
+   }
+  },
+  {
+   "domain": "facilities",
+   "name": "facilities_find_desk",
+   "description": "Find and reserve a free hot desk on a floor for a day.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "building": {
+      "type": "string",
+      "description": "Building code"
+     },
+     "floor": {
+      "type": "integer",
+      "description": "Floor number"
+     },
+     "date": {
+      "type": "string",
+      "description": "Date (YYYY-MM-DD)"
+     }
+    },
+    "required": [
+     "building",
+     "floor",
+     "date"
+    ]
+   }
+  },
+  {
+   "domain": "facilities",
+   "name": "facilities_report_issue",
+   "description": "Report a facilities issue such as a broken light, heating or a leak.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "building": {
+      "type": "string",
+      "description": "Building code"
+     },
+     "location": {
+      "type": "string",
+      "description": "Room or area"
+     },
+     "description": {
+      "type": "string",
+      "description": "What is wrong"
+     }
+    },
+    "required": [
+     "building",
+     "location",
+     "description"
+    ]
+   }
+  },
+  {
+   "domain": "facilities",
+   "name": "facilities_get_building_hours",
+   "description": "Get opening hours and badge-access hours for a building.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "building": {
+      "type": "string",
+      "description": "Building code"
+     }
+    },
+    "required": [
+     "building"
+    ]
+   }
+  },
+  {
+   "domain": "facilities",
+   "name": "facilities_request_parking",
+   "description": "Request a parking space for a date.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "username": {
+      "type": "string",
+      "description": "Username"
+     },
+     "date": {
+      "type": "string",
+      "description": "Date (YYYY-MM-DD)"
+     },
+     "vehicle_plate": {
+      "type": "string",
+      "description": "License plate"
+     }
+    },
+    "required": [
+     "username",
+     "date",
+     "vehicle_plate"
+    ]
+   }
+  },
+  {
+   "domain": "facilities",
+   "name": "facilities_list_rooms",
+   "description": "List meeting rooms in a building with capacity and equipment.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "building": {
+      "type": "string",
+      "description": "Building code"
+     },
+     "min_capacity": {
+      "type": "integer",
+      "description": "Minimum seats"
+     }
+    },
+    "required": [
+     "building"
+    ]
+   }
+  },
+  {
+   "domain": "crm",
+   "name": "crm_search_accounts",
+   "description": "Search customer accounts by name, industry or region.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "query": {
+      "type": "string",
+      "description": "Search text"
+     },
+     "region": {
+      "type": "string",
+      "description": "Sales region"
+     }
+    },
+    "required": [
+     "query"
+    ]
+   }
+  },
+  {
+   "domain": "crm",
+   "name": "crm_get_account",
+   "description": "Get a customer account with owner, ARR, open opportunities and recent activity.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "account_id": {
+      "type": "string",
+      "description": "Account ID"
+     }
+    },
+    "required": [
+     "account_id"
+    ]
+   }
+  },
+  {
+   "domain": "crm",
+   "name": "crm_create_opportunity",
+   "description": "Create a sales opportunity on an account.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "account_id": {
+      "type": "string",
+      "description": "Account ID"
+     },
+     "name": {
+      "type": "string",
+      "description": "Opportunity name"
+     },
+     "amount_usd": {
+      "type": "number",
+      "description": "Expected deal size"
+     },
+     "close_date": {
+      "type": "string",
+      "description": "Expected close date"
+     }
+    },
+    "required": [
+     "account_id",
+     "name",
+     "amount_usd",
+     "close_date"
+    ]
+   }
+  },
+  {
+   "domain": "crm",
+   "name": "crm_update_opportunity_stage",
+   "description": "Move an opportunity to a new pipeline stage.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "opportunity_id": {
+      "type": "string",
+      "description": "Opportunity ID"
+     },
+     "stage": {
+      "type": "string",
+      "description": "New stage",
+      "enum": [
+       "qualify",
+       "propose",
+       "negotiate",
+       "closed_won",
+       "closed_lost"
+      ]
+     }
+    },
+    "required": [
+     "opportunity_id",
+     "stage"
+    ]
+   }
+  },
+  {
+   "domain": "crm",
+   "name": "crm_log_activity",
+   "description": "Log a call, meeting or email against an account or opportunity.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "record_id": {
+      "type": "string",
+      "description": "Account or opportunity ID"
+     },
+     "type": {
+      "type": "string",
+      "description": "Activity type",
+      "enum": [
+       "call",
+       "meeting",
+       "email"
+      ]
+     },
+     "notes": {
+      "type": "string",
+      "description": "Summary notes"
+     }
+    },
+    "required": [
+     "record_id",
+     "type",
+     "notes"
+    ]
+   }
+  },
+  {
+   "domain": "crm",
+   "name": "crm_get_pipeline_summary",
+   "description": "Summarize pipeline value by stage for a sales rep or region.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "owner_or_region": {
+      "type": "string",
+      "description": "Rep name or region"
+     }
+    },
+    "required": [
+     "owner_or_region"
+    ]
+   }
+  },
+  {
+   "domain": "crm",
+   "name": "crm_list_contacts",
+   "description": "List contacts at a customer account.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "account_id": {
+      "type": "string",
+      "description": "Account ID"
+     }
+    },
+    "required": [
+     "account_id"
+    ]
+   }
+  },
+  {
+   "domain": "crm",
+   "name": "crm_create_quote",
+   "description": "Create a price quote for an opportunity, applying discount rules.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "opportunity_id": {
+      "type": "string",
+      "description": "Opportunity ID"
+     },
+     "discount_pct": {
+      "type": "number",
+      "description": "Requested discount percent"
+     }
+    },
+    "required": [
+     "opportunity_id",
+     "discount_pct"
+    ]
+   }
+  },
+  {
+   "domain": "legal",
+   "name": "legal_request_contract_review",
+   "description": "Send a contract to Legal for review before signature.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "counterparty": {
+      "type": "string",
+      "description": "Other party"
+     },
+     "document_url": {
+      "type": "string",
+      "description": "Link to the draft"
+     },
+     "deadline": {
+      "type": "string",
+      "description": "Needed-by date"
+     }
+    },
+    "required": [
+     "counterparty",
+     "document_url",
+     "deadline"
+    ]
+   }
+  },
+  {
+   "domain": "legal",
+   "name": "legal_get_nda_template",
+   "description": "Get the current mutual or one-way NDA template.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "type": {
+      "type": "string",
+      "description": "NDA type",
+      "enum": [
+       "mutual",
+       "one_way"
+      ]
+     }
+    },
+    "required": [
+     "type"
+    ]
+   }
+  },
+  {
+   "domain": "legal",
+   "name": "legal_check_contract_status",
+   "description": "Check where a contract is in the legal review and signature process.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "contract_id": {
+      "type": "string",
+      "description": "Contract ID"
+     }
+    },
+    "required": [
+     "contract_id"
+    ]
+   }
+  },
+  {
+   "domain": "legal",
+   "name": "legal_search_clauses",
+   "description": "Search the clause library for approved contract language.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "query": {
+      "type": "string",
+      "description": "Clause topic, e.g. 'limitation of liability'"
+     }
+    },
+    "required": [
+     "query"
+    ]
+   }
+  },
+  {
+   "domain": "bi",
+   "name": "bi_run_saved_report",
+   "description": "Run a saved BI report and return the result table.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "report_name": {
+      "type": "string",
+      "description": "Saved report name"
+     },
+     "filters": {
+      "type": "string",
+      "description": "Optional filter expression"
+     }
+    },
+    "required": [
+     "report_name"
+    ]
+   }
+  },
+  {
+   "domain": "bi",
+   "name": "bi_get_kpi",
+   "description": "Get the current value and trend of a company KPI.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "kpi": {
+      "type": "string",
+      "description": "KPI name, e.g. 'net revenue retention'"
+     }
+    },
+    "required": [
+     "kpi"
+    ]
+   }
+  },
+  {
+   "domain": "bi",
+   "name": "bi_list_dashboards",
+   "description": "List BI dashboards available to the user.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "team": {
+      "type": "string",
+      "description": "Team filter"
+     }
+    },
+    "required": []
+   }
+  },
+  {
+   "domain": "bi",
+   "name": "bi_export_dataset",
+   "description": "Export a governed dataset to CSV for offline analysis.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "dataset": {
+      "type": "string",
+      "description": "Dataset name"
+     },
+     "row_limit": {
+      "type": "integer",
+      "description": "Maximum rows"
+     }
+    },
+    "required": [
+     "dataset",
+     "row_limit"
+    ]
+   }
+  }
+ ]
+}
