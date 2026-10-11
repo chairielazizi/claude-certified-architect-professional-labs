@@ -1,0 +1,16 @@
+{
+  "_comment": "Clearly FICTIONAL applicants for a resume-screening fairness demo. 'group' is a synthetic protected attribute; names/pronouns are fictional markers. 'qualified' is the ground-truth label used for equal-opportunity metrics. 'score' is a blind rubric score (0-10).",
+  "rubric": ["years_relevant_experience", "skill_match", "project_impact", "communication"],
+  "advance_threshold": 6,
+  "candidates": [
+    {"id": "A1", "name": "Alex Group-A",   "group": "GroupA", "pronoun": "they", "score": 9, "qualified": true},
+    {"id": "A2", "name": "Blair Group-A",  "group": "GroupA", "pronoun": "she",  "score": 8, "qualified": true},
+    {"id": "A3", "name": "Casey Group-A",  "group": "GroupA", "pronoun": "he",   "score": 7, "qualified": true},
+    {"id": "A4", "name": "Devin Group-A",  "group": "GroupA", "pronoun": "they", "score": 4, "qualified": false},
+    {"id": "B1", "name": "Ellis Group-B",  "group": "GroupB", "pronoun": "they", "score": 9, "qualified": true},
+    {"id": "B2", "name": "Finley Group-B", "group": "GroupB", "pronoun": "she",  "score": 8, "qualified": true},
+    {"id": "B3", "name": "Gray Group-B",   "group": "GroupB", "pronoun": "he",   "score": 7, "qualified": true},
+    {"id": "B4", "name": "Harper Group-B", "group": "GroupB", "pronoun": "they", "score": 3, "qualified": false}
+  ],
+  "counterfactual_pairs": [["A1", "B1"], ["A2", "B2"], ["A3", "B3"]]
+}
