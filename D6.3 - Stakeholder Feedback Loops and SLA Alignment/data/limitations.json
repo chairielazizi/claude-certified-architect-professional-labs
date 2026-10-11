@@ -1,0 +1,18 @@
+{
+  "will_not": [
+    "Send letters. Every letter is approved by a licensed adjuster and sent through the existing PostMaster workflow.",
+    "Make or imply coverage determinations, or admit liability.",
+    "Handle injury-claim correspondence (phase 2, after the DPIA).",
+    "Guarantee identical wording for identical inputs - outputs are probabilistic, so regenerating a draft can change its wording.",
+    "Act as the system of record. Claim numbers, dates and amounts come from ClaimCore and are checked there.",
+    "Answer customers directly. It drafts letters for adjusters only.",
+    "Draft letters in languages other than English (Spanish is in discovery, not committed)."
+  ],
+  "known_limitations": [
+    { "id": "LIM-1", "title": "Wording is nondeterministic", "detail": "Two drafts for the same claim can differ in phrasing; adjusters should review the draft in front of them, not a previous one.", "metric": null },
+    { "id": "LIM-2", "title": "Factual slips are rare, not impossible", "detail": "The judge flags drafts with a factual error against the claim file; adjuster approval remains the control.", "metric": "factual_error_rate" },
+    { "id": "LIM-3", "title": "Quality is measured on a sample", "detail": "About 5% of drafts are judged; the true pass rate lies within the confidence interval shown, not exactly at the point estimate.", "metric": "quality_ci" },
+    { "id": "LIM-4", "title": "Long letters take longer", "detail": "Latency grows with letter length; the slowest 1% of drafts take noticeably longer than the median.", "metric": "latency_tail" },
+    { "id": "LIM-5", "title": "Depends on ClaimCore", "detail": "If ClaimCore is degraded, drafting falls back to template mode (since v1.5.0).", "metric": null }
+  ]
+}

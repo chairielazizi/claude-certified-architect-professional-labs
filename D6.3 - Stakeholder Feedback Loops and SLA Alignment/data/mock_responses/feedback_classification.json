@@ -1,0 +1,28 @@
+{
+  "items": [
+    { "id": "FB-01", "theme": "praise",          "severity": 1, "sentiment": "positive", "component": "prompt",      "summary": "Acknowledgement draft was accurate and saved time" },
+    { "id": "FB-02", "theme": "factual_error",   "severity": 3, "sentiment": "negative", "component": "model",       "summary": "Wrong incident date in draft" },
+    { "id": "FB-03", "theme": "missing_context", "severity": 3, "sentiment": "negative", "component": "retrieval",   "summary": "Latest adjuster note ignored on claims with many notes" },
+    { "id": "FB-04", "theme": "availability",    "severity": 3, "sentiment": "negative", "component": "integration", "summary": "Two-hour drafting outage; manual fallback" },
+    { "id": "FB-05", "theme": "availability",    "severity": 2, "sentiment": "negative", "component": "integration", "summary": "Draft unavailable errors" },
+    { "id": "FB-06", "theme": "availability",    "severity": 4, "sentiment": "negative", "component": "integration", "summary": "Sponsor escalation about outage impact before renewal season" },
+    { "id": "FB-07", "theme": "verbosity_tone",  "severity": 2, "sentiment": "negative", "component": "prompt",      "summary": "Status updates became much longer" },
+    { "id": "FB-08", "theme": "latency",         "severity": 2, "sentiment": "negative", "component": "prompt",      "summary": "Generation noticeably slower" },
+    { "id": "FB-09", "theme": "verbosity_tone",  "severity": 3, "sentiment": "negative", "component": "prompt",      "summary": "Chatty tone doubled rejections on near-denial letters" },
+    { "id": "FB-10", "theme": "latency",         "severity": 2, "sentiment": "negative", "component": "prompt",      "summary": "Slow generation for a short acknowledgement" },
+    { "id": "FB-11", "theme": "factual_error",   "severity": 4, "sentiment": "negative", "component": "model",       "summary": "Wrong deductible amount in draft" },
+    { "id": "FB-12", "theme": "praise",          "severity": 1, "sentiment": "positive", "component": "prompt",      "summary": "Letters shorter again after the fix" },
+    { "id": "FB-13", "theme": "latency",         "severity": 2, "sentiment": "negative", "component": "prompt",      "summary": "Still slow in the morning" },
+    { "id": "FB-14", "theme": "policy_risk",     "severity": 4, "sentiment": "negative", "component": "prompt",      "summary": "Draft implied coverage before the coverage review" },
+    { "id": "FB-15", "theme": "formatting",      "severity": 1, "sentiment": "negative", "component": "ui",          "summary": "PDF export shows asterisks instead of bullets" },
+    { "id": "FB-16", "theme": "feature_request", "severity": 2, "sentiment": "neutral",  "component": "model",       "summary": "Request for Spanish-language letters" },
+    { "id": "FB-17", "theme": "missing_context", "severity": 3, "sentiment": "negative", "component": "retrieval",   "summary": "Old mailing address used despite a recent note" },
+    { "id": "FB-18", "theme": "praise",          "severity": 1, "sentiment": "positive", "component": "prompt",      "summary": "Team lead reports good quality and lower handling time" },
+    { "id": "FB-19", "theme": "factual_error",   "severity": 3, "sentiment": "negative", "component": "model",       "summary": "Payment amount rounded in draft" },
+    { "id": "FB-20", "theme": "feature_request", "severity": 2, "sentiment": "neutral",  "component": "integration", "summary": "Request for bulk backlog mode" },
+    { "id": "FB-21", "theme": "verbosity_tone",  "severity": 2, "sentiment": "negative", "component": "prompt",      "summary": "Robotic tone in condolence-type letters" },
+    { "id": "FB-22", "theme": "policy_risk",     "severity": 4, "sentiment": "negative", "component": "process",     "summary": "Compliance asks for prevention of coverage-language incidents" },
+    { "id": "FB-23", "theme": "praise",          "severity": 1, "sentiment": "positive", "component": "integration", "summary": "Template fallback mode worked during a ClaimCore blip" },
+    { "id": "FB-24", "theme": "formatting",      "severity": 2, "sentiment": "negative", "component": "ui",          "summary": "Wrong branch phone number in letter header" }
+  ]
+}

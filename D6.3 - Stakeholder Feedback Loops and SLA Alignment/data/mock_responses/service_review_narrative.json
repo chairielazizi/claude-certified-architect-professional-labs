@@ -1,0 +1,26 @@
+{
+  "executive_summary": "April missed the availability SLO (99.48% against 99.5%) and used 105% of the error budget, mostly because of a two-hour ClaimCore degradation on Apr 13 (INC-0413, 70% of the budget). The contractual SLA held at 99.83% because outages of customer-owned dependencies are excluded, so no service credit is due ($0.00). A prompt change (v1.4.0, Apr 15-19) made drafts longer and slower and pushed rejections and escalations to 15.4% that week; it was rolled back in v1.4.1. Draft quality is estimated at 91.8% of sampled drafts meeting the rubric, but the 95% confidence interval (89.0%-93.9%) dips below the 90.0% target, so we report it as at risk rather than met.",
+  "highlights": [
+    "Latency held: 97.8% of drafts completed within 8 s (target 95.0%), with a p95 of 7.17 s.",
+    "Cost per completed letter was $0.0437, well inside the $0.06 target.",
+    "v1.5.0 added a ClaimCore circuit breaker and a template fallback mode, closing the outage feedback.",
+    "8 of 20 actionable feedback items were closed within the month (40%)."
+  ],
+  "concerns": [
+    "Error budget exhausted (105%): the feature freeze applies until 30-day availability is back above 99.5%.",
+    "Prompt v1.4.0 shipped without a latency and tone gate: the week of Apr 15-21 had a p95 of 8.24 s and 15.4% rejections and escalations.",
+    "Two compliance-sensitive reports (a draft implying coverage) need a prohibited-content guard, now P1 (BL-25).",
+    "The judge flagged factual errors in 10 of 499 sampled drafts (2.0%); a field validator against ClaimCore is P1 (BL-21)."
+  ],
+  "expectation_notes": [
+    "Quality figures are estimates from a random sample, not a guarantee for every letter: with 499 judged drafts, the true pass rate is likely between 89.0% and 93.9%.",
+    "Wording varies between regenerations of the same draft; adjuster approval remains the control for every letter.",
+    "A small share of drafts will contain factual slips (2.0% flagged this month); the planned field validator reduces this risk but cannot eliminate it."
+  ],
+  "next_month_focus": [
+    "Ship the prohibited-content guard (BL-25) and the ClaimCore field validator (BL-21).",
+    "Add a latency and tone gate to the canary stage so changes like v1.4.0 are caught before full rollout.",
+    "Double the judge sample so the quality estimate has a tighter confidence interval.",
+    "Hold the feature freeze until availability recovers above the 99.5% SLO."
+  ]
+}

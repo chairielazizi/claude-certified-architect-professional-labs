@@ -1,0 +1,28 @@
+{
+  "items": [
+    { "id": "FB-01", "day": 2,  "channel": "thumbs_up",   "submitter": "adj-114", "role": "Adjuster", "text": "The acknowledgement letter was perfect and saved me ten minutes." },
+    { "id": "FB-02", "day": 6,  "channel": "thumbs_down", "submitter": "adj-031", "role": "Adjuster", "text": "Draft listed the incident date as March 3 but the claim says March 8." },
+    { "id": "FB-03", "day": 9,  "channel": "ticket",      "submitter": "lead-07", "role": "Team lead", "text": "Letters ignore the latest adjuster note when a claim has more than 20 notes." },
+    { "id": "FB-04", "day": 13, "channel": "ticket",      "submitter": "adj-052", "role": "Adjuster", "text": "Copilot kept spinning and then errored for about two hours this morning; I wrote letters by hand." },
+    { "id": "FB-05", "day": 13, "channel": "thumbs_down", "submitter": "adj-118", "role": "Adjuster", "text": "Error: draft unavailable. Again." },
+    { "id": "FB-06", "day": 13, "channel": "email",       "submitter": "vp-ops",  "role": "VP Claims Operations", "text": "Several teams lost the morning to the outage. What is the plan so this does not happen during renewal season?" },
+    { "id": "FB-07", "day": 15, "channel": "thumbs_down", "submitter": "adj-031", "role": "Adjuster", "text": "Drafts are suddenly much longer - status updates are now a full page." },
+    { "id": "FB-08", "day": 15, "channel": "thumbs_down", "submitter": "adj-077", "role": "Adjuster", "text": "Takes forever to generate today." },
+    { "id": "FB-09", "day": 16, "channel": "ticket",      "submitter": "lead-03", "role": "Team lead", "text": "Rejections on my team doubled since Thursday; the new tone is too chatty for letters close to a denial." },
+    { "id": "FB-10", "day": 16, "channel": "thumbs_down", "submitter": "adj-114", "role": "Adjuster", "text": "Waited about 12 seconds for a two-line acknowledgement." },
+    { "id": "FB-11", "day": 16, "channel": "thumbs_down", "submitter": "adj-090", "role": "Adjuster", "text": "Draft said the deductible was $500; the policy shows $1,000." },
+    { "id": "FB-12", "day": 19, "channel": "survey",      "submitter": "adj-077", "role": "Adjuster", "text": "Much better again this afternoon. Please keep the letters short." },
+    { "id": "FB-13", "day": 19, "channel": "thumbs_down", "submitter": "adj-052", "role": "Adjuster", "text": "Still slow this morning." },
+    { "id": "FB-14", "day": 20, "channel": "ticket",      "submitter": "cmp-02",  "role": "Compliance analyst", "text": "Draft for claim 4471 said 'your loss is covered' before the coverage review was complete." },
+    { "id": "FB-15", "day": 21, "channel": "thumbs_down", "submitter": "adj-118", "role": "Adjuster", "text": "Bullet points render as asterisks in the PDF export." },
+    { "id": "FB-16", "day": 22, "channel": "survey",      "submitter": "adj-140", "role": "Adjuster", "text": "Can it draft letters in Spanish? About a third of my customers prefer Spanish." },
+    { "id": "FB-17", "day": 22, "channel": "thumbs_down", "submitter": "adj-090", "role": "Adjuster", "text": "Used the old mailing address even though the customer moved last week; the note was added on Monday." },
+    { "id": "FB-18", "day": 23, "channel": "survey",      "submitter": "lead-07", "role": "Team lead", "text": "Quality is good overall and my team's handling time is down a lot." },
+    { "id": "FB-19", "day": 26, "channel": "ticket",      "submitter": "adj-031", "role": "Adjuster", "text": "The amount in the payment letter was rounded to the nearest dollar." },
+    { "id": "FB-20", "day": 27, "channel": "survey",      "submitter": "adj-140", "role": "Adjuster", "text": "Would love a bulk mode for the backlog letters." },
+    { "id": "FB-21", "day": 28, "channel": "thumbs_down", "submitter": "adj-063", "role": "Adjuster", "text": "Tone feels robotic for condolence-type letters." },
+    { "id": "FB-22", "day": 28, "channel": "email",       "submitter": "cmp-lead", "role": "Head of Compliance", "text": "Please confirm how the coverage-language incident on claim 4471 is being prevented going forward." },
+    { "id": "FB-23", "day": 29, "channel": "thumbs_up",   "submitter": "adj-052", "role": "Adjuster", "text": "The fallback template mode during yesterday's ClaimCore blip worked well." },
+    { "id": "FB-24", "day": 30, "channel": "ticket",      "submitter": "adj-063", "role": "Adjuster", "text": "The letter header shows the wrong office phone number for the Dallas branch." }
+  ]
+}

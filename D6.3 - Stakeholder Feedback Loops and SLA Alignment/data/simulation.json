@@ -1,0 +1,41 @@
+{
+  "seed": 2027,
+  "model": "claude-sonnet-5-5",
+  "weekday_requests": 420,
+  "weekend_requests": 60,
+  "jitter": 25,
+  "baseline": {
+    "p_client_error": 0.004,
+    "p_server_error": 0.001,
+    "p_timeout": 0.0005,
+    "p_throttled": 0.0005,
+    "latency_median_s": 4.0,
+    "latency_sigma": 0.33,
+    "input_tokens": 2500,
+    "output_tokens": 700,
+    "cache_read_tokens": 54000,
+    "cache_write_tokens": 6000,
+    "actions": { "approved": 0.62, "edited": 0.26, "rejected": 0.09, "escalated": 0.03 },
+    "judge_pass": 0.93,
+    "factual_error": 0.012
+  },
+  "incident": {
+    "id": "INC-0413",
+    "day": 13,
+    "start_hour": 10,
+    "hours": 2,
+    "error_rate": 0.6,
+    "cause": "ClaimCore API degradation (customer-owned dependency); drafts timed out",
+    "sla_excluded": true
+  },
+  "prompt_change": {
+    "version": "v1.4.0",
+    "start": [15, 9],
+    "end": [19, 11],
+    "latency_mult": 1.35,
+    "output_mult": 1.45,
+    "actions": { "approved": 0.5, "edited": 0.3, "rejected": 0.16, "escalated": 0.04 },
+    "judge_pass": 0.8,
+    "factual_error": 0.035
+  }
+}

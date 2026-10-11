@@ -1,0 +1,36 @@
+{
+  "releases": [
+    {
+      "version": "v1.4.0",
+      "day": 15,
+      "type": "prompt change",
+      "summary": "Warmer tone and more explanation of next steps in every letter type.",
+      "addresses_themes": []
+    },
+    {
+      "version": "v1.4.1",
+      "day": 19,
+      "type": "rollback + fix",
+      "summary": "Rolled back the v1.4.0 wording for status and payment letters, added a per-letter-type output length budget, kept the warmer tone for acknowledgements only.",
+      "addresses_themes": ["verbosity_tone", "latency"]
+    },
+    {
+      "version": "v1.5.0",
+      "day": 27,
+      "type": "reliability",
+      "summary": "ClaimCore circuit breaker with retries and jitter; 'AI unavailable' template fallback in the adjuster UI.",
+      "addresses_themes": ["availability"]
+    }
+  ],
+  "theme_backlog": {
+    "factual_error": { "id": "BL-21", "title": "Field validator: check dates, amounts and deductibles against ClaimCore before a draft is shown", "effort": 3 },
+    "verbosity_tone": { "id": "BL-22", "title": "Tone and length checks per letter type in the eval suite (incl. condolence letters)", "effort": 2 },
+    "latency": { "id": "BL-23", "title": "Latency gate per prompt version in the canary stage", "effort": 2 },
+    "availability": { "id": "BL-26", "title": "Circuit breaker and template fallback mode", "effort": 3 },
+    "missing_context": { "id": "BL-24", "title": "Always include the latest adjuster notes and contact changes in context", "effort": 2 },
+    "policy_risk": { "id": "BL-25", "title": "Prohibited-content guard on every draft (coverage and liability language)", "effort": 3 },
+    "formatting": { "id": "BL-28", "title": "Template and export fixes (PDF bullets, branch contact data)", "effort": 1 },
+    "feature_request": { "id": "BL-27", "title": "Discovery: Spanish-language letters and bulk backlog mode", "effort": 5 }
+  },
+  "risk_override_themes": ["policy_risk"]
+}

@@ -1,0 +1,82 @@
+{
+  "service": "Claims Correspondence Copilot",
+  "provider": "AI Delivery Team (managed service)",
+  "customer": "Harbor Mutual Claims Operations (fictional)",
+  "period": { "label": "April 2027", "month": "Apr", "days": 30, "start_weekday": 3 },
+  "business_hours": { "open": 7, "close": 21, "tz": "ET" },
+  "slos": [
+    {
+      "id": "SLO-1",
+      "name": "Availability",
+      "kind": "availability",
+      "sli": "good requests / valid requests during business hours (4xx client errors are not valid requests)",
+      "target": 0.995,
+      "window": "30 days",
+      "sla": { "target": 0.99, "credits": [ { "below": 0.99, "credit_pct": 10 }, { "below": 0.98, "credit_pct": 25 } ] }
+    },
+    {
+      "id": "SLO-2",
+      "name": "Latency",
+      "kind": "latency",
+      "sli": "share of successful drafts completed within 8 s (streamed; full draft)",
+      "threshold_s": 8,
+      "target": 0.95,
+      "window": "30 days (tracked weekly)",
+      "sla": { "metric": "monthly p95 full-draft latency", "max_s": 12, "credit_pct": 5 }
+    },
+    {
+      "id": "SLO-3",
+      "name": "Draft quality",
+      "kind": "quality",
+      "sli": "share of sampled drafts scoring >= 4/5 on the agreed rubric (calibrated LLM judge)",
+      "target": 0.9,
+      "min_samples": 400,
+      "window": "30 days",
+      "sla": null
+    },
+    {
+      "id": "SLO-4",
+      "name": "Cost per completed letter",
+      "kind": "cost",
+      "sli": "model spend (drafting + judging) / letters approved as-is or after edits",
+      "target_max_usd": 0.06,
+      "window": "30 days",
+      "sla": null
+    },
+    {
+      "id": "SLO-5",
+      "name": "Rejection and escalation rate",
+      "kind": "escalation",
+      "sli": "(drafts rejected + escalated) / successful drafts",
+      "target_max": 0.15,
+      "window": "30 days (tracked weekly)",
+      "sla": null
+    }
+  ],
+  "sla_terms": {
+    "monthly_fee_usd": 18000,
+    "credit_cap_pct": 30,
+    "exclusions": [
+      "4xx client errors (invalid requests)",
+      "Scheduled maintenance announced at least 72 hours ahead",
+      "Outages of customer-owned dependencies (ClaimCore) declared by Harbor Mutual IT"
+    ]
+  },
+  "error_budget_policy": [
+    { "id": "EBP-1", "trigger": "budget_exhausted", "action": "Feature freeze: only reliability and security changes ship until 30-day availability is back above the SLO." },
+    { "id": "EBP-2", "trigger": "incident_over_20pct", "action": "Blameless postmortem within 5 business days for any incident that consumed more than 20% of the monthly budget." },
+    { "id": "EBP-3", "trigger": "quality_not_met", "action": "Double the judge sample next month and run every prompt change against the eval suite before release." }
+  ],
+  "burn_alert_guard": { "min_requests": 30, "min_failures": 3 },
+  "burn_alerts": [
+    { "name": "fast burn", "severity": "PAGE", "long_h": 1, "short_h": 1, "threshold": 14.4 },
+    { "name": "medium burn", "severity": "PAGE", "long_h": 6, "short_h": 1, "threshold": 6.0 },
+    { "name": "slow burn", "severity": "TICKET", "long_h": 72, "short_h": 6, "threshold": 1.0 }
+  ],
+  "judge": {
+    "model": "claude-haiku-5-5",
+    "sample_rate": 0.05,
+    "tokens_per_judgement": { "input": 3000, "output": 150 },
+    "calibration": "Calibrated monthly against 50 human-graded drafts; April agreement 88% (target >= 85%)."
+  }
+}
