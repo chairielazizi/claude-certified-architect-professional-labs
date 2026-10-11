@@ -1,0 +1,83 @@
+# Example: AI-assisted PR review in GitHub Actions.
+# Documentation for the D7.2 lab - it is parsed and linted by the lab, never executed.
+# Requires the repository secret ANTHROPIC_API_KEY. Input names follow anthropics/claude-code-action v1;
+# check the action's README for the current interface before copying.
+name: claude-pr-review
+
+on:
+  pull_request:
+    types: [opened, synchronize, ready_for_review]
+    paths:
+      - "app/**"
+      - "tests/**"
+      - "web/src/**"
+
+# Least privilege for the workflow token: read code, write review comments, nothing else.
+permissions:
+  contents: read
+  pull-requests: write
+
+# A new push cancels the in-flight review of the old commit (no tokens spent on stale code).
+concurrency:
+  group: claude-review-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  ai-review:
+    if: github.event.pull_request.draft == false && github.actor != 'dependabot[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Claude review (advisory comments only)
+        uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          prompt: |
+            Review the diff of this pull request against origin/${{ github.base_ref }}.
+            Follow the rubric in .github/claude/review_guidelines.md.
+            Post findings as inline review comments. Never approve or request changes.
+          claude_args: >-
+            --model claude-sonnet-5-5
+            --max-turns 8
+            --allowedTools "Read,Grep,Glob,Bash(git diff:*),Bash(git log:*)"
+
+  headless-summary:
+    if: github.event.pull_request.draft == false
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+      - name: Install Claude Code
+        run: npm install -g @anthropic-ai/claude-code
+      - name: Summarise the change (headless mode, JSON output)
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          git diff origin/${{ github.base_ref }}...HEAD > pr.diff
+          claude -p "Summarise pr.diff for release notes: 3 bullets, user-facing language." \
+            --output-format json \
+            --max-turns 3 \
+            --allowedTools "Read" \
+            > claude_result.json
+      - name: Gate on result and budget
+        run: |
+          python3 - <<'EOF'
+          import json, sys
+          r = json.load(open("claude_result.json"))
+          if r.get("is_error") or r.get("subtype") != "success":
+              sys.exit("Claude run failed: " + str(r.get("subtype")))
+          cost = r.get("total_cost_usd", 0)
+          print(f"turns={r.get('num_turns')} cost=${cost:.4f}")
+          if cost > 0.50:
+              print("::warning::Claude summary exceeded the $0.50 per-PR budget")
+          open("summary.md", "w").write(r["result"])
+          EOF

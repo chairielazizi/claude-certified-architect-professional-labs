@@ -1,0 +1,26 @@
+# Deliberately UNSAFE workflow used to exercise the lab's workflow linter. Do not copy.
+# All secrets are fake placeholders.
+name: ai-review-risky
+
+on:
+  pull_request_target:
+    types: [opened, synchronize]
+
+permissions: write-all
+
+env:
+  ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - uses: anthropics/claude-code-action@main
+        with:
+          anthropic_api_key: sk-ant-EXAMPLE-not-a-real-key-000000
+          prompt: "Review and fix everything, then push the fixes to the branch."
+      - name: Headless follow-up
+        run: claude -p "Apply all review suggestions and merge" --dangerously-skip-permissions

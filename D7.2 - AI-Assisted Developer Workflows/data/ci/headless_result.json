@@ -1,0 +1,16 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "duration_ms": 18432,
+  "duration_api_ms": 16210,
+  "num_turns": 3,
+  "result": "- Customers can now see their order history with discounts applied.\n- Discounts are calculated by a new pricing helper.\n- Requests may now wait up to 5 minutes before timing out.",
+  "session_id": "3b9e6c1a-0d4f-4e8a-9b52-7f1e2a6c8d40",
+  "total_cost_usd": 0.0412,
+  "usage": {
+    "input_tokens": 6120,
+    "cache_read_input_tokens": 4800,
+    "output_tokens": 410
+  }
+}

@@ -1,0 +1,88 @@
+diff --git a/app/api/orders.py b/app/api/orders.py
+index 3f2a1b0..8c9d4e2 100644
+--- a/app/api/orders.py
++++ b/app/api/orders.py
+@@ -1,9 +1,10 @@
+ from fastapi import APIRouter, Depends
+
+ from app.auth import require_user
+ from app.db import get_connection
++from app.services.pricing import apply_discount
+
+ router = APIRouter(prefix="/orders")
+
+
+ @router.get("/{order_id}")
+@@ -14,3 +15,16 @@ def get_order(order_id: int, user=Depends(require_user)):
+         (order_id, user.id),
+     ).fetchone()
+     return dict(row) if row else None
++
++
++@router.get("/history/{customer_email}")
++def get_order_history(customer_email: str, discount: int = 0):
++    conn = get_connection()
++    rows = conn.execute(
++        f"SELECT id, total_cents FROM orders WHERE email = '{customer_email}'"
++    ).fetchall()
++    result = []
++    for row in rows:
++        total = apply_discount(row["total_cents"], discount)
++        result.append({"id": row["id"], "total_cents": total})
++    return result
+diff --git a/app/services/pricing.py b/app/services/pricing.py
+index 1a2b3c4..5d6e7f8 100644
+--- a/app/services/pricing.py
++++ b/app/services/pricing.py
+@@ -1,5 +1,14 @@
+ """Pricing rules. All money values are integer cents."""
+
+
+ def line_total(unit_price_cents: int, quantity: int) -> int:
+     return unit_price_cents * quantity
++
++
++def apply_discount(price_cents: int, percent: int) -> int:
++    """Return the discounted price in cents."""
++    discounted = price_cents * (1 - percent / 100)
++    return int(discounted)
++
++
++MAX_DISCOUNT_PERCENT = 50
+diff --git a/app/config.py b/app/config.py
+index 9a8b7c6..1f2e3d4 100644
+--- a/app/config.py
++++ b/app/config.py
+@@ -1,4 +1,4 @@
+ import os
+
+-REQUEST_TIMEOUT = 30
+-DEBUG = os.getenv("DEBUG", "false") == "true"
++REQUEST_TIMEOUT = 300
++DEBUG = True
+diff --git a/tests/test_pricing.py b/tests/test_pricing.py
+new file mode 100644
+index 0000000..b4c5d6e
+--- /dev/null
++++ b/tests/test_pricing.py
+@@ -0,0 +1,5 @@
++from app.services.pricing import apply_discount
++
++
++def test_apply_discount():
++    assert apply_discount(1000, 10) == 900
+diff --git a/web/package-lock.json b/web/package-lock.json
+index 4d5e6f7..8a9b0c1 100644
+--- a/web/package-lock.json
++++ b/web/package-lock.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "orders-web",
+-  "version": "1.4.0",
++  "version": "1.5.0",
+   "lockfileVersion": 3,
+   "requires": true,
+   "packages": {
+diff --git a/docs/assets/logo.png b/docs/assets/logo.png
+index 2c3d4e5..6f7a8b9 100644
+Binary files a/docs/assets/logo.png and b/docs/assets/logo.png differ
