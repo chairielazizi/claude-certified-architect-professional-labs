@@ -1,0 +1,14 @@
+{
+  "_comment": "Supplier knowledge graph. Product->supplier edges come from catalog.json (supplier_id); customer->product PURCHASED edges are derived from orders.csv at load time, so the graph joins three sources.",
+  "suppliers": [
+    {"id": "S-01", "name": "Shenzhen SoundWorks", "country": "China"},
+    {"id": "S-02", "name": "Hanoi Acoustic Co", "country": "Vietnam"},
+    {"id": "S-03", "name": "Baltic Audio Parts", "country": "Lithuania"},
+    {"id": "S-04", "name": "Penang Precision Audio", "country": "Malaysia"}
+  ],
+  "edges": [
+    {"src": "product:AC-020", "rel": "COMPATIBLE_WITH", "dst": "product:HP-200"},
+    {"src": "product:AC-020", "rel": "COMPATIBLE_WITH", "dst": "product:HP-250"},
+    {"src": "product:AC-010", "rel": "COMPATIBLE_WITH", "dst": "product:EB-220"}
+  ]
+}

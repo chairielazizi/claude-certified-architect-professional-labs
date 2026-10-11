@@ -1,0 +1,16 @@
+{
+  "_comment": "Demo queries with the expected query pattern (used to score the router). as_of fixes 'today' so warranty math is deterministic.",
+  "as_of": "2026-10-11",
+  "queries": [
+    {"id": "Q1", "query": "What's the status of order ORD-10447?", "expected": ["exact_lookup"]},
+    {"id": "Q2", "query": "What was total revenue by region in Q3 2026?", "expected": ["aggregation"]},
+    {"id": "Q3", "query": "Show me wireless headphones under $150 with at least 30 hours of battery", "expected": ["filtered_search"]},
+    {"id": "Q4", "query": "What is the restocking fee?", "expected": ["keyword"]},
+    {"id": "Q5", "query": "Can I send back headphones I opened if I just don't like them?", "expected": ["conceptual"]},
+    {"id": "Q6", "query": "How do warranty claims work if my headphones stopped charging?", "expected": ["mixed"]},
+    {"id": "Q7", "query": "Which customers bought products from suppliers based in Vietnam?", "expected": ["multi_hop"]},
+    {"id": "Q8", "query": "Where is the shipping cost for international orders calculated in the code?", "expected": ["code_search"]},
+    {"id": "Q9", "query": "Is Dana Lee's most recent headphone order still under warranty?", "expected": ["multi_hop"]},
+    {"id": "Q10", "query": "anything good for running in the rain?", "expected": ["conceptual", "mixed"]}
+  ]
+}

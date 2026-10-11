@@ -1,0 +1,28 @@
+order_id,order_date,customer_id,customer_name,region,sku,quantity,unit_price,status
+ORD-10301,2025-08-15,C-1001,Dana Lee,North America,HP-100,1,59.99,delivered
+ORD-10318,2025-09-02,C-1002,Marco Rossi,Europe,SP-300,1,249.00,delivered
+ORD-10327,2025-10-11,C-1003,Aiko Tanaka,APAC,EB-110,2,79.99,delivered
+ORD-10344,2025-11-20,C-1005,Sam Okafor,North America,HP-300,1,199.00,delivered
+ORD-10377,2025-12-02,C-1001,Dana Lee,North America,HP-200,1,129.99,delivered
+ORD-10381,2025-12-05,C-1001,Dana Lee,North America,AC-030,1,19.99,delivered
+ORD-10390,2026-01-14,C-1004,Priya Shah,Europe,HP-150,1,99.00,delivered
+ORD-10402,2026-02-03,C-1006,Lena Fischer,Europe,SP-100,3,49.99,delivered
+ORD-10411,2026-03-19,C-1007,Wei Chen,APAC,HP-250,1,179.99,delivered
+ORD-10415,2026-04-22,C-1008,Carlos Mendez,North America,SP-200,2,99.99,delivered
+ORD-10419,2026-05-30,C-1002,Marco Rossi,Europe,AC-020,1,24.99,delivered
+ORD-10421,2026-06-18,C-1003,Aiko Tanaka,APAC,HP-200,1,129.99,returned
+ORD-10422,2026-07-02,C-1005,Sam Okafor,North America,EB-220,2,149.99,delivered
+ORD-10425,2026-07-09,C-1006,Lena Fischer,Europe,HP-200,1,129.99,delivered
+ORD-10427,2026-07-15,C-1007,Wei Chen,APAC,SP-100,4,49.99,delivered
+ORD-10428,2026-07-21,C-1004,Priya Shah,Europe,HP-250,1,179.99,delivered
+ORD-10430,2026-08-01,C-1008,Carlos Mendez,North America,HP-150,2,99.00,delivered
+ORD-10431,2026-08-04,C-1002,Marco Rossi,Europe,EB-110,1,79.99,cancelled
+ORD-10433,2026-08-12,C-1003,Aiko Tanaka,APAC,SP-300,1,249.00,delivered
+ORD-10434,2026-08-19,C-1001,Dana Lee,North America,SP-100,1,49.99,delivered
+ORD-10436,2026-08-27,C-1006,Lena Fischer,Europe,AC-010,5,12.99,delivered
+ORD-10437,2026-09-03,C-1005,Sam Okafor,North America,HP-300,1,199.00,delivered
+ORD-10439,2026-09-14,C-1007,Wei Chen,APAC,EB-220,1,149.99,delivered
+ORD-10440,2026-09-22,C-1004,Priya Shah,Europe,SP-200,2,99.99,delivered
+ORD-10441,2026-09-29,C-1008,Carlos Mendez,North America,HP-250,1,179.99,delivered
+ORD-10444,2026-10-02,C-1002,Marco Rossi,Europe,HP-100,1,59.99,delivered
+ORD-10447,2026-10-08,C-1003,Aiko Tanaka,APAC,HP-150,1,99.00,in_transit
