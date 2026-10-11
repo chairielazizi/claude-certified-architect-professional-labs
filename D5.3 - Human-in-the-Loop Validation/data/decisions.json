@@ -1,0 +1,17 @@
+{
+  "_comment": "Fictional refund-decision queue for the D5.3 HITL router. amount in USD; support = retrieval/evidence support 0-1; fraud_signal from an upstream detector.",
+  "thresholds": {"auto_amount_limit": 200, "support_min": 0.5, "confidence_min": 0.75, "review_sla_hours": 4},
+  "regulated_categories": ["medical", "legal", "insurance"],
+  "items": [
+    {"id": "C01", "user": "alice",  "amount": 45,  "category": "general",   "support": 0.92, "fraud_signal": false, "text": "Refund my $45 order, arrived damaged."},
+    {"id": "C02", "user": "bob",    "amount": 350, "category": "general",   "support": 0.90, "fraud_signal": false, "text": "Please refund $350, item never shipped."},
+    {"id": "C03", "user": "carol",  "amount": 120, "category": "medical",   "support": 0.88, "fraud_signal": false, "text": "Refund for a medical device return, $120."},
+    {"id": "C04", "user": "dave",   "amount": 80,  "category": "general",   "support": 0.40, "fraud_signal": false, "text": "Refund $80, but no order record attached."},
+    {"id": "C05", "user": "erin",   "amount": 500, "category": "general",   "support": 0.30, "fraud_signal": true,  "text": "Urgent $500 refund to a new account, mismatched details."},
+    {"id": "C06", "user": "frank",  "amount": 30,  "category": "general",   "support": 0.95, "fraud_signal": false, "text": "Refund $30, wrong size."},
+    {"id": "C07", "user": "grace",  "amount": 150, "category": "insurance", "support": 0.85, "fraud_signal": false, "text": "Insurance-linked refund of $150."},
+    {"id": "C08", "user": "heidi",  "amount": 60,  "category": "general",   "support": 0.90, "fraud_signal": false, "text": "Refund $60, duplicate charge."},
+    {"id": "C09", "user": "ivan",   "amount": 90,  "category": "general",   "support": 0.91, "fraud_signal": false, "text": "Refund $90, defective unit."},
+    {"id": "C10", "user": "judy",   "amount": 40,  "category": "general",   "support": 0.93, "fraud_signal": false, "text": "Refund $40, late delivery."}
+  ]
+}
