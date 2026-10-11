@@ -1,0 +1,10 @@
+{
+  "_comment": "Fictional workload profiles for the D5.4 compliance policy engine. Educational only - not legal advice. 'verify' notes mean: confirm current authorizations/BAA with the provider.",
+  "workloads": [
+    {"name": "Clinical note summarizer", "data_types": ["PHI", "PII"], "user_region": "US", "government_customer": false, "retention_days": 2555, "needs_zdr": false},
+    {"name": "EU customer support", "data_types": ["PII"], "user_region": "EU", "government_customer": false, "retention_days": 365, "needs_zdr": false},
+    {"name": "Federal case assistant", "data_types": ["CUI", "PII"], "user_region": "US", "government_customer": true, "retention_days": 1095, "needs_zdr": true},
+    {"name": "Payments reconciliation", "data_types": ["PCI", "PII"], "user_region": "US", "government_customer": false, "retention_days": 365, "needs_zdr": false},
+    {"name": "Public FAQ bot", "data_types": ["public"], "user_region": "US", "government_customer": false, "retention_days": 30, "needs_zdr": false}
+  ]
+}
