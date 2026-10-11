@@ -1,0 +1,128 @@
+{
+  "system": {
+    "id": "ccc",
+    "name": "Claims Correspondence Copilot",
+    "version": "1.5.0",
+    "status": "production",
+    "owner": "AI Delivery Team",
+    "summary": "Drafts outbound claim letters for adjusters; every letter is approved by a licensed adjuster before it is sent."
+  },
+  "people": [
+    { "id": "adjuster", "name": "Claims adjuster", "description": "Requests, edits and approves drafts", "uses": ["workspace_ui"] },
+    { "id": "team_lead", "name": "Team lead", "description": "Monitors draft quality for the team", "uses": ["workspace_ui"] }
+  ],
+  "external_systems": [
+    { "id": "claimcore", "name": "ClaimCore", "description": "Claims system of record (REST API)", "owner": "Claims Platform" },
+    { "id": "docvault", "name": "DocVault", "description": "Policy wording and claim documents (S3)", "owner": "Claims Platform" },
+    { "id": "postmaster", "name": "PostMaster", "description": "Outbound correspondence service - NOT called by the copilot (by design)", "owner": "Claims Platform" },
+    { "id": "okta", "name": "Okta", "description": "Workforce SSO", "owner": "Corporate IT" },
+    { "id": "anthropic", "name": "Claude API", "description": "Anthropic Messages API (US region)", "owner": "Anthropic (vendor)" }
+  ],
+  "components": [
+    { "id": "workspace_ui", "name": "Adjuster workspace plug-in", "type": "ui", "tech": "React micro-frontend", "owner": "Claims Platform",
+      "depends_on": ["drafting_api", "okta"] },
+    { "id": "drafting_api", "name": "Drafting API", "type": "service", "tech": "Python, FastAPI", "owner": "AI Delivery Team",
+      "depends_on": ["context_builder", "drafting_agent", "guardrails", "audit_store", "claimcore"] },
+    { "id": "context_builder", "name": "Context builder", "type": "service", "tech": "Python", "owner": null,
+      "depends_on": ["claimcore", "docvault"] },
+    { "id": "drafting_agent", "name": "Drafting orchestrator", "type": "agent", "tech": "Claude API (Sonnet 5.5) with read-only tools", "owner": "AI Delivery Team",
+      "depends_on": ["anthropic", "prompt_registry"], "models": ["m_draft"] },
+    { "id": "guardrails", "name": "Guardrail service", "type": "service", "tech": "Python rules + Claude Haiku 5.5 classifier", "owner": "AI Delivery Team",
+      "depends_on": ["anthropic", "prompt_registry"], "models": ["m_guard"] },
+    { "id": "eval_runner", "name": "Eval and judge runner", "type": "job", "tech": "Python, Message Batches API", "owner": "AI Quality",
+      "depends_on": ["anthropic", "audit_store", "eval_store"], "models": ["m_judge"] },
+    { "id": "batch_backlog", "name": "Backlog batch drafter", "type": "job", "tech": "Python, Message Batches API", "owner": "AI Delivery Team",
+      "depends_on": ["context_builder", "drafting_agent", "letter_queue"], "models": ["m_draft"] }
+  ],
+  "models": [
+    { "id": "m_draft", "model": "claude-sonnet-5-5", "purpose": "Draft letters from claim context and cached policy wording", "effort": "low", "thinking": "adaptive", "max_tokens": 1200, "fallback": "Template mode (no AI draft)" },
+    { "id": "m_guard", "model": "claude-haiku-5-5", "purpose": "Prohibited-content classification (coverage and liability language)", "effort": "low", "thinking": "adaptive", "max_tokens": 300, "fallback": "Block draft and route to manual review" },
+    { "id": "m_judge", "model": "claude-haiku-5-5", "purpose": "Sampled quality judging against the rubric", "effort": "medium", "thinking": "adaptive", "max_tokens": 600, "fallback": "Defer judging (batch retry next day)" }
+  ],
+  "prompts": [
+    { "id": "p_draft_status", "version": "1.4.1", "owner": "Claims Ops content lead", "component": "drafting_agent", "path": "prompts/draft_status.md", "eval_suite": "evals/status_letters.jsonl" },
+    { "id": "p_draft_payment", "version": "1.4.1", "owner": "Claims Ops content lead", "component": "drafting_agent", "path": "prompts/draft_payment.md", "eval_suite": "evals/payment_letters.jsonl" },
+    { "id": "p_guard", "version": "0.9.0", "owner": "Compliance", "component": "guardrails", "path": "prompts/guard_classifier.md", "eval_suite": null },
+    { "id": "p_judge", "version": "1.1.0", "owner": "AI Quality", "component": "eval_runner", "path": "prompts/judge_rubric.md", "eval_suite": "evals/judge_calibration.jsonl" }
+  ],
+  "tools": [
+    { "name": "get_claim", "component": "drafting_agent", "description": "Read claim header, parties and amounts", "side_effect": "read", "auth_scope": "claimcore:claims.read", "requires_approval": false },
+    { "name": "get_claim_notes", "component": "drafting_agent", "description": "Read the latest adjuster notes for the claim", "side_effect": "read", "auth_scope": "claimcore:notes.read", "requires_approval": false },
+    { "name": "get_policy_wording", "component": "drafting_agent", "description": "Read policy wording by product and version", "side_effect": "read", "auth_scope": null, "requires_approval": false },
+    { "name": "save_draft", "component": "drafting_api", "description": "Save the draft to ClaimCore as pending correspondence", "side_effect": "write", "write_mode": "pending", "auth_scope": "claimcore:correspondence.write_pending", "requires_approval": false },
+    { "name": "send_letter", "component": "drafting_agent", "description": "Send the letter through PostMaster", "side_effect": "write", "write_mode": "final", "auth_scope": "postmaster:send", "requires_approval": false }
+  ],
+  "data_stores": [
+    { "id": "audit_store", "name": "Audit store", "kind": "PostgreSQL (append-only)", "classification": "confidential", "contains_pii": true, "retention": "7 years", "encryption": "AES-256 at rest, TLS 1.2+ in transit", "residency": "US (us-east)", "owner": "AI Delivery Team" },
+    { "id": "prompt_registry", "name": "Prompt registry", "kind": "Git repository with signed tags", "classification": "internal", "contains_pii": false, "retention": "Indefinite", "encryption": "Repository default", "residency": "US", "owner": "AI Delivery Team" },
+    { "id": "eval_store", "name": "Eval results", "kind": "S3 bucket", "classification": "confidential", "contains_pii": true, "retention": null, "encryption": "SSE-KMS", "residency": "US (us-east)", "owner": "AI Quality" }
+  ],
+  "integrations": [
+    { "system": "claimcore", "protocol": "REST over HTTPS", "auth": "OAuth2 client credentials", "direction": "read/write (pending drafts only)", "limits": "50 rps shared with other apps" },
+    { "system": "docvault", "protocol": "S3 API", "auth": "IAM role (read-only)", "direction": "read", "limits": "-" },
+    { "system": "okta", "protocol": "OIDC", "auth": "Authorization code + PKCE", "direction": "read", "limits": "-" },
+    { "system": "anthropic", "protocol": "HTTPS (Messages API, Message Batches API)", "auth": "API key from Vault", "direction": "read/write", "limits": "Org rate limits per model" }
+  ],
+  "guardrails": [
+    { "id": "G1", "type": "input", "description": "Claim-scoped context only: no data from other claims or customers", "component": "context_builder" },
+    { "id": "G2", "type": "output", "description": "Prohibited-content check: no coverage determinations or liability admissions", "component": "guardrails" },
+    { "id": "G3", "type": "output", "description": "Field validator: claim number, dates and amounts must match ClaimCore", "component": "drafting_api" },
+    { "id": "G4", "type": "process", "description": "Licensed adjuster approves every letter; sending stays in PostMaster workflow", "component": "workspace_ui" },
+    { "id": "G5", "type": "data", "description": "PII masking in application logs", "component": "drafting_api" }
+  ],
+  "slos": [
+    { "id": "SLO-1", "name": "Availability", "target": ">= 99.5% of valid requests succeed (business hours, 30 days)", "alert": "AL-1" },
+    { "id": "SLO-2", "name": "Latency", "target": ">= 95% of drafts complete within 8 s", "alert": "AL-2" },
+    { "id": "SLO-3", "name": "Draft quality", "target": ">= 90% of sampled drafts score >= 4/5 (95% CI reported)", "alert": "AL-3" },
+    { "id": "SLO-4", "name": "Cost per completed letter", "target": "<= $0.06", "alert": null }
+  ],
+  "alerts": [
+    { "id": "AL-1", "name": "Availability fast burn", "condition": "Burn rate >= 14.4 over 1 h (min 30 requests and 3 failures)", "severity": "page", "component": "drafting_api" },
+    { "id": "AL-2", "name": "Latency SLO burn", "condition": "Share of drafts <= 8 s below 90% over 1 h", "severity": "page", "component": "drafting_agent" },
+    { "id": "AL-3", "name": "Quality at risk", "condition": "Weekly judge pass-rate lower 95% bound below 85%", "severity": "ticket", "component": "eval_runner" },
+    { "id": "AL-5", "name": "Guardrail block spike", "condition": "Prohibited-content blocks above 2% of drafts over 1 h", "severity": "page", "component": "guardrails" },
+    { "id": "AL-6", "name": "ClaimCore dependency errors", "condition": "ClaimCore 5xx or timeouts above 5% over 10 min", "severity": "page", "component": "context_builder" }
+  ],
+  "request_flow": [
+    { "from": "adjuster", "to": "workspace_ui", "message": "Draft letter (claim id, letter type)" },
+    { "from": "workspace_ui", "to": "drafting_api", "message": "POST /drafts with SSO token" },
+    { "from": "drafting_api", "to": "context_builder", "message": "Build claim-scoped context" },
+    { "from": "context_builder", "to": "claimcore", "message": "GET claim and latest notes (OAuth2)" },
+    { "from": "context_builder", "to": "docvault", "message": "GET policy wording (product, version)" },
+    { "from": "drafting_api", "to": "drafting_agent", "message": "Draft(context, prompt version)" },
+    { "from": "drafting_agent", "to": "anthropic", "message": "messages.stream - Sonnet 5.5, cached policy prefix" },
+    { "from": "anthropic", "to": "drafting_agent", "message": "Streamed draft tokens", "reply": true },
+    { "from": "drafting_api", "to": "guardrails", "message": "Check draft (rules + Haiku classifier)" },
+    { "from": "drafting_api", "to": "drafting_api", "message": "Field validator vs ClaimCore values" },
+    { "from": "drafting_api", "to": "audit_store", "message": "Append draft, model and prompt versions" },
+    { "from": "drafting_api", "to": "claimcore", "message": "save_draft as pending correspondence" },
+    { "from": "drafting_api", "to": "workspace_ui", "message": "Stream approved-for-review draft", "reply": true },
+    { "from": "adjuster", "to": "workspace_ui", "message": "Edit and approve (sent via PostMaster workflow)" }
+  ],
+  "environments": [
+    { "name": "dev", "purpose": "Feature work with mocked ClaimCore", "data": "Synthetic claims only", "model_access": "Shared dev key, low rate limits" },
+    { "name": "staging", "purpose": "Integration tests and eval gate", "data": "Masked production sample", "model_access": "Staging key" },
+    { "name": "prod", "purpose": "Adjuster traffic", "data": "Live claims (US region)", "model_access": "Production key, org rate limits" }
+  ],
+  "config": [
+    { "key": "ANTHROPIC_API_KEY", "secret": true, "source": "Vault: kv/ccc/anthropic", "default": null },
+    { "key": "CLAIMCORE_CLIENT_SECRET", "secret": true, "source": "Vault: kv/ccc/claimcore", "default": null },
+    { "key": "DRAFT_MODEL", "secret": false, "source": "env", "default": "claude-sonnet-5-5" },
+    { "key": "DRAFT_EFFORT", "secret": false, "source": "env", "default": "low" },
+    { "key": "PROMPT_VERSION_PIN", "secret": false, "source": "env", "default": "1.4.1" },
+    { "key": "JUDGE_SAMPLE_RATE", "secret": false, "source": "env", "default": "0.05" },
+    { "key": "FALLBACK_MODE", "secret": false, "source": "feature flag", "default": "auto" }
+  ],
+  "rollout": [
+    { "phase": "Shadow", "traffic": "0% (drafts generated, not shown)", "entry": "Eval suite pass rate >= 90% on the golden set", "exit": "1 week with no guardrail misses on audited drafts", "rollback": "n/a (not user-visible)" },
+    { "phase": "Canary", "traffic": "1 adjuster team (about 5%)", "entry": "Shadow exit met; on-call briefed", "exit": "2 weeks: quality lower bound >= 88%, p95 <= 8 s", "rollback": "Quality lower bound < 85% or p95 > 10 s for 2 h -> flag off" },
+    { "phase": "Ramp", "traffic": "25% then 50%", "entry": "Canary exit met; sponsor sign-off", "exit": "2 weeks within all SLOs", "rollback": "Any SLO burn page -> previous traffic level" },
+    { "phase": "General availability", "traffic": "100%", "entry": "Ramp exit met; operations acceptance signed", "exit": "Steady state; monthly service review", "rollback": "Prompt or model pin to last good version" }
+  ],
+  "operations": {
+    "on_call": "AI Delivery Team (primary), Claims Platform (secondary)",
+    "dashboards": ["SLO overview (availability, latency, quality)", "Cost per completed letter", "Guardrail blocks and refusals", "Prompt version canary comparison"],
+    "acceptance_signoff": null,
+    "kt_sessions": ["Architecture walkthrough (done)", "Runbook drill with Claims Platform (done)"]
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "description": "Pull request #142 'Close doc-lint findings' - reviewed by the architecture board",
+  "operations": [
+    { "op": "set", "path": "components[id=context_builder].owner", "value": "AI Delivery Team",
+      "reason": "Every component needs an accountable owner for on-call and change approval." },
+    { "op": "set", "path": "components[id=batch_backlog].depends_on", "value": ["context_builder", "guardrails", "audit_store", "anthropic"],
+      "reason": "letter_queue was never built; the batch drafter reads the backlog from ClaimCore via the context builder and calls the Batches API directly." },
+    { "op": "set", "path": "tools[name=get_policy_wording].auth_scope", "value": "docvault:policies.read",
+      "reason": "Least-privilege scope for the policy wording read." },
+    { "op": "remove", "path": "tools[name=send_letter]",
+      "reason": "Discovery constraint: the copilot must not call PostMaster; sending stays in the adjuster-approved workflow." },
+    { "op": "set", "path": "prompts[id=p_guard].eval_suite", "value": "evals/prohibited_content.jsonl",
+      "reason": "Guardrail prompts need a regression suite (positives and negatives) like any other prompt." },
+    { "op": "set", "path": "data_stores[id=eval_store].retention", "value": "13 months",
+      "reason": "Eval results contain PII from sampled drafts; retention aligned with the audit policy for samples." },
+    { "op": "set", "path": "slos[id=SLO-4].alert", "value": "AL-4",
+      "reason": "An SLO without an alert is a wish." },
+    { "op": "append", "path": "alerts", "value": { "id": "AL-4", "name": "Cost per letter drift", "condition": "Daily cost per completed letter above $0.05 for 2 consecutive days", "severity": "ticket", "component": "drafting_agent" },
+      "reason": "Alert backing SLO-4 (warns before the $0.06 SLO is breached)." }
+  ]
+}

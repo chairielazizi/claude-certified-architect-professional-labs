@@ -1,0 +1,46 @@
+{
+  "entries": [
+    {
+      "alert_id": "AL-1",
+      "likely_causes": ["ClaimCore degradation or timeouts (check AL-6)", "Claude API errors: 429 rate limits, 529 overloaded, 5xx", "Bad deploy of the drafting API or a new prompt version"],
+      "diagnosis_steps": ["Open the SLO overview dashboard and identify the failing status codes", "Check whether AL-6 is also firing (dependency problem)", "Search logs by Claude request id for error types (rate_limit_error, overloaded_error, api_error)", "Compare the start time with the last deploy and prompt version change"],
+      "remediation_steps": ["Dependency: confirm template fallback mode is active and notify Claims Platform", "Claude 429/529: pause the backlog batch drafter and let SDK retries with backoff absorb bursts", "Deploy regression: roll back to the last good release or prompt pin"],
+      "escalation": "AI Delivery Team on-call; Claims Platform for ClaimCore; vendor support with request ids for sustained API errors"
+    },
+    {
+      "alert_id": "AL-2",
+      "likely_causes": ["Prompt change producing longer drafts", "Cache misses on the policy prefix (prefix no longer byte-stable)", "Higher effort setting or model change"],
+      "diagnosis_steps": ["Compare output tokens per draft by prompt version", "Check the cache-read ratio on the dashboard", "Compare DRAFT_MODEL and DRAFT_EFFORT with the pinned values"],
+      "remediation_steps": ["Roll back the prompt version if output length jumped", "Restore a byte-stable prefix (no timestamps, fixed section order) and pre-warm the cache", "Revert effort or model changes"],
+      "escalation": "AI Delivery Team on-call"
+    },
+    {
+      "alert_id": "AL-3",
+      "likely_causes": ["Recent prompt or model change", "Shift in letter mix or claim data", "Judge drift"],
+      "diagnosis_steps": ["Break the judge pass rate down by letter type and prompt version", "Read 10 failing samples next to their rubric scores", "Check the latest judge calibration agreement"],
+      "remediation_steps": ["Roll back the offending prompt version", "Add the failing cases to the eval suite before fixing the prompt", "Re-calibrate the judge if agreement fell below 85%"],
+      "escalation": "AI Quality lead; Claims Ops content lead for prompt changes"
+    },
+    {
+      "alert_id": "AL-4",
+      "likely_causes": ["Lower cache hit rate", "Longer outputs or more regenerations per letter", "Model or effort change"],
+      "diagnosis_steps": ["Split spend into cache reads, cache writes, uncached input and output", "Check regenerations per completed letter", "Confirm the pinned model and effort"],
+      "remediation_steps": ["Fix prefix stability to restore cache reads", "Tighten output length budgets per letter type", "Move eligible backlog volume to the batch drafter"],
+      "escalation": "AI Delivery Team (product owner informed)"
+    },
+    {
+      "alert_id": "AL-5",
+      "likely_causes": ["Drafting prompt change introducing coverage-like phrasing", "Classifier prompt change (p_guard) over-blocking", "Unusual letter mix, such as many near-denial letters"],
+      "diagnosis_steps": ["Sample 20 blocked drafts and label true vs false positives", "Check recent p_draft_* and p_guard version changes", "Compare the block rate by letter type"],
+      "remediation_steps": ["True positives: roll back the drafting prompt", "False positives: roll back p_guard and add the cases to its eval suite", "Never disable the guardrail to restore throughput"],
+      "escalation": "Compliance (notify within 4 hours) and AI Delivery Team"
+    },
+    {
+      "alert_id": "AL-6",
+      "likely_causes": ["ClaimCore outage or degradation", "Shared ClaimCore rate limit exhausted (50 rps)", "Expired OAuth2 client secret"],
+      "diagnosis_steps": ["Check ClaimCore status and error codes (5xx vs 429 vs 401)", "Compare request rate with the shared 50 rps limit", "Verify the client secret in Vault"],
+      "remediation_steps": ["Confirm the circuit breaker opened and template mode is active", "Throttle the batch drafter", "Rotate the secret if authentication fails"],
+      "escalation": "Claims Platform on-call (ClaimCore owner)"
+    }
+  ]
+}

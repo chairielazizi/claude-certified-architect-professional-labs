@@ -1,0 +1,23 @@
+{
+  "system_overview": "The Claims Correspondence Copilot drafts outbound claim letters for Harbor Mutual adjusters inside their existing workspace. For each request it builds a claim-scoped context from ClaimCore and DocVault, drafts with Claude Sonnet 5.5 using the full policy wording as a cached prompt prefix, checks the draft with guardrails and a field validator, records an audit trail, and saves the draft to ClaimCore as pending correspondence. A licensed adjuster edits and approves every letter; sending stays in the existing PostMaster workflow, which the copilot never calls.",
+  "container_responsibilities": [
+    { "component_id": "workspace_ui", "responsibility": "Adds a 'Draft letter' action to the adjuster workspace, streams the draft into an editor, shows guardrail and validator findings, and records the adjuster's edits and approval." },
+    { "component_id": "drafting_api", "responsibility": "Single entry point for drafting: validates the SSO token, orchestrates context building, drafting, guardrail checks and the field validator, writes the audit record and saves the draft to ClaimCore as pending correspondence." },
+    { "component_id": "context_builder", "responsibility": "Assembles a claim-scoped context (claim header, parties, amounts, latest notes from ClaimCore; policy wording by product and version from DocVault), laid out so the policy prefix stays byte-stable for prompt caching." },
+    { "component_id": "drafting_agent", "responsibility": "Calls Claude Sonnet 5.5 with the pinned prompt version and read-only tools, streams the draft back, and handles refusals, max_tokens stops and API errors." },
+    { "component_id": "guardrails", "responsibility": "Runs deterministic rules and a Claude Haiku 5.5 classifier over every draft to block coverage determinations, liability admissions and other prohibited content before an adjuster sees it." },
+    { "component_id": "eval_runner", "responsibility": "Samples drafts daily and grades them against the rubric with a Claude Haiku 5.5 judge via the Message Batches API; calibrates the judge monthly against human grades and feeds the quality SLO." },
+    { "component_id": "batch_backlog", "responsibility": "Drafts backlog letters overnight through the Message Batches API at lower unit cost, reusing the context builder and guardrails; drafts land in ClaimCore as pending correspondence for approval." }
+  ],
+  "key_decisions": [
+    { "title": "Ground drafts with long-context prompting and prompt caching", "rationale": "Simplest operations and lowest cost among the options that meet the latency constraint; citation risk is mitigated by the field validator and clause checks.", "adr": "ADR-0007" },
+    { "title": "No send capability in the copilot", "rationale": "Regulatory constraint from discovery: a licensed adjuster approves every letter, so the copilot writes only pending drafts and never calls PostMaster.", "adr": null },
+    { "title": "Small models for guardrails and judging", "rationale": "Classification and rubric grading are high-volume, well-specified tasks; Claude Haiku 5.5 keeps them cheap enough to run on every draft or sample.", "adr": null },
+    { "title": "Template fallback mode", "rationale": "When ClaimCore or the Claude API is degraded, adjusters get the approved template instead of an error, protecting user-facing availability.", "adr": null }
+  ],
+  "operational_notes": [
+    "Prompt and model versions are pinned in configuration; every change ships through shadow and canary stages with eval, latency and cost gates.",
+    "Log the Claude request id with every draft so incidents can be traced end to end.",
+    "Watch the cache-read ratio: a drop usually means the policy prefix stopped being byte-stable."
+  ]
+}
