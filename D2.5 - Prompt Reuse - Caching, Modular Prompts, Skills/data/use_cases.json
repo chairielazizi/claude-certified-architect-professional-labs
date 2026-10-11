@@ -1,0 +1,8 @@
+{
+  "_note": "Use-case manifests: which library components (with semver constraints) each assistant composes. '^2' = highest 2.x.y, '*' = highest available, '2.2.0' = exact pin.",
+  "use_cases": {
+    "claims_triage": ["persona.claims_assistant@^1", "format.json_claim_decision@^1", "safety.pii@^1", "safety.core@^2", "policy.claims_handbook@^3", "reference.coverage_schedule@*"],
+    "underwriting_memo": ["safety.core@^2", "reference.coverage_schedule@*", "persona.underwriting_analyst@^1", "safety.pii@^1", "policy.claims_handbook@^3", "format.markdown_memo@^1"],
+    "skills_demo": ["safety.core@^2", "persona.claims_assistant@^1"]
+  }
+}

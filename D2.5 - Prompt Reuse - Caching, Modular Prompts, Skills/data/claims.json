@@ -1,0 +1,24 @@
+{
+  "triage_requests": [
+    {"claim_id": "CLM-7701", "text": "Home policy, region R07 Front Range. Hailstorm on 2 Oct damaged roof tiles and two skylights. Contractor estimate $8,400. Photos attached. Policy in force since 2021.",
+     "offline_decision": {"claim_id": "CLM-7701", "decision": "approve", "handbook_sections": ["H5.2", "H4.1", "H1.3"], "deductible_usd": 500, "rationale": "Storm damage to the roof is covered under H5.2; estimate is within standard handler authority and far below the R07 Home limit."}},
+    {"claim_id": "CLM-7702", "text": "Contents policy, region R29 New York Metro. Laptop bought in 2019 stolen from apartment, police ref NYPD-55120 filed same day. Replacement cost $2,100.",
+     "offline_decision": {"claim_id": "CLM-7702", "decision": "approve", "handbook_sections": ["H5.4", "H4.4", "H2.2"], "deductible_usd": 400, "rationale": "Theft with timely police report is covered; electronics older than 5 years settle at depreciated value (minimum 25% of replacement)."}},
+    {"claim_id": "CLM-7703", "text": "Motor Private, region R10 Gulf Coast West. Rear-ended at a red light by an identified driver who admitted fault. Repair estimate $4,900. No injuries.",
+     "offline_decision": {"claim_id": "CLM-7703", "decision": "approve", "handbook_sections": ["H7.1", "H7.4"], "deductible_usd": 480, "rationale": "Comprehensive own-damage claim within authority; the other party is identified and at fault, so flag for subrogation recovery."}},
+    {"claim_id": "CLM-7704", "text": "Landlord policy, region R18 Appalachia. Property vacant for 75 days; burst pipe discovered on return, ceiling collapsed. Estimate $22,000.",
+     "offline_decision": {"claim_id": "CLM-7704", "decision": "deny", "handbook_sections": ["H6.2"], "deductible_usd": null, "rationale": "Escape of water while the property was unoccupied for more than 60 consecutive days is excluded under H6.2."}},
+    {"claim_id": "CLM-7705", "text": "Small Business Property, region R23 South Florida. Storm surge flooded the shop floor; stock loss claimed at selling price $96,000 plus 3 weeks of lost revenue.",
+     "offline_decision": {"claim_id": "CLM-7705", "decision": "refer", "handbook_sections": ["H5.2", "H8.1", "H8.2", "H1.3"], "deductible_usd": null, "rationale": "R23 is flood-excluded, stock must be valued at cost, business interruption is always referred and the amount exceeds senior authority."}}
+  ],
+  "memo_requests": [
+    "Summarize what the last quarter's flood-excluded-region claims mean for our Small Business Property appetite on the Gulf Coast.",
+    "Draft a memo on whether Gulf Coast flood exclusions are driving Small Business Property complaints.",
+    "Give the committee a one-page view of Small Business Property flood exposure in flood-excluded regions."
+  ],
+  "memo_offline": "## Situation\nFlood-excluded regions R10, R11, R21 and R23 produced most declined Small Business Property flood claims last quarter.\n\n## Evidence\nSchedule rows show deductibles of $1,800-$2,250 and CAT surge x1.50 in these regions; H5.2 excludes flood there.\n\n## Recommendation\nOffer an optional flood endorsement priced from the R23 schedule row, and tighten appetite for ground-floor retail in R23.",
+  "skill_requests": [
+    {"id": "fraud", "text": "Claim CLM-7731 (Contents, region R04): policy started 9 days ago, cover was raised to $60,000 last week, and the claimant reports theft of a new $9,800 camera kit but has no receipts. Is this suspicious?"},
+    {"id": "plain", "text": "What is the notification deadline for a motor claim?"}
+  ]
+}
