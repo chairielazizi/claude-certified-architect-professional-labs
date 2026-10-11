@@ -1,0 +1,57 @@
+{
+  "audiences": [
+    {
+      "id": "executive",
+      "label": "Executive sponsor / steering committee",
+      "goal": "Approve the recommendation and understand its business impact",
+      "cares_about": [
+        "business value and outcomes",
+        "monthly cost and budget headroom",
+        "delivery risk and timeline",
+        "exactly what decision is needed from them"
+      ],
+      "avoid": ["implementation detail", "model internals", "unexplained acronyms and jargon"],
+      "format": "One headline sentence, at most 5 bullets, then a one-line ask.",
+      "max_words": 160,
+      "min_flesch": 50,
+      "required": [["$"], ["risk"], ["recommend"], ["approve", "decision"]],
+      "jargon_blocklist": ["token", "tokens", "embedding", "embeddings", "vector", "p95", "cache", "cached", "chunk", "prefix", "BM25"]
+    },
+    {
+      "id": "engineering_lead",
+      "label": "Engineering lead / platform team",
+      "goal": "Understand the design, interfaces and operational impact so they can plan the build",
+      "cares_about": [
+        "components and interfaces",
+        "request flow and caching behaviour",
+        "latency and cost per request",
+        "failure modes, fallbacks and rollback",
+        "observability and evals"
+      ],
+      "avoid": ["marketing language", "repeating the business case"],
+      "format": "Short sections: Design, Interfaces, Ops and failure modes, Next steps.",
+      "max_words": 320,
+      "min_flesch": 30,
+      "required": [["cache", "caching"], ["p95"], ["fallback", "rollback"], ["eval"]],
+      "jargon_blocklist": []
+    },
+    {
+      "id": "security_legal",
+      "label": "Security, privacy and legal reviewers",
+      "goal": "Assess data flows, controls and compliance obligations",
+      "cares_about": [
+        "what data goes where, and where it is stored",
+        "data residency and retention",
+        "access control and least privilege",
+        "audit trail",
+        "new copies of sensitive data"
+      ],
+      "avoid": ["performance detail unrelated to risk"],
+      "format": "Data flow summary, controls as bullets, residual risks, decisions needed.",
+      "max_words": 280,
+      "min_flesch": 35,
+      "required": [["residency", "US region"], ["retention", "retain"], ["audit"], ["PII", "personal data"]],
+      "jargon_blocklist": []
+    }
+  ]
+}

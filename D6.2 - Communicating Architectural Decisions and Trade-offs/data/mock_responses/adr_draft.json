@@ -1,0 +1,64 @@
+{
+  "title": "Ground drafted letters with long-context prompting and prompt caching on Claude Sonnet 5.5",
+  "context": "The Claims Correspondence Copilot drafts about 9,000 letters per month (12,000 drafting requests including regenerations), and every draft must reflect the customer's actual policy wording. Adjusters approve every letter, so the system must make that review fast and trustworthy. Must-meet constraints from discovery are a p95 full-draft latency of at most 10 s, AI run cost of at most $8,000 per month, and US data residency. Four grounding approaches ran the same 200-letter golden set: hybrid RAG (A), long context with prompt caching (B), agentic search on Sonnet 5.5 (C) and agentic search on Opus 5.5 (D).",
+  "decision": "We will ground each draft by loading the full policy wording for the claim's product as a cached prompt prefix and generating with Claude Sonnet 5.5 (Option B: long context + prompt caching). Claim context is appended after the cached prefix so the cache is reused across letters for the same product and policy version. Agentic search (Option C) remains the documented fallback if citation accuracy becomes the dominant concern.",
+  "decision_drivers": [
+    "Fastest time to value: 2 weeks to production readiness versus 5-6 weeks for the alternatives.",
+    "Lowest run cost among eligible options: $454 per month, well inside the $8,000 cap.",
+    "Simplest operations: no index pipeline or vector store to run and patch.",
+    "Fewer copies of sensitive content than RAG, which would add an embedding index of policy and claim text."
+  ],
+  "considered_options": [
+    {
+      "option_id": "A",
+      "name": "Hybrid RAG + Claude Sonnet 5.5",
+      "pros": ["Fastest at p95 (6.8 s)", "Strong citation accuracy (94%)"],
+      "cons": ["Index pipeline and vector store to operate", "Creates an additional copy of policy and claim content", "Policy updates take up to an hour to appear"],
+      "outcome": "rejected: lowest weighted score (5.10) and the highest operational load"
+    },
+    {
+      "option_id": "B",
+      "name": "Long context + prompt caching (Sonnet 5.5)",
+      "pros": ["Best time to value (2 weeks)", "Lowest monthly cost ($454)", "Fewest moving parts"],
+      "cons": ["Lowest citation accuracy of the eligible options (88%)", "Thin latency headroom against the SLO (8.9 s p95)"],
+      "outcome": "chosen"
+    },
+    {
+      "option_id": "C",
+      "name": "Agentic search (Sonnet 5.5 + document tools)",
+      "pros": ["Highest eligible quality (92%) and citation accuracy (95%)", "Always-fresh content"],
+      "cons": ["Highest eligible cost ($755 per month)", "p95 of 9.4 s leaves little SLO headroom", "Tool servers and multi-turn loops to operate"],
+      "outcome": "rejected: weighted score 5.95; preferred by Compliance for auditability, kept as the fallback"
+    },
+    {
+      "option_id": "D",
+      "name": "Agentic search (Opus 5.5 + document tools)",
+      "pros": ["Best quality (94.5%) and citation accuracy (96%)"],
+      "cons": ["p95 of 16 s breaks the 10 s SLO", "Most expensive option ($1,355 per month)"],
+      "outcome": "rejected: fails must-meet MM-1 (latency); candidate for the overnight backlog batch"
+    }
+  ],
+  "consequences_positive": [
+    "Production-ready in about 2 weeks, cutting run cost by 30% versus agentic search.",
+    "No index or vector store to operate; policy updates reach drafts at the next cache build.",
+    "Budget headroom of $7,546 per month for growth and evaluation traffic."
+  ],
+  "consequences_negative": [
+    "Citation accuracy is 7.0 pp lower than agentic search, so cited clauses need a code-side check against the policy text.",
+    "Answer quality is 1.0 pp lower than Option C.",
+    "Large cached prompts make latency sensitive to cache misses: p95 is 8.9 s against a 10 s ceiling.",
+    "A product whose policy wording outgrows a single prompt would force a redesign."
+  ],
+  "risks": [
+    { "risk": "Cache misses after prompt or policy changes push p95 above 10 s", "mitigation": "Keep the policy prefix byte-stable, pre-warm the cache per product, alert on p95 and on the cache-read ratio" },
+    { "risk": "Wrong clause cited in a draft", "mitigation": "Validate each cited clause against the policy text in code; adjuster approval stays mandatory" },
+    { "risk": "Compliance prefers agentic search for auditability", "mitigation": "Review citation accuracy monthly with Compliance; the auditability weight would need to rise x2.25 to change the decision" }
+  ],
+  "review_triggers": [
+    "Citation accuracy below 88% for two consecutive weeks",
+    "p95 full-draft latency above 10 s in any week",
+    "A product's policy wording no longer fits in one prompt",
+    "A new Claude model or a price change alters the cost or latency comparison",
+    "Compliance raises the auditability weight toward the break-even (x2.25)"
+  ]
+}

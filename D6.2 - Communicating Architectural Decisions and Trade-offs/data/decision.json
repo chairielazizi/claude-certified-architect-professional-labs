@@ -1,0 +1,89 @@
+{
+  "adr_number": 7,
+  "as_of": "2026-10-08",
+  "project": "Claims Correspondence Copilot (Harbor Mutual Insurance, fictional)",
+  "question": "How should the copilot ground each drafted letter in the customer's policy wording and claim documents?",
+  "context_facts": [
+    "Every letter must quote or reflect the correct policy wording; adjusters approve every draft (Compliance constraint).",
+    "Policy wording per product is about 60,000 tokens; claim context per letter is about 2,500 tokens.",
+    "Volume: 9,000 letters per month, about 12,000 drafting requests including regenerations.",
+    "Pilot: each option ran the same 200-letter golden set, graded by the agreed rubric and a citation check."
+  ],
+  "requests_per_month": 12000,
+  "letters_per_month": 9000,
+  "requirement_links": ["FR-01 (draft letters)", "NFR-10 (p95 <= 10 s)", "NFR-13 (AI spend <= $8,000/month)", "NFR-03 (US data residency)"],
+  "constraints": [
+    { "id": "MM-1", "label": "p95 full-draft latency <= 10 s (NFR-10)", "metric": "p95_latency_s", "op": "<=", "value": 10 },
+    { "id": "MM-2", "label": "Monthly AI run cost <= $8,000 (NFR-13)", "metric": "monthly_cost_usd", "op": "<=", "value": 8000 },
+    { "id": "MM-3", "label": "Deployable with US data residency (NFR-03)", "metric": "us_residency", "op": "==", "value": 1 }
+  ],
+  "criteria": [
+    { "id": "quality", "label": "Answer quality", "metric": "eval_pass_rate_pct", "unit": "%", "worst": 80, "best": 100,
+      "why": "Rubric pass rate on the 200-letter golden set" },
+    { "id": "latency", "label": "Responsiveness", "metric": "p95_latency_s", "unit": "s", "worst": 10, "best": 2,
+      "why": "p95 full-draft latency; 10 s is the SLO ceiling" },
+    { "id": "cost", "label": "Run cost", "metric": "monthly_cost_usd", "unit": "USD/month", "worst": 2000, "best": 0,
+      "why": "Model usage at 12,000 requests/month plus fixed infrastructure" },
+    { "id": "time_to_value", "label": "Time to value", "metric": "build_weeks", "unit": "weeks", "worst": 12, "best": 1,
+      "why": "Engineering weeks to production readiness" },
+    { "id": "operability", "label": "Operational simplicity", "metric": "ops_complexity", "unit": "1-5", "worst": 5, "best": 1,
+      "why": "Moving parts to run, monitor and patch (index pipelines, vector store, tool servers)" },
+    { "id": "auditability", "label": "Auditability", "metric": "citation_accuracy_pct", "unit": "%", "worst": 80, "best": 100,
+      "why": "Share of drafts whose cited policy clause is correct" },
+    { "id": "freshness", "label": "Content freshness", "metric": "freshness_minutes", "unit": "min", "worst": 1440, "best": 0,
+      "why": "Minutes until a policy wording update is reflected in drafts" },
+    { "id": "data_exposure", "label": "Data minimization", "metric": "data_exposure", "unit": "1-5", "worst": 5, "best": 1,
+      "why": "Additional copies of sensitive data (indexes, embeddings, caches outside the system of record)" }
+  ],
+  "options": [
+    {
+      "id": "A",
+      "name": "Hybrid RAG + Claude Sonnet 5.5",
+      "summary": "Chunk and index policy wording (BM25 + embeddings), retrieve top-5 chunks per draft, generate with Sonnet.",
+      "model": "claude-sonnet-5-5",
+      "raw": { "eval_pass_rate_pct": 88.5, "p95_latency_s": 6.8, "build_weeks": 6, "ops_complexity": 4,
+               "citation_accuracy_pct": 94, "freshness_minutes": 60, "data_exposure": 4, "us_residency": 1 },
+      "tokens_per_request": { "input": 4500, "cache_read": 1500, "cache_write": 0, "output": 700 },
+      "fixed_monthly_usd": 400
+    },
+    {
+      "id": "B",
+      "name": "Long context + prompt caching (Sonnet 5.5)",
+      "summary": "Load the full policy wording for the claim's product as a cached prefix; append claim context; generate with Sonnet.",
+      "model": "claude-sonnet-5-5",
+      "raw": { "eval_pass_rate_pct": 91.0, "p95_latency_s": 8.9, "build_weeks": 2, "ops_complexity": 1,
+               "citation_accuracy_pct": 88, "freshness_minutes": 5, "data_exposure": 2, "us_residency": 1 },
+      "tokens_per_request": { "input": 2500, "cache_read": 54000, "cache_write": 6000, "output": 700 },
+      "fixed_monthly_usd": 0
+    },
+    {
+      "id": "C",
+      "name": "Agentic search (Sonnet 5.5 + document tools)",
+      "summary": "Sonnet searches and reads policy sections through tools over DocVault, about 4 turns per draft.",
+      "model": "claude-sonnet-5-5",
+      "raw": { "eval_pass_rate_pct": 92.0, "p95_latency_s": 9.4, "build_weeks": 5, "ops_complexity": 3,
+               "citation_accuracy_pct": 95, "freshness_minutes": 0, "data_exposure": 2, "us_residency": 1 },
+      "tokens_per_request": { "input": 14000, "cache_read": 22000, "cache_write": 0, "output": 1800 },
+      "fixed_monthly_usd": 150
+    },
+    {
+      "id": "D",
+      "name": "Agentic search (Opus 5.5 + document tools)",
+      "summary": "Same as C with Opus 5.5 as the agent: best quality, slowest and most expensive.",
+      "model": "claude-opus-5-5",
+      "raw": { "eval_pass_rate_pct": 94.5, "p95_latency_s": 16.0, "build_weeks": 5, "ops_complexity": 3,
+               "citation_accuracy_pct": 96, "freshness_minutes": 0, "data_exposure": 2, "us_residency": 1 },
+      "tokens_per_request": { "input": 14000, "cache_read": 22000, "cache_write": 0, "output": 2000 },
+      "fixed_monthly_usd": 150
+    }
+  ],
+  "stakeholders": [
+    { "id": "sponsor", "name": "Dana Whitfield", "role": "VP Claims Operations (sponsor)", "influence": 0.4,
+      "weights": { "quality": 25, "latency": 15, "cost": 15, "time_to_value": 25, "operability": 5, "auditability": 5, "freshness": 5, "data_exposure": 5 } },
+    { "id": "compliance", "name": "Priya Raman", "role": "Head of Compliance / DPO", "influence": 0.3,
+      "weights": { "quality": 20, "latency": 0, "cost": 5, "time_to_value": 5, "operability": 5, "auditability": 35, "freshness": 10, "data_exposure": 20 } },
+    { "id": "platform", "name": "Marcus Oyelaran", "role": "Director of Claims Platform", "influence": 0.3,
+      "weights": { "quality": 15, "latency": 20, "cost": 15, "time_to_value": 10, "operability": 25, "auditability": 5, "freshness": 5, "data_exposure": 5 } }
+  ],
+  "sensitivity": { "perturbation": 0.5, "trials": 5000, "seed": 42, "scan_max_multiplier": 5.0, "scan_step": 0.05 }
+}

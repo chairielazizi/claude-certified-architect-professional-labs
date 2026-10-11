@@ -1,0 +1,13 @@
+Option A (Hybrid RAG + Claude Sonnet 5.5): eval pass rate 88.5%, p95 6.8 s, monthly cost $596 ($0.0163/request, $0.066/letter), build 6 weeks, citation accuracy 94%, freshness 60 min, weighted score 5.10/10 - eligible
+Option B (Long context + prompt caching (Sonnet 5.5)): eval pass rate 91%, p95 8.9 s, monthly cost $454 ($0.0378/request, $0.050/letter), build 2 weeks, citation accuracy 88%, freshness 5 min, weighted score 6.56/10 - eligible
+Option C (Agentic search (Sonnet 5.5 + document tools)): eval pass rate 92%, p95 9.4 s, monthly cost $755 ($0.0504/request, $0.084/letter), build 5 weeks, citation accuracy 95%, freshness 0 min, weighted score 5.95/10 - eligible
+Option D (Agentic search (Opus 5.5 + document tools)): eval pass rate 94.5%, p95 16 s, monthly cost $1,355 ($0.1004/request, $0.151/letter), build 5 weeks, citation accuracy 96%, freshness 0 min, weighted score 5.83/10 - NOT ELIGIBLE - fails MM-1 (16 vs <= 10)
+Recommended: Option B; runner-up Option C (margin 0.61)
+Budget headroom with B: $7,546/month under the $8,000 cap
+Combined weights: Answer quality 20.5, Responsiveness 12.0, Run cost 12.0, Time to value 14.5, Operational simplicity 11.0, Auditability 14.0, Content freshness 6.5, Data minimization 9.5
+Winner by stakeholder weights: Dana Whitfield -> B, Priya Raman -> C, Marcus Oyelaran -> B
+Monte Carlo (5000 trials, weights +/-50%): A wins 0.0%, B wins 99.5%, C wins 0.5%
+Break-even: auditability weight x2.25 (14.0 -> 31.5 points) makes C the winner
+Trade-off: B over C: saves $301/month (-39.9%); 0.5 s faster at p95; 1.0 pp lower answer quality; 7.0 pp lower citation accuracy; ships 3 weeks sooner.
+Trade-off: B over A: saves $142/month (-23.8%); 2.1 s slower at p95; 2.5 pp higher answer quality; 6.0 pp lower citation accuracy; ships 4 weeks sooner.
+Trade-off: B over D: saves $901/month (-66.5%); 7.1 s faster at p95; 3.5 pp lower answer quality; 8.0 pp lower citation accuracy; ships 3 weeks sooner. (D is not eligible: fails MM-1 (16 vs <= 10))
