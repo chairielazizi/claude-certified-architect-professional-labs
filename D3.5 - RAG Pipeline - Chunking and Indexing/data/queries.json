@@ -1,0 +1,19 @@
+{
+  "_comment": "Labeled retrieval eval set. A chunk is relevant when it belongs to doc_id AND its raw text contains the evidence phrase (case/whitespace-insensitive). Phrase-based labels are chunking-strategy agnostic, so every strategy is graded against the same ground truth. evidence_v4 overrides the phrase after the v4.0 travel policy update.",
+  "queries": [
+    {"id": "q01", "query": "How many days do I have to submit my expense report after a trip?", "doc_id": "travel-expense-policy", "evidence": "within 60 days", "evidence_v4": "within 30 days"},
+    {"id": "q02", "query": "What is the daily meal allowance for international business travel?", "doc_id": "travel-expense-policy", "evidence": "international per diem is USD 95", "evidence_v4": "international per diem is USD 105"},
+    {"id": "q03", "query": "Am I allowed to fly business class on a long trip?", "doc_id": "travel-expense-policy", "evidence": "Business class is permitted"},
+    {"id": "q04", "query": "How much unused vacation can I carry over into next year?", "doc_id": "pto-leave-policy", "evidence": "up to 5 unused PTO days"},
+    {"id": "q05", "query": "How many weeks of paid leave do I get for a new baby?", "doc_id": "pto-leave-policy", "evidence": "16 weeks"},
+    {"id": "q06", "query": "My laptop was stolen at the airport, what should I do?", "doc_id": "security-acceptable-use", "evidence": "within 1 hour"},
+    {"id": "q07", "query": "Is multi-factor authentication required for the VPN?", "doc_id": "security-acceptable-use", "evidence": "is mandatory for email, VPN"},
+    {"id": "q08", "query": "How much money can I get for a desk and chair at home?", "doc_id": "remote-work-policy", "evidence": "stipend of USD 500"},
+    {"id": "q09", "query": "Who must sign off on buying something that costs USD 12,000?", "doc_id": "procurement-policy", "evidence": "require approval from your department VP"},
+    {"id": "q10", "query": "What is Form PRC-7 used for?", "doc_id": "procurement-policy", "evidence": "Form PRC-7"},
+    {"id": "q11", "query": "Do I need to keep a receipt for a 20 dollar taxi ride?", "doc_id": "travel-expense-policy", "evidence": "USD 25 or more"},
+    {"id": "q12", "query": "What hours do remote employees need to be online?", "doc_id": "remote-work-policy", "evidence": "from 10:00 to 15:00"},
+    {"id": "q13", "query": "Can I work from abroad for a few weeks?", "doc_id": "remote-work-policy", "evidence": "limited to 20 working days"},
+    {"id": "q14", "query": "What happens if I lose a receipt?", "doc_id": "travel-expense-policy", "evidence": "Form EX-12"}
+  ]
+}
