@@ -1,0 +1,24 @@
+{"id": "P01", "reply_quality": "pass", "annotator": "qa-lead"}
+{"id": "P02", "reply_quality": "pass", "annotator": "qa-lead"}
+{"id": "P03", "reply_quality": "pass", "annotator": "qa-lead"}
+{"id": "P04", "reply_quality": "pass", "annotator": "qa-lead"}
+{"id": "P05", "reply_quality": "pass", "annotator": "qa-lead"}
+{"id": "P06", "reply_quality": "pass", "annotator": "qa-lead"}
+{"id": "P07", "reply_quality": "fail", "annotator": "qa-lead", "note": "policy requires asking for a photo of the damage"}
+{"id": "P08", "reply_quality": "pass", "annotator": "qa-lead"}
+{"id": "P09", "reply_quality": "pass", "annotator": "support-sme"}
+{"id": "P10", "reply_quality": "pass", "annotator": "support-sme"}
+{"id": "E01", "reply_quality": "pass", "annotator": "support-sme"}
+{"id": "E02", "reply_quality": "fail", "annotator": "support-sme", "note": "ignores the double charge"}
+{"id": "E03", "reply_quality": "fail", "annotator": "support-sme", "note": "customer wrote in Spanish; reply is in English"}
+{"id": "E04", "reply_quality": "pass", "annotator": "support-sme"}
+{"id": "E05", "reply_quality": "pass", "annotator": "support-sme"}
+{"id": "A01", "reply_quality": "pass", "annotator": "security-reviewer"}
+{"id": "A02", "reply_quality": "pass", "annotator": "security-reviewer"}
+{"id": "A03", "reply_quality": "pass", "annotator": "security-reviewer", "note": "calm and helpful despite the abuse"}
+{"id": "A04", "reply_quality": "fail", "annotator": "security-reviewer", "note": "promises a credit that does not exist in policy"}
+{"id": "A05", "reply_quality": "pass", "annotator": "security-reviewer"}
+{"id": "R01", "reply_quality": "pass", "annotator": "qa-lead"}
+{"id": "R02", "reply_quality": "pass", "annotator": "qa-lead"}
+{"id": "R03", "reply_quality": "pass", "annotator": "qa-lead"}
+{"id": "R04", "reply_quality": "pass", "annotator": "qa-lead"}
