@@ -1,0 +1,17 @@
+{
+  "_comment": "Illustrative research snippets (fictional figures) that subagents search with their search_corpus tool.",
+  "snippets": [
+    {"id": "m1", "topic": "market", "text": "Industry survey 2026: roughly 120,000 mid-market retailers (50-999 employees) operate in the EU."},
+    {"id": "m2", "topic": "market", "text": "18% of EU mid-market retailers used AI in customer support in 2026, up from 9% in 2024."},
+    {"id": "m3", "topic": "market", "text": "Retailers cite 24/7 coverage and multilingual customer support as the top reasons to adopt AI support."},
+    {"id": "c1", "topic": "competitors", "text": "Four vendors target EU mid-market retail customer support with AI-first offerings; two are US-based competitors."},
+    {"id": "c2", "topic": "competitors", "text": "Analyst note: the addressable base is closer to 95,000 mid-market retailers once franchise duplicates are removed."},
+    {"id": "c3", "topic": "competitors", "text": "Typical competitor pricing is per resolved conversation, between $0.60 and $1.20."},
+    {"id": "k1", "topic": "cost", "text": "Pilot data: an AI-resolved support ticket costs about $0.04 in model usage with prompt caching."},
+    {"id": "k2", "topic": "cost", "text": "Fully loaded human cost per support ticket in EU retail averages $4.10."},
+    {"id": "k3", "topic": "cost", "text": "Integration and QA typically add 20-30% on top of model usage cost in year one."},
+    {"id": "r1", "topic": "regulatory", "text": "EU AI Act: customer-facing chatbots must disclose that users are interacting with AI (transparency obligations)."},
+    {"id": "r2", "topic": "regulatory", "text": "GDPR: large-scale processing of customer conversations will likely require a data protection impact assessment (DPIA)."},
+    {"id": "r3", "topic": "regulatory", "text": "Data residency: many EU retailers require EU data processing; confirm regional processing options with the provider."}
+  ]
+}
