@@ -1,0 +1,20 @@
+{
+  "_comment": "LLM-specific risk register for a Claude-based production system. likelihood/impact on a 1-5 scale. Educational sample values - re-score for your own workload.",
+  "bands": {"high": 15, "medium": 8},
+  "risks": [
+    {"id": "R01", "risk": "Hallucination / fabricated facts", "category": "accuracy", "likelihood": 4, "impact": 4, "owner": "ML Lead", "mitigation": "RAG grounding + citations + groundedness output check + human review for high-stakes"},
+    {"id": "R02", "risk": "Prompt injection (direct, user input)", "category": "security", "likelihood": 3, "impact": 4, "owner": "Security", "mitigation": "input heuristic + classifier, untrusted-data envelope, operator role:system channel"},
+    {"id": "R03", "risk": "Prompt injection (indirect, retrieved/tool content)", "category": "security", "likelihood": 3, "impact": 5, "owner": "Security", "mitigation": "quarantine + scan retrieved docs, treat tool output as data, least-privilege tools"},
+    {"id": "R04", "risk": "Sensitive data leakage (PII/secrets)", "category": "privacy", "likelihood": 2, "impact": 5, "owner": "DPO", "mitigation": "input/output PII redaction, de-identification, ZDR/retention controls, egress filters"},
+    {"id": "R05", "risk": "Excessive agency (unauthorized side effects)", "category": "safety", "likelihood": 3, "impact": 5, "owner": "Platform", "mitigation": "tool allowlist, argument validation, human approval gate on high-risk actions"},
+    {"id": "R06", "risk": "Over-reliance / automation bias", "category": "human-factors", "likelihood": 4, "impact": 3, "owner": "Product", "mitigation": "confidence surfacing, AI disclosure, HITL sampling, decision explanations"},
+    {"id": "R07", "risk": "Nondeterminism / unreproducible output", "category": "reliability", "likelihood": 5, "impact": 2, "owner": "ML Lead", "mitigation": "structured outputs, eval harness, schema validation, snapshot tests of the control plane"},
+    {"id": "R08", "risk": "Context overflow / lost-in-the-middle", "category": "accuracy", "likelihood": 3, "impact": 3, "owner": "ML Lead", "mitigation": "token budgeting, compaction/context editing, put key facts at edges, retrieval over stuffing"},
+    {"id": "R09", "risk": "Knowledge cutoff / staleness", "category": "accuracy", "likelihood": 4, "impact": 2, "owner": "ML Lead", "mitigation": "RAG for fresh data, web_search for current events, display cutoff caveats"},
+    {"id": "R10", "risk": "Bias / unfair outcomes", "category": "ethics", "likelihood": 3, "impact": 4, "owner": "Responsible AI", "mitigation": "counterfactual tests, fairness metrics, attribute redaction, rubric decisions (see D5.5)"},
+    {"id": "R11", "risk": "Over-refusal / false-positive safety blocks", "category": "quality", "likelihood": 3, "impact": 2, "owner": "ML Lead", "mitigation": "refusal-category routing, server-side fallback, prompt tuning, verification programs"},
+    {"id": "R12", "risk": "Cost runaway in agent loops", "category": "cost", "likelihood": 3, "impact": 3, "owner": "Platform", "mitigation": "step budgets, max_tokens caps, effort caps, per-session cost ceiling, circuit breaker"},
+    {"id": "R13", "risk": "Vendor / model deprecation", "category": "operations", "likelihood": 2, "impact": 3, "owner": "Architecture", "mitigation": "model-id abstraction, eval-gated upgrades, migration runbook, pin + monitor"},
+    {"id": "R14", "risk": "Supply chain of tools / MCP servers", "category": "security", "likelihood": 2, "impact": 4, "owner": "Security", "mitigation": "vet + pin MCP servers, least privilege, tool output as untrusted data, audit tool inventory"}
+  ]
+}
