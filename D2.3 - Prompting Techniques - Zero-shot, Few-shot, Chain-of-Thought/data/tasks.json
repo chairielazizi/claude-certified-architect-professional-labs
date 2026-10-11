@@ -1,0 +1,83 @@
+{
+  "taxonomy": [
+    {"label": "billing_dispute", "definition": "The customer believes a charge is WRONG: a duplicate charge, an amount that does not match their plan, extra seats they do not have, or a charge they do not recognize."},
+    {"label": "refund_request", "definition": "The customer accepts the charge was valid when made but asks for money back: unused time after a downgrade, an accidental renewal, changing their mind."},
+    {"label": "technical_outage", "definition": "The service is broken or unavailable, typically for many users or the whole organization at once: errors, downtime, sync or webhook failures, crashes."},
+    {"label": "account_access", "definition": "A specific user or organization cannot sign in or verify identity while the service itself is up: passwords, 2FA, lockouts, SSO configuration."},
+    {"label": "feature_request", "definition": "The customer asks for a new capability or a change in behaviour. Nothing is broken."},
+    {"label": "churn_risk", "definition": "The customer states an intent to cancel, leave, not renew, or switch to a competitor."}
+  ],
+  "rules": [
+    "churn_risk takes precedence over every other label whenever the customer states an intent to cancel, leave, not renew or switch, even if they also report a bug or ask for a refund.",
+    "A charge the customer did not expect or does not recognize is billing_dispute, not refund_request.",
+    "If sign-in fails because the whole service is down, use technical_outage; if only one user or organization is affected while the service is up, use account_access."
+  ],
+  "few_shot_pool": [
+    {"id": "P01", "label": "billing_dispute", "email": "Hi, my invoice for October shows $98 but my plan is $49 a month. It looks like I was billed for two workspaces when we only have one."},
+    {"id": "P02", "label": "billing_dispute", "email": "There's a charge from you on my card dated the 3rd that I don't recognize at all. I cancelled back in August, so what is this for?"},
+    {"id": "P03", "label": "refund_request", "email": "I renewed annually by mistake yesterday and haven't used anything since. Could I get my money back for the renewal?"},
+    {"id": "P04", "label": "refund_request", "email": "We moved two seats to the cheaper tier mid-cycle. Is the unused portion of those two seats refundable?"},
+    {"id": "P05", "label": "technical_outage", "email": "Webhooks have stopped firing for every one of our projects since 14:00 UTC, and your API is returning 500 errors."},
+    {"id": "P06", "label": "technical_outage", "email": "The mobile app now crashes on launch for our whole field team after this morning's update. Nobody can log visits."},
+    {"id": "P07", "label": "account_access", "email": "I'm locked out after too many password attempts and the unlock email never arrives, even in spam."},
+    {"id": "P08", "label": "account_access", "email": "Our new admin can't sign in through Google SSO. She gets 'user not provisioned' every time, everyone else is fine."},
+    {"id": "P09", "label": "feature_request", "email": "Any plans to support recurring tasks with custom intervals, like every third Tuesday of the month?"},
+    {"id": "P10", "label": "feature_request", "email": "It would help a lot if reports could be scheduled to email our finance team automatically every Monday."},
+    {"id": "P11", "label": "churn_risk", "email": "Honestly the price jump is too much for us. Unless something changes we'll cancel at renewal next month."},
+    {"id": "P12", "label": "churn_risk", "email": "Your competitor includes SSO for free. We're evaluating a switch, so give me a reason to stay."},
+    {"id": "P13", "label": "billing_dispute", "email": "Our annual invoice applied last year's list price instead of the 15% discount written into our contract."},
+    {"id": "P14", "label": "refund_request", "email": "We bought the onboarding package but our project was cancelled before kickoff. Can that fee be returned?"},
+    {"id": "P15", "label": "technical_outage", "email": "Search returns no results for anyone in our workspace since last night, even for documents we opened today."},
+    {"id": "P16", "label": "account_access", "email": "My authenticator app was on my old phone, which I lost. How do I get back into my account?"},
+    {"id": "P17", "label": "feature_request", "email": "Please let us set different approval limits per department instead of one global limit."},
+    {"id": "P18", "label": "churn_risk", "email": "Leadership has asked us to consolidate tools. We will not be renewing unless you can match our new vendor."}
+  ],
+  "test_set": [
+    {"id": "E01", "label": "billing_dispute", "email": "I was charged $49 twice this month for the same Pro subscription. Please fix this.", "rationale": "Duplicate charge the customer believes is wrong -> billing_dispute."},
+    {"id": "E02", "label": "refund_request", "email": "I downgraded to Basic last week but still have 20 days of Pro left. Can I get the difference back?", "rationale": "Valid charge, asks for money back for unused time after a downgrade -> refund_request."},
+    {"id": "E03", "label": "billing_dispute", "email": "There's a $12.99 charge called 'NX*ADDON' on my statement. I never signed up for any add-on.", "rationale": "Unrecognized charge -> rule 2 says billing_dispute, not refund_request."},
+    {"id": "E04", "label": "technical_outage", "email": "Since about 9am none of my team can load dashboards - we all get error 503.", "rationale": "Whole team sees 503 errors -> service broken -> technical_outage."},
+    {"id": "E05", "label": "account_access", "email": "I reset my password but the 2FA code never arrives on my new phone, so I'm locked out.", "rationale": "Single user cannot verify identity while service is up -> account_access."},
+    {"id": "E06", "label": "feature_request", "email": "Can you add dark mode to the mobile app? My eyes would thank you.", "rationale": "Asks for a new capability, nothing broken -> feature_request."},
+    {"id": "E07", "label": "churn_risk", "email": "Third outage this month. If sync breaks again I'm moving our 40 seats to Competitor X.", "rationale": "Reports an outage but states intent to switch -> rule 1 precedence -> churn_risk."},
+    {"id": "E08", "label": "technical_outage", "email": "I can't log in - and your status page says the whole login service is down?", "rationale": "Login fails because the whole service is down -> rule 3 -> technical_outage."},
+    {"id": "E09", "label": "feature_request", "email": "Would be great if exports supported CSV with custom delimiters for our ERP import.", "rationale": "Requests new export capability -> feature_request."},
+    {"id": "E10", "label": "churn_risk", "email": "Please cancel my plan at the end of this cycle; we found a cheaper tool. Also refund the last month?", "rationale": "Intent to cancel plus a refund ask -> rule 1 precedence -> churn_risk."},
+    {"id": "E11", "label": "billing_dispute", "email": "You billed us for 25 seats but we only have 18 active users.", "rationale": "Charged for seats they do not have -> amount is wrong -> billing_dispute."},
+    {"id": "E12", "label": "account_access", "email": "Our SSO login stopped accepting our Okta assertions after your update yesterday - only our org seems affected.", "rationale": "Only one organization affected while the service is up -> rule 3 -> account_access."}
+  ],
+  "reasoning_examples": [
+    {"question": "A plan costs $20 per seat per month. A team of 5 pays monthly. What do they pay per year in dollars?", "worked": "Monthly cost = 20 x 5 = 100. Yearly = 100 x 12 = 1200.", "answer": 1200},
+    {"question": "A job processes 90 documents per hour. How many hours are needed for 400 documents, rounded up to whole hours?", "worked": "400 / 90 = 4.44 hours. Rounded up = 5.", "answer": 5}
+  ],
+  "reasoning_test": [
+    {"id": "M01", "question": "A team plan costs $15 per seat per month. The team has 12 seats and pays annually with a 20% discount. What is the annual cost in dollars?", "worked": "Monthly list = 15 x 12 = 180. Annual list = 180 x 12 = 2160. Discount 20% -> 2160 x 0.8 = 1728.", "answer": 1728},
+    {"id": "M02", "question": "A support queue receives 240 tickets per day. An AI assistant auto-resolves 35% of them; each agent resolves 16 of the remaining tickets per day. How many agents are needed?", "worked": "Remaining = 240 x 0.65 = 156. Agents = 156 / 16 = 9.75 -> must round up to 10 whole agents.", "answer": 10},
+    {"id": "M03", "question": "Input costs $4 per million tokens and output $20 per million. A request uses 3,000 input and 500 output tokens. What do 10,000 such requests cost in dollars?", "worked": "Per request = 3000 x 4/1e6 + 500 x 20/1e6 = 0.012 + 0.010 = 0.022. x 10,000 = 220.", "answer": 220},
+    {"id": "M04", "question": "A cache write costs 1.25x the base input price and a cache read 0.1x. A 10,000-token prefix is used by 5 requests within the cache lifetime. How many base-price token equivalents are billed for the prefix in total?", "worked": "Request 1 writes: 10,000 x 1.25 = 12,500. Requests 2-5 read: 4 x 10,000 x 0.1 = 4,000. Total = 16,500.", "answer": 16500},
+    {"id": "M05", "question": "An SLA requires 99.5% availability over a 30-day month. How many minutes of downtime are allowed?", "worked": "Minutes in month = 30 x 24 x 60 = 43,200. Allowed downtime = 43,200 x 0.005 = 216.", "answer": 216}
+  ],
+  "offline_simulation": {
+    "_note": "Drives the OFFLINE mock only: which items each technique gets wrong, so the comparison is deterministic and mirrors typical failure modes (precedence rules missed zero-shot, label boundaries fixed by examples, arithmetic slips fixed by reasoning). Live mode ignores this block.",
+    "classification_errors": {
+      "zero_shot": {"E03": "refund_request", "E07": "technical_outage", "E10": "refund_request", "E12": "technical_outage"},
+      "few_shot": {"E08": "account_access", "E12": "technical_outage"},
+      "cot": {"E03": "refund_request"},
+      "thinking": {}
+    },
+    "zero_shot_verbose": {
+      "E04": "This is a technical_outage.",
+      "E06": "Category: feature_request",
+      "E11": "billing_dispute - customer was overcharged for seats"
+    },
+    "cot_wrong_rationale": {
+      "E03": "Customer wants the $12.99 back for an add-on, so this is a request for money back -> refund_request."
+    },
+    "reasoning_errors": {
+      "zero_shot": {"M01": 2160, "M02": 9, "M04": 17500},
+      "few_shot": {"M01": 2160, "M04": 17500},
+      "cot": {},
+      "thinking": {}
+    }
+  }
+}
