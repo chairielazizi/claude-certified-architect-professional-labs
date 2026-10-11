@@ -71,6 +71,13 @@ PRICING: dict[str, dict[str, float]] = {
     MODEL_SONNET: {"input": 2.00, "output": 10.00, "cache_write": 2.50, "cache_read": 0.20},
     # Haiku 5.5 cache pricing assumed at the usual ratios (1.25x write, 0.1x read).
     MODEL_HAIKU: {"input": 0.10, "output": 0.50, "cache_write": 0.125, "cache_read": 0.01},
+    # Previous generations - for migration / comparison labs (cache at 1.25x write, 0.1x read).
+    "claude-fable-5": {"input": 10.00, "output": 50.00, "cache_write": 12.50, "cache_read": 1.00},
+    "claude-opus-5": {"input": 5.00, "output": 25.00, "cache_write": 6.25, "cache_read": 0.50},
+    "claude-opus-4-8": {"input": 5.00, "output": 25.00, "cache_write": 6.25, "cache_read": 0.50},
+    "claude-sonnet-5": {"input": 2.00, "output": 10.00, "cache_write": 2.50, "cache_read": 0.20},
+    "claude-sonnet-4-6": {"input": 3.00, "output": 15.00, "cache_write": 3.75, "cache_read": 0.30},
+    "claude-haiku-4-5": {"input": 1.00, "output": 5.00, "cache_write": 1.25, "cache_read": 0.10},
 }
 
 # Simulated latency profile for offline mode: time-to-first-token + per output token.
@@ -331,7 +338,9 @@ def _build_message(body: dict[str, Any], state: _MockState) -> tuple[dict[str, A
     stop_reason = out.get("stop_reason") or (
         "tool_use" if any(b.get("type") == "tool_use" for b in content) else "end_turn"
     )
-    out_tokens = estimate_tokens(json.dumps(content))
+    # Compact, non-ASCII-escaped JSON - byte-identical to JSON.stringify in the TS client,
+    # so both languages report the same usage for the same reply.
+    out_tokens = estimate_tokens(json.dumps(content, separators=(",", ":"), ensure_ascii=False))
     max_tokens = int(body.get("max_tokens", 4096))
     if out_tokens > max_tokens and stop_reason == "end_turn":
         # Simulate truncation: keep roughly max_tokens worth of text.
@@ -421,9 +430,9 @@ def get_client(responder: Responder | None = None, **kwargs: Any) -> anthropic.A
         time.sleep(latency)
         return response
 
+    kwargs.setdefault("max_retries", 0)  # offline: no retries unless a lab asks for them
     return anthropic.Anthropic(
         api_key="offline-mock-key",
-        max_retries=0,
         http_client=anthropic.DefaultHttpxClient(transport=httpx2.MockTransport(handler)),
         **kwargs,
     )
@@ -447,9 +456,9 @@ def get_async_client(responder: Responder | None = None, **kwargs: Any) -> anthr
     if is_live():
         return anthropic.AsyncAnthropic(**kwargs)
     state = _MockState(responder=responder or default_responder)
+    kwargs.setdefault("max_retries", 0)
     return anthropic.AsyncAnthropic(
         api_key="offline-mock-key",
-        max_retries=0,
         http_client=anthropic.DefaultAsyncHttpxClient(transport=_AsyncMockTransport(state)),
         **kwargs,
     )

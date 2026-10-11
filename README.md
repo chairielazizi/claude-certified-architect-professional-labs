@@ -143,7 +143,17 @@ The mock also simulates the behaviours architects reason about:
 | SSE streaming for text and tool calls | Perceived latency, tool streaming |
 | `count_tokens` endpoint | Context budgeting (D2.4) |
 
-Offline numbers are **illustrative**. Use live mode to get real measurements.
+Offline numbers are **illustrative**. Use live mode to get real measurements. Known simplifications of the mock:
+
+- **Caching** honours only the *last* `cache_control` breakpoint (no multi-breakpoint reads, no 20-block
+  lookback) and uses a 1,024-token minimum. The real minimum is model-dependent and lower on current models.
+- **Latency** is simulated per model and scaled down for speed. `elapsed_ms()` scales it back up, so
+  interpreter and timer noise is magnified too. Labs that make latency-based decisions model latency
+  deterministically from `usage` instead.
+- **Errors**: the mock only returns 200/404. Labs that teach 429/529/timeout handling raise the SDK's own
+  exception classes from a fault-injection layer (see D5.2, D4.6, D7.3).
+- **Not served offline**: Batches, Files, Models API, Skills, MCP connector and server tools (web search, code
+  execution, tool search). Labs guard these with `is_live()` and print the exact request code instead.
 
 ## Models used (cached Oct 2026; confirm on the live models page)
 

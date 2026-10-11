@@ -53,6 +53,13 @@ export const PRICING: Record<string, Price> = {
   [MODEL_SONNET]: { input: 2.0, output: 10.0, cacheWrite: 2.5, cacheRead: 0.2 },
   // Haiku 5.5 cache pricing assumed at the usual ratios (1.25x write, 0.1x read).
   [MODEL_HAIKU]: { input: 0.1, output: 0.5, cacheWrite: 0.125, cacheRead: 0.01 },
+  // Previous generations - for migration / comparison labs (cache at 1.25x write, 0.1x read).
+  "claude-fable-5": { input: 10.0, output: 50.0, cacheWrite: 12.5, cacheRead: 1.0 },
+  "claude-opus-5": { input: 5.0, output: 25.0, cacheWrite: 6.25, cacheRead: 0.5 },
+  "claude-opus-4-8": { input: 5.0, output: 25.0, cacheWrite: 6.25, cacheRead: 0.5 },
+  "claude-sonnet-5": { input: 2.0, output: 10.0, cacheWrite: 2.5, cacheRead: 0.2 },
+  "claude-sonnet-4-6": { input: 3.0, output: 15.0, cacheWrite: 3.75, cacheRead: 0.3 },
+  "claude-haiku-4-5": { input: 1.0, output: 5.0, cacheWrite: 1.25, cacheRead: 0.1 },
 };
 
 /** Simulated latency for offline mode: [time-to-first-token ms, ms per output token]. */
@@ -402,5 +409,6 @@ function makeMockFetch(state: MockState) {
 export function getClient(responder?: Responder, options: ConstructorParameters<typeof Anthropic>[0] = {}): Anthropic {
   if (isLive()) return new Anthropic(options);
   const state: MockState = { responder: responder ?? defaultResponder, calls: 0, cache: new Map() };
-  return new Anthropic({ ...options, apiKey: "offline-mock-key", maxRetries: 0, fetch: makeMockFetch(state) });
+  // Offline: no retries unless a lab asks for them (options.maxRetries wins).
+  return new Anthropic({ maxRetries: 0, ...options, apiKey: "offline-mock-key", fetch: makeMockFetch(state) });
 }
