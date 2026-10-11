@@ -1,0 +1,28 @@
+{
+  "support_agent": {
+    "current": "2.0.0",
+    "versions": {
+      "1.0.0": {
+        "file": "support_agent.v1.md",
+        "status": "deprecated",
+        "changelog": "Initial prompt: one paragraph, policy pasted inline, no untrusted-content rules."
+      },
+      "2.0.0": {
+        "file": "support_agent.v2.md",
+        "status": "current",
+        "changelog": "XML-tagged sections, untrusted-content handling, scope/refusal/escalation guardrails, JSON output.",
+        "required_sections": ["role_and_goal", "context", "policy_document", "rules", "untrusted_content_handling", "guardrails", "output_format"]
+      }
+    },
+    "variables": {
+      "company_name": {"max_len": 60, "pattern": "^[A-Za-z0-9 .&-]+$"},
+      "assistant_name": {"max_len": 40, "pattern": "^[A-Za-z ]+$"},
+      "support_hours": {"max_len": 80},
+      "escalation_channel": {"max_len": 40, "pattern": "^[a-z_]+$"},
+      "policy_document": {"max_len": 20000},
+      "policy_version": {"max_len": 10, "pattern": "^\\d{4}-\\d{2}-\\d{2}$"},
+      "max_reply_words": {"max_len": 3, "pattern": "^\\d+$"},
+      "canary": {"max_len": 40, "pattern": "^CANARY-[A-Z0-9-]+$"}
+    }
+  }
+}

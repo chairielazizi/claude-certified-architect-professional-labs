@@ -1,0 +1,15 @@
+{
+  "type": "object",
+  "properties": {
+    "reply": {"type": "string"},
+    "intent": {
+      "type": "string",
+      "enum": ["baggage", "booking_change", "refund", "delay_or_cancellation", "payment", "special_assistance", "safety_incident", "out_of_scope", "other"]
+    },
+    "needs_escalation": {"type": "boolean"},
+    "escalation_reason": {"type": "string"},
+    "policy_refs": {"type": "array", "items": {"type": "string"}}
+  },
+  "required": ["reply", "intent", "needs_escalation", "escalation_reason", "policy_refs"],
+  "additionalProperties": false
+}
