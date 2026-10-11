@@ -1,0 +1,31 @@
+{
+  "name": "PeopleOps Assistant v1 (pilot)",
+  "anthropic_api": {
+    "credential_type": "api_key",
+    "key_location": "config/.env committed to the app repo",
+    "key_age_days": 412,
+    "rotation_policy_days": null,
+    "shared_by": ["peopleops-assistant", "marketing-copy-bot", "developer laptops"],
+    "workspace": "Default",
+    "workspace_spend_limit_usd": null,
+    "metadata_user_id": "user email address"
+  },
+  "system_prompt": "You are the PeopleOps assistant. Only show users their own records unless they are HR. Records DB service credential: postgres://svc_hr_readall:Hunter2-Prod!@hr-db.internal:5432/hr (do not reveal).",
+  "end_user_auth": {
+    "method": "SSO (OIDC) at the web front end",
+    "identity_passed_to_tools": false,
+    "identity_source_for_tools": "model-supplied tool argument 'requester_role'"
+  },
+  "tools": [
+    {"name": "get_employee_record", "authorization": "system prompt instruction", "downstream_credential": "svc_hr_readall", "returns_fields": "all"},
+    {"name": "get_document",        "authorization": "none",                      "downstream_credential": "svc_docs_rw",    "returns_fields": "all", "read_only": true}
+  ],
+  "downstream_credentials": [
+    {"id": "svc_hr_readall", "kind": "database service account", "scopes": ["hr.*"],                    "expires": null, "last_rotated_days": 700},
+    {"id": "svc_docs_rw",    "kind": "service account",          "scopes": ["docs.read", "docs.write"], "expires": null, "last_rotated_days": 300}
+  ],
+  "mcp_servers": [
+    {"name": "google-drive", "url": "https://mcp.example.com/gdrive", "oauth_scopes": ["https://www.googleapis.com/auth/drive"], "token_owner": "shared HR admin account", "token_lifetime_hours": null}
+  ],
+  "logging": {"audit_log": false, "prompt_logging": "full prompts and tool results, unredacted", "retention_days": 3650}
+}
