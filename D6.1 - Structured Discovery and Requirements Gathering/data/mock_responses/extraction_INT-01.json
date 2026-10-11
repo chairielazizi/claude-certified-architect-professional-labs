@@ -1,0 +1,161 @@
+{
+  "stakeholder": {
+    "name": "Dana Whitfield",
+    "role": "VP Claims Operations (executive sponsor)",
+    "department": "Claims Operations"
+  },
+  "business_goals": [
+    {
+      "statement": "Cut average handling time per letter by at least 40%",
+      "metric": "average handling time per letter",
+      "target": ">= 40% reduction from 22 minutes"
+    },
+    {
+      "statement": "Clear the correspondence backlog",
+      "metric": "letter backlog",
+      "target": "cleared within three months of go-live"
+    },
+    {
+      "statement": "Make letters easier for customers to understand",
+      "metric": "correspondence CSAT",
+      "target": "4.2 out of 5"
+    }
+  ],
+  "personas": [
+    { "name": "Claims adjuster", "needs": "A good first draft in front of them, with claim details pre-filled" },
+    { "name": "Team lead", "needs": "Visibility of draft quality across the team" }
+  ],
+  "pain_points": [
+    "About 22 minutes of handling time per letter",
+    "Templates are out of date, so adjusters copy from old letters",
+    "Inconsistent tone across letters",
+    "Correspondence CSAT is 3.6 out of 5"
+  ],
+  "volumes": [
+    { "metric": "outbound letters", "value": 9000, "unit": "letters/month" },
+    { "metric": "adjusters", "value": 120, "unit": "people" },
+    { "metric": "letter backlog", "value": 3000, "unit": "letters" }
+  ],
+  "data_sources": [
+    { "name": "ClaimCore claim notes and documents", "sensitivity": "confidential", "contains_pii": true },
+    { "name": "Word letter templates", "sensitivity": "internal", "contains_pii": false },
+    { "name": "Historical letters", "sensitivity": "confidential", "contains_pii": true }
+  ],
+  "integrations": [
+    { "system": "ClaimCore", "direction": "read", "mechanism": "unspecified" },
+    { "system": "Outbound mail service", "direction": "write", "mechanism": "unspecified (implied by auto-send)" }
+  ],
+  "functional": [
+    {
+      "id": "FR-1",
+      "statement": "Generate draft letters from the claim file in the adjuster workspace using house style and templates",
+      "priority_hint": "must",
+      "owner": null,
+      "related_topic": null,
+      "source_quote": "Generate draft letters from the claim file in the adjuster workspace, in our house style and with the correct template."
+    },
+    {
+      "id": "FR-2",
+      "statement": "Automatically send simple letters (status updates, document acknowledgements) without adjuster review",
+      "priority_hint": "must",
+      "owner": null,
+      "related_topic": "human_review_policy",
+      "source_quote": "For simple letters like status updates and document acknowledgements, I want it to send automatically."
+    },
+    {
+      "id": "FR-3",
+      "statement": "Let adjusters edit and approve drafts of complex letters before they go out",
+      "priority_hint": "must",
+      "owner": "Claims Operations",
+      "related_topic": null,
+      "source_quote": "Adjusters edit and approve the draft before it goes out."
+    },
+    {
+      "id": "FR-4",
+      "statement": "Pre-fill claim number, dates and amounts from the claim system",
+      "priority_hint": "should",
+      "owner": null,
+      "related_topic": null,
+      "source_quote": "It should also pre-fill the claim number, dates and amounts so nobody is retyping them."
+    },
+    {
+      "id": "FR-5",
+      "statement": "Give team leads a view of draft quality across their team",
+      "priority_hint": "could",
+      "owner": null,
+      "related_topic": null,
+      "source_quote": "Team leads should get a simple view of draft quality across their team."
+    },
+    {
+      "id": "FR-6",
+      "statement": "Support injury-claim correspondence from day one",
+      "priority_hint": "must",
+      "owner": null,
+      "related_topic": "phase1_scope",
+      "source_quote": "Injury claims are where the backlog is, so they have to be in from day one."
+    }
+  ],
+  "non_functional": [
+    {
+      "id": "NFR-1",
+      "category": "latency",
+      "statement": "Drafting must be fast; adjusters will not wait",
+      "metric": null,
+      "target_value": null,
+      "unit": null,
+      "source_quote": "It needs to be fast. Adjusters won't wait around for a computer."
+    },
+    {
+      "id": "NFR-2",
+      "category": "cost",
+      "statement": "All-in cost under one dollar per letter",
+      "metric": "all-in cost per letter",
+      "target_value": 1.0,
+      "unit": "USD/letter",
+      "source_quote": "Keep it under a dollar per letter all-in."
+    }
+  ],
+  "constraints": [
+    {
+      "category": "timeline",
+      "statement": "Live before renewal season - January 15 at the latest",
+      "source_quote": "I need this live before renewal season. January 15 at the latest."
+    }
+  ],
+  "positions": [
+    {
+      "topic": "human_review_policy",
+      "stance": "Auto-send simple letters; adjusters approve complex letters only",
+      "normalized_value": "auto_send_simple_letters"
+    },
+    {
+      "topic": "phase1_scope",
+      "stance": "Injury claims included from day one",
+      "normalized_value": "include_injury_claims"
+    },
+    {
+      "topic": "go_live_date",
+      "stance": "Live by January 15",
+      "normalized_value": "2027-01-15"
+    },
+    {
+      "topic": "ai_budget",
+      "stance": "Under $1 per letter all-in (about $9,000/month at 9,000 letters)",
+      "normalized_value": "usd_1_per_letter"
+    },
+    {
+      "topic": "latency_target",
+      "stance": "Fast, not quantified",
+      "normalized_value": "unquantified_fast"
+    }
+  ],
+  "success_metrics": [
+    { "name": "Average handling time per letter", "baseline": "22 minutes", "target": "40% reduction (<= 13.2 minutes)" },
+    { "name": "Correspondence CSAT", "baseline": "3.6 / 5", "target": "4.2 / 5" },
+    { "name": "Letter backlog", "baseline": "3,000 letters", "target": "Cleared within three months of go-live" }
+  ],
+  "escalation_paths": [],
+  "risks": ["Low adoption if adjusters do not trust the drafts"],
+  "assumptions": [],
+  "open_questions": ["Who owns the letter templates - Customer Experience or Legal?"]
+}

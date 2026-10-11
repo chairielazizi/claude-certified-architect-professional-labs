@@ -1,0 +1,34 @@
+Interview ID: INT-01
+Date: 2026-09-29
+Stakeholder: Dana Whitfield, VP Claims Operations (executive sponsor)
+Interviewer: Solution architect (SA)
+Project: Claims Correspondence Copilot - Harbor Mutual Insurance (fictional)
+
+SA: Thanks for making time. Let's start with outcomes. What does success look like a year from now?
+DW: My adjusters spend too much of their day writing letters. Every claim generates correspondence - acknowledgements, status updates, requests for documents, decision letters. Average handling time per letter is about 22 minutes today. I want that down by at least 40%.
+SA: How many letters are we talking about?
+DW: Around 9,000 outbound letters a month across 120 adjusters. We also have a backlog of roughly 3,000 letters, mostly on injury claims.
+SA: Walk me through how a letter gets written today.
+DW: The adjuster opens the claim in ClaimCore, reads the notes and documents, picks a Word template, edits it by hand, and sends it through our outbound mail service. Templates are out of date half the time, so people copy from old letters. Tone is all over the place. Our correspondence CSAT is 3.6 out of 5.
+SA: Who would use the assistant?
+DW: Adjusters first - they want a good first draft in front of them. Team leads want to see quality across their team.
+SA: What should the assistant do?
+DW: Generate draft letters from the claim file in the adjuster workspace, in our house style and with the correct template. For simple letters like status updates and document acknowledgements, I want it to send automatically. That's where the volume is.
+SA: And for complex letters?
+DW: Adjusters edit and approve the draft before it goes out. It should also pre-fill the claim number, dates and amounts so nobody is retyping them.
+SA: Any expectations on speed?
+DW: It needs to be fast. Adjusters won't wait around for a computer.
+SA: Are there claim types we should exclude?
+DW: No. Injury claims are where the backlog is, so they have to be in from day one.
+SA: Timeline?
+DW: I need this live before renewal season. January 15 at the latest.
+SA: Budget?
+DW: Finance will ask about unit cost. Keep it under a dollar per letter all-in.
+SA: How will you measure success?
+DW: Handling time down 40%, the backlog cleared within three months of go-live, and correspondence CSAT up to 4.2.
+SA: Who maintains the letter templates?
+DW: I think Customer Experience owns them. Or maybe Legal. Honestly, nobody really owns them right now.
+SA: What risks do you see?
+DW: Adoption. If adjusters don't trust the drafts, they won't use them.
+SA: Anything else for the dashboard side?
+DW: Team leads should get a simple view of draft quality across their team.

@@ -1,0 +1,18 @@
+{
+  "estimates": [
+    { "req_id": "FR-01", "value": 5, "effort": 3, "moscow": "must", "rationale": "Core of the business case (handling time -40%); corroborated by sponsor and Platform." },
+    { "req_id": "FR-02", "value": 4, "effort": 2, "moscow": "wont", "rationale": "High volume, but contradicts Compliance's mandatory-approval constraint; revisit with evidence after phase 1." },
+    { "req_id": "FR-03", "value": 5, "effort": 2, "moscow": "must", "rationale": "Human approval is the primary control and the adoption path for adjusters." },
+    { "req_id": "FR-04", "value": 4, "effort": 2, "moscow": "should", "rationale": "Removes retyping; deterministic merge fields also reduce hallucinated numbers." },
+    { "req_id": "FR-05", "value": 2, "effort": 3, "moscow": "could", "rationale": "Useful for adoption tracking; can be delivered from audit data after go-live." },
+    { "req_id": "FR-06", "value": 4, "effort": 4, "moscow": "must", "rationale": "Sponsor states the backlog is mostly injury claims; medical data adds controls and a DPIA." },
+    { "req_id": "FR-07", "value": 5, "effort": 1, "moscow": "must", "rationale": "Regulatory requirement; approval step already exists in the workflow." },
+    { "req_id": "FR-08", "value": 4, "effort": 3, "moscow": "must", "rationale": "Regulatory audit trail with model and prompt version; 7-year retention needs storage design." },
+    { "req_id": "FR-09", "value": 5, "effort": 2, "moscow": "must", "rationale": "Prohibited-content guardrail; failure would be a regulatory incident." },
+    { "req_id": "FR-10", "value": 5, "effort": 2, "moscow": "must", "rationale": "Zero-tolerance fields; code can validate against ClaimCore rather than trusting the model." },
+    { "req_id": "FR-11", "value": 3, "effort": 2, "moscow": "should", "rationale": "Fairness test suite before go-live; needs a measurable consistency metric first." },
+    { "req_id": "FR-12", "value": 4, "effort": 3, "moscow": "must", "rationale": "Keeps sending in the existing PostMaster workflow; required for the approval flow." },
+    { "req_id": "FR-13", "value": 3, "effort": 2, "moscow": "should", "rationale": "Backlog clearance via batch processing at lower unit cost; not latency sensitive." }
+  ],
+  "notes": "Estimates are relative (1-5) and need confirmation by the delivery team. FR-02 and FR-06 depend on open steering decisions."
+}

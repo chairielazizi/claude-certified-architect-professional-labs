@@ -1,0 +1,159 @@
+{
+  "stakeholder": {
+    "name": "Priya Raman",
+    "role": "Head of Compliance and Data Protection Officer",
+    "department": "Compliance"
+  },
+  "business_goals": [
+    {
+      "statement": "Keep every customer communication compliant with state unfair claims practices regulations",
+      "metric": null,
+      "target": null
+    }
+  ],
+  "personas": [],
+  "pain_points": [],
+  "volumes": [],
+  "data_sources": [
+    { "name": "Medical information in injury claims", "sensitivity": "restricted", "contains_pii": true },
+    { "name": "Customer PII in claim data", "sensitivity": "confidential", "contains_pii": true }
+  ],
+  "integrations": [],
+  "functional": [
+    {
+      "id": "FR-1",
+      "statement": "Require licensed adjuster approval before any letter is sent",
+      "priority_hint": "must",
+      "owner": "Compliance",
+      "related_topic": "human_review_policy",
+      "source_quote": "No letter leaves this company without a licensed adjuster approving it."
+    },
+    {
+      "id": "FR-2",
+      "statement": "Record an audit trail per letter (approver, AI draft, model and prompt version) and retain it for seven years",
+      "priority_hint": "must",
+      "owner": "Compliance",
+      "related_topic": null,
+      "source_quote": "For every letter we need an audit trail: who approved it, the AI draft, and the model and prompt version that produced it."
+    },
+    {
+      "id": "FR-3",
+      "statement": "Block coverage determinations and admissions of liability in drafts",
+      "priority_hint": "must",
+      "owner": "Compliance",
+      "related_topic": null,
+      "source_quote": "It must never make or imply a coverage determination, and it must never admit liability."
+    },
+    {
+      "id": "FR-4",
+      "statement": "Verify claim numbers, dates and dollar amounts in every draft match the claim system exactly",
+      "priority_hint": "must",
+      "owner": null,
+      "related_topic": null,
+      "source_quote": "Claim numbers, dates and dollar amounts must match the claim system exactly - zero tolerance."
+    },
+    {
+      "id": "FR-5",
+      "statement": "Test tone and helpfulness for consistency across customer demographics before go-live",
+      "priority_hint": "should",
+      "owner": null,
+      "related_topic": null,
+      "source_quote": "Tone and helpfulness must not vary by the customer's name, age or postcode."
+    }
+  ],
+  "non_functional": [
+    {
+      "id": "NFR-1",
+      "category": "privacy",
+      "statement": "Claim data must stay in US regions",
+      "metric": null,
+      "target_value": null,
+      "unit": null,
+      "source_quote": "Claim data must stay in US regions."
+    },
+    {
+      "id": "NFR-2",
+      "category": "compliance",
+      "statement": "Retain the per-letter audit trail for seven years",
+      "metric": "audit trail retention period",
+      "target_value": 7,
+      "unit": "years",
+      "source_quote": "Keep that audit trail for seven years."
+    },
+    {
+      "id": "NFR-3",
+      "category": "privacy",
+      "statement": "No customer PII in application logs (mask it)",
+      "metric": null,
+      "target_value": null,
+      "unit": null,
+      "source_quote": "And no customer PII in application logs - mask it."
+    },
+    {
+      "id": "NFR-4",
+      "category": "quality",
+      "statement": "Claim numbers, dates and amounts in drafts match the claim system exactly",
+      "metric": "field-level exact-match rate",
+      "target_value": 100,
+      "unit": "%",
+      "source_quote": "Claim numbers, dates and dollar amounts must match the claim system exactly - zero tolerance."
+    },
+    {
+      "id": "NFR-5",
+      "category": "quality",
+      "statement": "Drafts must be accurate",
+      "metric": null,
+      "target_value": null,
+      "unit": null,
+      "source_quote": "They must be accurate."
+    },
+    {
+      "id": "NFR-6",
+      "category": "quality",
+      "statement": "Tone and helpfulness must not vary by customer name, age or postcode",
+      "metric": null,
+      "target_value": null,
+      "unit": null,
+      "source_quote": "Tone and helpfulness must not vary by the customer's name, age or postcode."
+    }
+  ],
+  "constraints": [
+    {
+      "category": "regulatory",
+      "statement": "A licensed adjuster must approve every letter (state unfair claims practices regulations)",
+      "source_quote": "State unfair claims practices regulations hold us accountable for every communication, including simple status letters."
+    },
+    {
+      "category": "regulatory",
+      "statement": "Claim data must remain in US regions",
+      "source_quote": "Claim data must stay in US regions."
+    },
+    {
+      "category": "regulatory",
+      "statement": "The assistant must never make coverage determinations or admit liability",
+      "source_quote": "It must never make or imply a coverage determination, and it must never admit liability."
+    }
+  ],
+  "positions": [
+    {
+      "topic": "human_review_policy",
+      "stance": "Draft yes, send no - a human approves every letter",
+      "normalized_value": "human_approval_every_letter"
+    },
+    {
+      "topic": "phase1_scope",
+      "stance": "Exclude injury claims from phase 1 until controls are proven",
+      "normalized_value": "exclude_injury_claims"
+    }
+  ],
+  "success_metrics": [
+    { "name": "Field-level accuracy of claim numbers, dates and amounts", "baseline": null, "target": "100% exact match" }
+  ],
+  "escalation_paths": [],
+  "risks": ["Misdirected letter containing another customer's information (reportable breach)"],
+  "assumptions": [],
+  "open_questions": [
+    "How will demographic consistency of tone be measured, and by whom?",
+    "What is the field-error rate in today's manual letters?"
+  ]
+}

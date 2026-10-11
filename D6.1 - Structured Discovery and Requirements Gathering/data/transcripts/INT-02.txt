@@ -1,0 +1,26 @@
+Interview ID: INT-02
+Date: 2026-09-30
+Stakeholder: Priya Raman, Head of Compliance and Data Protection Officer
+Interviewer: Solution architect (SA)
+Project: Claims Correspondence Copilot - Harbor Mutual Insurance (fictional)
+
+SA: What are your non-negotiables for a system like this?
+PR: No letter leaves this company without a licensed adjuster approving it. State unfair claims practices regulations hold us accountable for every communication, including simple status letters.
+SA: So no automatic sending, even for templated status updates?
+PR: Correct. Draft, yes. Send, no. A human approves every letter.
+SA: What about injury claims?
+PR: Injury claims contain medical information, the most sensitive data we hold. For phase one I want injury claims excluded until the controls are proven on property and auto claims.
+SA: Data handling requirements?
+PR: Claim data must stay in US regions. For every letter we need an audit trail: who approved it, the AI draft, and the model and prompt version that produced it. Keep that audit trail for seven years. And no customer PII in application logs - mask it.
+SA: Anything the assistant must never do?
+PR: It must never make or imply a coverage determination, and it must never admit liability.
+SA: How accurate do drafts need to be?
+PR: They must be accurate.
+SA: Can we put a number on that?
+PR: Claim numbers, dates and dollar amounts must match the claim system exactly - zero tolerance. For the wording, the adjuster is the safety net.
+SA: Fairness concerns?
+PR: Tone and helpfulness must not vary by the customer's name, age or postcode. I want that tested before go-live.
+SA: Who owns the rules on prohibited content?
+PR: My team owns the prohibited-content rules and reviews them quarterly.
+SA: What is the worst case?
+PR: A letter going out with another customer's information. That is a reportable breach.

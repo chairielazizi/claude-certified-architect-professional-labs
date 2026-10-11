@@ -1,0 +1,142 @@
+{
+  "stakeholder": {
+    "name": "Marcus Oyelaran",
+    "role": "Director of Claims Platform (IT)",
+    "department": "Claims Platform"
+  },
+  "business_goals": [],
+  "personas": [],
+  "pain_points": [],
+  "volumes": [
+    { "metric": "ClaimCore API rate limit (shared with other apps)", "value": 50, "unit": "requests/second" }
+  ],
+  "data_sources": [
+    { "name": "ClaimCore claim data and notes (REST API)", "sensitivity": "confidential", "contains_pii": true },
+    { "name": "DocVault claim documents (S3)", "sensitivity": "confidential", "contains_pii": true }
+  ],
+  "integrations": [
+    { "system": "ClaimCore", "direction": "read_write", "mechanism": "REST API" },
+    { "system": "DocVault", "direction": "read", "mechanism": "S3 API" },
+    { "system": "Okta", "direction": "read", "mechanism": "SSO" }
+  ],
+  "functional": [
+    {
+      "id": "FR-1",
+      "statement": "Generate draft letters in the adjuster workspace from claim data and documents",
+      "priority_hint": "must",
+      "owner": "Claims Platform",
+      "related_topic": null,
+      "source_quote": "Generate draft letters in the adjuster workspace from claim data and documents, then write the draft back to ClaimCore as pending correspondence."
+    },
+    {
+      "id": "FR-2",
+      "statement": "Write each draft back to ClaimCore as pending correspondence",
+      "priority_hint": "must",
+      "owner": "Claims Platform",
+      "related_topic": null,
+      "source_quote": "Generate draft letters in the adjuster workspace from claim data and documents, then write the draft back to ClaimCore as pending correspondence."
+    },
+    {
+      "id": "FR-3",
+      "statement": "Process the letter backlog as an overnight batch",
+      "priority_hint": "should",
+      "owner": null,
+      "related_topic": null,
+      "source_quote": "An overnight batch is fine for the backlog."
+    }
+  ],
+  "non_functional": [
+    {
+      "id": "NFR-1",
+      "category": "latency",
+      "statement": "First words appear within 2 seconds in the adjuster UI",
+      "metric": "time to first token",
+      "target_value": 2,
+      "unit": "s",
+      "source_quote": "In the adjuster UI the first words should appear within 2 seconds, and the full draft within 10 seconds at p95."
+    },
+    {
+      "id": "NFR-2",
+      "category": "latency",
+      "statement": "Full draft within 10 seconds at p95",
+      "metric": "p95 end-to-end draft latency",
+      "target_value": 10,
+      "unit": "s",
+      "source_quote": "In the adjuster UI the first words should appear within 2 seconds, and the full draft within 10 seconds at p95."
+    },
+    {
+      "id": "NFR-3",
+      "category": "availability",
+      "statement": "99.5% availability from 7am to 9pm Eastern",
+      "metric": "availability during business hours",
+      "target_value": 99.5,
+      "unit": "%",
+      "source_quote": "We commit 99.5% availability during those hours for tier-2 apps."
+    },
+    {
+      "id": "NFR-4",
+      "category": "scalability",
+      "statement": "It should scale (possible commercial lines rollout)",
+      "metric": null,
+      "target_value": null,
+      "unit": null,
+      "source_quote": "It should scale. We may roll it out to commercial lines later."
+    },
+    {
+      "id": "NFR-5",
+      "category": "cost",
+      "statement": "AI usage capped at $8,000 per month",
+      "metric": "monthly AI usage cost",
+      "target_value": 8000,
+      "unit": "USD/month",
+      "source_quote": "Our platform budget caps AI usage at $8,000 a month."
+    }
+  ],
+  "constraints": [
+    {
+      "category": "technical",
+      "statement": "The assistant must not call PostMaster; sending stays in the existing workflow",
+      "source_quote": "It must not call PostMaster directly - sending stays in the existing workflow."
+    },
+    {
+      "category": "technical",
+      "statement": "ClaimCore API rate limit of 50 requests/second, shared with other apps",
+      "source_quote": "The ClaimCore API rate limit is 50 requests per second, shared with other apps."
+    },
+    {
+      "category": "organizational",
+      "statement": "Three engineers available; a security review is required",
+      "source_quote": "With three engineers and the security review, March 1 is realistic."
+    },
+    {
+      "category": "budget",
+      "statement": "AI usage above $8,000/month needs a new approval",
+      "source_quote": "Anything above that needs a new approval."
+    }
+  ],
+  "positions": [
+    {
+      "topic": "go_live_date",
+      "stance": "March 1 is realistic; January 15 is aggressive",
+      "normalized_value": "2027-03-01"
+    },
+    {
+      "topic": "ai_budget",
+      "stance": "Hard cap of $8,000/month for AI usage",
+      "normalized_value": "usd_8000_per_month"
+    },
+    {
+      "topic": "latency_target",
+      "stance": "First words <= 2 s; full draft <= 10 s at p95",
+      "normalized_value": "ttft_2s_p95_10s"
+    }
+  ],
+  "success_metrics": [],
+  "escalation_paths": [],
+  "risks": [
+    "Shared ClaimCore API rate limit (50 rps) could throttle drafting at peak",
+    "Prompt changes going live without testing"
+  ],
+  "assumptions": ["The existing Claude enterprise agreement covers this use case; no new vendor review"],
+  "open_questions": ["Who on the business side owns the prompts and templates?"]
+}

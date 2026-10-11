@@ -1,0 +1,169 @@
+{
+  "project": "Claims Correspondence Copilot",
+  "client": "Harbor Mutual Insurance (fictional)",
+  "as_of": "2026-10-05",
+  "sponsor_interview": "INT-01",
+  "interviews": [
+    { "id": "INT-01", "file": "INT-01.txt" },
+    { "id": "INT-02", "file": "INT-02.txt" },
+    { "id": "INT-03", "file": "INT-03.txt" }
+  ],
+  "sections": [
+    {
+      "id": "business_goals",
+      "title": "Business goals and outcomes",
+      "why": "Anchors every later trade-off; a requirement that serves no goal is a candidate for Won't.",
+      "evidence_fields": ["business_goals"],
+      "questions": [
+        "What does success look like 12 months after go-live?",
+        "Which business KPI moves if this works, and by how much?",
+        "What happens if we do nothing?"
+      ]
+    },
+    {
+      "id": "users_personas",
+      "title": "Users and personas",
+      "why": "Different users need different latency, UX and review steps.",
+      "evidence_fields": ["personas"],
+      "questions": [
+        "Who touches the output first, and who is accountable for it?",
+        "What does a great day look like for that person?"
+      ]
+    },
+    {
+      "id": "current_process",
+      "title": "Current process and pain points",
+      "why": "The as-is process is the baseline for value and the source of edge cases.",
+      "evidence_fields": ["pain_points"],
+      "questions": [
+        "Walk me through the last time you did this task, step by step.",
+        "Where do errors, rework or waiting happen today?"
+      ]
+    },
+    {
+      "id": "volumes",
+      "title": "Volumes and growth",
+      "why": "Drives model choice, batching, rate limits and cost.",
+      "evidence_fields": ["volumes"],
+      "questions": [
+        "How many items per day/month, and what are the peaks?",
+        "What growth or new teams are expected in 12-24 months?"
+      ]
+    },
+    {
+      "id": "data_sources",
+      "title": "Data sources and sensitivity",
+      "why": "Data availability and classification decide feasibility, residency and guardrails.",
+      "evidence_fields": ["data_sources"],
+      "questions": [
+        "Which systems hold the information a human uses today?",
+        "What is the classification of that data (PII, health, financial)?"
+      ]
+    },
+    {
+      "id": "integrations",
+      "title": "Integration points",
+      "why": "Read vs write access changes the risk profile (tools with side effects need approvals).",
+      "evidence_fields": ["integrations"],
+      "questions": [
+        "Which systems must the solution read from and write to?",
+        "What APIs, auth mechanisms and rate limits exist?"
+      ]
+    },
+    {
+      "id": "constraints",
+      "title": "Constraints (latency, cost, compliance, timeline)",
+      "why": "Constraints are non-negotiable inputs; NFRs need measurable targets to be testable.",
+      "evidence_fields": ["constraints", "non_functional"],
+      "questions": [
+        "What response time is acceptable, measured how (p95, time to first token)?",
+        "What budget or unit cost must we stay within?",
+        "Which regulations, residency or retention rules apply?"
+      ]
+    },
+    {
+      "id": "success_metrics",
+      "title": "Success metrics",
+      "why": "Without a baseline and target you cannot prove value or run evals.",
+      "evidence_fields": ["success_metrics"],
+      "questions": [
+        "What is today's baseline for each KPI and how is it measured?",
+        "What target would make you call this a success?"
+      ]
+    },
+    {
+      "id": "failure_modes",
+      "title": "Failure handling and escalation",
+      "why": "LLMs are probabilistic; the design must say what happens when Claude is unsure or wrong.",
+      "evidence_fields": ["escalation_paths"],
+      "questions": [
+        "What should happen when the assistant is unsure, or a draft is wrong?",
+        "Who is the escalation point, and what is the fallback if the AI is unavailable?"
+      ]
+    },
+    {
+      "id": "risks_assumptions",
+      "title": "Risks and assumptions",
+      "why": "Unwritten assumptions become surprises; risks need owners and mitigations.",
+      "evidence_fields": ["risks", "assumptions"],
+      "questions": [
+        "What is the worst thing this system could do?",
+        "What are we assuming about data, contracts, people or timing?"
+      ]
+    }
+  ],
+  "conflict_topics": {
+    "human_review_policy": {
+      "label": "Human review before a letter is sent",
+      "severity": "high",
+      "decision_owner": "Head of Compliance (regulatory veto) with the VP Claims Operations",
+      "compromise_hint": "Claude drafts every letter; adjusters approve routine letters with one click while edit rates are measured. Revisit auto-send only with evidence (e.g. 3 months of <1% material edits) and written Compliance sign-off."
+    },
+    "phase1_scope": {
+      "label": "Phase-1 scope: injury claims (medical data)",
+      "severity": "high",
+      "decision_owner": "Steering committee (sponsor, Compliance, Platform)",
+      "compromise_hint": "Phase 1 on property and auto claims; injury claims in phase 2 after a DPIA and a red-team of PHI handling. Use the overnight batch path for the injury backlog only once controls are proven."
+    },
+    "go_live_date": {
+      "label": "Go-live date",
+      "severity": "medium",
+      "decision_owner": "Executive sponsor, informed by the Platform delivery plan",
+      "compromise_hint": "Pilot with one adjuster team by January 15; general availability on March 1 after the security review."
+    },
+    "ai_budget": {
+      "label": "AI usage budget",
+      "severity": "medium",
+      "decision_owner": "Executive sponsor with Finance",
+      "compromise_hint": "Express the budget both ways: cost per letter and a monthly cap. Model the cost per letter in design (model choice, caching, batch for backlog) and agree which number wins."
+    },
+    "latency_target": {
+      "label": "Latency target",
+      "severity": "low",
+      "decision_owner": "Product owner with Platform",
+      "compromise_hint": "Adopt the measurable target (time to first token <= 2 s, p95 full draft <= 10 s, streamed) and confirm with the sponsor that it satisfies 'fast'."
+    }
+  },
+  "measurability": {
+    "categories_requiring_metric": ["latency", "availability", "cost", "quality", "scalability"],
+    "vague_terms": [
+      "fast", "quick", "quickly", "real-time", "realtime", "instant", "scale", "scalable",
+      "secure", "accurate", "user-friendly", "intuitive", "seamless", "robust", "reliable",
+      "cheap", "asap", "easy", "always on", "high availability"
+    ]
+  },
+  "followup_templates": {
+    "vague_nfr": "You said \"{quote}\". What measurable target should we commit to for {category} - metric, threshold and how it is measured?",
+    "unmeasured_nfr": "\"{statement}\" has no measurable target yet. How should we measure {category}, and what threshold is acceptable?",
+    "missing_owner": "Who will own {req_id} \"{statement}\" after go-live (accountable for content, changes and approvals)?",
+    "conflict": "{a_name} wants \"{a_stance}\"; {b_name} wants \"{b_stance}\". Decision owner: {owner}. Which option do we commit to for phase 1? Option to table: {hint}",
+    "coverage": "Nobody has covered \"{title}\" yet. {question}",
+    "no_baseline": "What is today's baseline for \"{metric}\", and how is it measured?",
+    "unverified_quote": "The extracted evidence for {ref} (\"{quote}\") is not verbatim in the transcript. Please confirm the stakeholder's exact words."
+  },
+  "prioritization": {
+    "must_effort_share_max": 0.6,
+    "high_value_min": 4,
+    "low_effort_max": 2
+  }
+}

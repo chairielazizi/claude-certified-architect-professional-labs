@@ -1,0 +1,26 @@
+Interview ID: INT-03
+Date: 2026-10-01
+Stakeholder: Marcus Oyelaran, Director of Claims Platform (IT)
+Interviewer: Solution architect (SA)
+Project: Claims Correspondence Copilot - Harbor Mutual Insurance (fictional)
+
+SA: What does the integration landscape look like?
+MO: ClaimCore is the system of record and exposes a REST API for claim data and notes. Documents live in DocVault, which is S3 with metadata. Outbound letters go through PostMaster, our correspondence service. Auth is Okta SSO.
+SA: How would the assistant fit?
+MO: Generate draft letters in the adjuster workspace from claim data and documents, then write the draft back to ClaimCore as pending correspondence. It must not call PostMaster directly - sending stays in the existing workflow.
+SA: Latency expectations?
+MO: In the adjuster UI the first words should appear within 2 seconds, and the full draft within 10 seconds at p95. For the backlog, an overnight batch is fine.
+SA: Availability?
+MO: Adjusters work 7am to 9pm Eastern. We commit 99.5% availability during those hours for tier-2 apps.
+SA: Scale?
+MO: It should scale. We may roll it out to commercial lines later.
+SA: Timeline?
+MO: January 15 is aggressive. With three engineers and the security review, March 1 is realistic.
+SA: Budget?
+MO: Our platform budget caps AI usage at $8,000 a month. Anything above that needs a new approval.
+SA: Ownership?
+MO: My team owns the integration and hosting. Somebody on the business side needs to own the prompts and templates, not us.
+SA: What worries you?
+MO: The ClaimCore API rate limit is 50 requests per second, shared with other apps. And prompt changes going live without testing.
+SA: Any assumptions we should write down?
+MO: I'm assuming our existing Claude enterprise agreement covers this, so no new vendor review.

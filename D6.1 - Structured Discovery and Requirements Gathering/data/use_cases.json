@@ -1,0 +1,63 @@
+{
+  "scale": "1 (low) - 5 (high). integration_complexity, data_sensitivity, error_impact and regulatory_exposure are 'higher = harder/riskier'.",
+  "weights": { "value": 0.4, "feasibility": 0.35, "safety": 0.25 },
+  "thresholds": { "go_readiness": 3.8, "conditional_readiness": 3.0, "min_data_readiness": 3, "max_risk_for_go": 3.5 },
+  "use_cases": [
+    {
+      "id": "UC-1",
+      "name": "Draft correspondence with adjuster approval",
+      "value": 5,
+      "data_readiness": 4,
+      "technical_fit": 5,
+      "integration_complexity": 3,
+      "data_sensitivity": 4,
+      "error_impact": 3,
+      "regulatory_exposure": 3,
+      "human_in_loop": true,
+      "measurable_success_metric": true,
+      "hard_constraint_conflicts": []
+    },
+    {
+      "id": "UC-2",
+      "name": "Claim-file summary for adjusters",
+      "value": 4,
+      "data_readiness": 5,
+      "technical_fit": 5,
+      "integration_complexity": 2,
+      "data_sensitivity": 4,
+      "error_impact": 2,
+      "regulatory_exposure": 2,
+      "human_in_loop": true,
+      "measurable_success_metric": false,
+      "hard_constraint_conflicts": []
+    },
+    {
+      "id": "UC-3",
+      "name": "Fraud-indicator flagging on incoming correspondence",
+      "value": 4,
+      "data_readiness": 2,
+      "technical_fit": 2,
+      "integration_complexity": 4,
+      "data_sensitivity": 4,
+      "error_impact": 4,
+      "regulatory_exposure": 4,
+      "human_in_loop": true,
+      "measurable_success_metric": true,
+      "hard_constraint_conflicts": []
+    },
+    {
+      "id": "UC-4",
+      "name": "Auto-send routine letters without review",
+      "value": 5,
+      "data_readiness": 4,
+      "technical_fit": 4,
+      "integration_complexity": 3,
+      "data_sensitivity": 4,
+      "error_impact": 4,
+      "regulatory_exposure": 5,
+      "human_in_loop": false,
+      "measurable_success_metric": true,
+      "hard_constraint_conflicts": ["A licensed adjuster must approve every letter (Compliance, INT-02)"]
+    }
+  ]
+}
