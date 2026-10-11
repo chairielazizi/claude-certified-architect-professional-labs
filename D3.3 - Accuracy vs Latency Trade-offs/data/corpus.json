@@ -1,0 +1,20 @@
+{
+  "D01": "Meals on domestic travel: the daily meal allowance is USD 75 for each full travel day. Departure and return days count as travel days and are reimbursed at 75 percent of the daily allowance.",
+  "D02": "Flights and hotels must be booked through TravelDesk, the corporate booking tool. Bookings made outside TravelDesk need a written exception from Finance.",
+  "D03": "Current hotel nightly caps (2026 travel policy): London GBP 260, New York USD 340, Chicago USD 280, Tokyo JPY 32000. Lodging above the cap is not reimbursable.",
+  "D04": "Archived 2024 lodging rates (superseded, kept for audit): London GBP 220, New York USD 300, Chicago USD 250, Tokyo JPY 28000.",
+  "D05": "Expense reports must be submitted within 30 calendar days of the trip end date.",
+  "D06": "Late expense reports need director sign-off and are reimbursed at 90 percent, unless the delay was caused by a TravelDesk or expense-system outage. A documented outage extends the submission deadline by the length of the outage.",
+  "D07": "System status log: TravelDesk was unavailable from March 20 to March 24 inclusive (5 days).",
+  "D08": "Cabin class: business class is permitted when the scheduled flight time exceeds 6 hours for employees in Band B or above. All other employees fly economy.",
+  "D09": "Job architecture: Associates and Senior Associates are Band A; Leads and Principals are Band B; Directors and VPs are Band C.",
+  "D10": "Band C employees receive 125 percent of the city hotel cap on all trips.",
+  "D11": "Pre-approval thresholds: under USD 500 manager approval; USD 500 to 2000 director approval; above USD 2000 VP approval.",
+  "D12": "Conference registration fees above USD 1500 always require VP approval, regardless of the general thresholds.",
+  "D13": "Personal car mileage is reimbursed at USD 0.67 per mile. Tolls and parking are reimbursed at cost.",
+  "D14": "Flight changes made within 24 hours of departure require manager approval. Red-eye flights over 5 hours allow a late start the next day.",
+  "D15": "Employees traveling more than 10 days per month may join the frequent-traveler program for lounge access.",
+  "D16": "Hotel loyalty points earned on business trips may be kept by employees. Hotel upgrades must not increase the nightly cost.",
+  "D17": "Engineering offsites: engineers may fly premium economy on flights longer than 4 hours when the offsite budget allows.",
+  "D18": "Long flights: for any flight over 9 hours, employees may book a hotel day room on arrival."
+}
