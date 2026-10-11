@@ -1,0 +1,90 @@
+[
+  {
+    "id": "T-1001",
+    "channel": "Email",
+    "customer_email": "dana.ortiz@example.com",
+    "subject": "Charged twice",
+    "body": "Hi team,\nI was charged twice for my March invoice (INV-3391). My card 4242 4242 4242 4242 shows two identical charges of $49.00. Please refund one.\n\nThanks,\nDana\n\nOn Mon, Mar 4, 2026 at 9:02 AM Support <support@example.com> wrote:\n> We have received your request and will get back to you shortly.",
+    "gold": {"category": "billing", "priority": "P2"}
+  },
+  {
+    "id": "T-1002",
+    "channel": "chat",
+    "customer_email": "it-admin@acme-logistics.example",
+    "subject": "SSO login broken for everyone",
+    "body": "Since 09:10 nobody on our team (about 140 users) can log in. SSO returns error 500 right after the Okta redirect. Production work is blocked.",
+    "gold": {"category": "access", "priority": "P1", "review_note": "Many users blocked from working is P1 even if the word outage is never used."}
+  },
+  {
+    "id": "T-1003",
+    "channel": " EMAIL ",
+    "customer_email": "dana.ortiz@example.com",
+    "subject": "Charged twice",
+    "body": "Hi team,\n  I was charged twice for my March invoice (INV-3391).   My card 4242 4242 4242 4242 shows two identical charges of $49.00. Please refund one.\n\nThanks,\nDana",
+    "gold": {"category": "billing", "priority": "P2"}
+  },
+  {
+    "id": "T-1004",
+    "channel": "web",
+    "customer_email": "",
+    "subject": "",
+    "body": "   \n  ",
+    "gold": null
+  },
+  {
+    "id": "T-1005",
+    "channel": "web",
+    "customer_email": "li.wei@example.com",
+    "subject": "Export dashboard",
+    "body": "How do I export my dashboard to PDF? I only see the CSV export option.",
+    "gold": {"category": "how_to", "priority": "P4"}
+  },
+  {
+    "id": "T-1006",
+    "channel": "email",
+    "customer_email": "finance@brightpath.example",
+    "subject": "Invoice wrong after plan change",
+    "body": "After switching from the Pro plan to the Team plan last week we were billed for both plans this month. Can you fix the invoice?",
+    "gold": {"category": "billing", "priority": "P3", "review_note": "A plan change that produces wrong charges is billing, not account."}
+  },
+  {
+    "id": "T-1007",
+    "channel": "web",
+    "customer_email": "m.keller@example.org",
+    "subject": "Delete my data",
+    "body": "Please delete all personal data you hold about me under GDPR Article 17. You can reach me on +1 415 555 0134 if you need to verify my identity.",
+    "gold": {"category": "privacy", "priority": "P2", "review_note": "GDPR erasure requests carry a statutory deadline, so at least P2."}
+  },
+  {
+    "id": "T-1008",
+    "channel": "email",
+    "customer_email": "sam.okafor@example.com",
+    "subject": "Lots of problems since the 5.2 mobile update",
+    "body": "I want to report several problems with the mobile app since the 5.2 update. First, the app crashes every time I open the Reports tab on Android 15 (Pixel 8). Second, push notifications arrive 20-40 minutes late. Third, in dark mode the table headers are black text on a dark grey background and unreadable. Fourth, when I edit entries offline and reconnect, every edited entry is duplicated. Fifth, battery drain went from about 4% to 15% per hour with the app in the background. Finally, I am logged out every morning even though 'remember me' is ticked. We have 12 field staff relying on this app daily, so please look at all of these.",
+    "gold": {"category": "bug", "priority": "P3"}
+  },
+  {
+    "id": "T-1009",
+    "channel": "email",
+    "customer_email": "dev@quantumcart.example",
+    "subject": "API rate limit errors",
+    "body": "Our integration gets HTTP 429 responses from your API even though we stay under the documented limit of 100 requests per minute. Orders are queuing up on our side.",
+    "gold": {"category": "bug", "priority": "P2"}
+  },
+  {
+    "id": "T-1010",
+    "channel": "chat",
+    "customer_email": "owner@lakeside-dental.example",
+    "subject": "Payment keeps failing",
+    "body": "My renewal payment failed three times with 'card_declined_do_not_honor' but my bank says there is no block on the card. I need to renew before Friday or we lose access.",
+    "gold": {"category": "billing", "priority": "P2"}
+  },
+  {
+    "id": "T-1011",
+    "channel": "web",
+    "customer_email": "info@riverside-shelter.example",
+    "subject": "Question",
+    "body": "Is there a discount for nonprofits? Also the app felt a bit slow yesterday.",
+    "gold": {"category": "sales", "priority": "P4"}
+  }
+]
